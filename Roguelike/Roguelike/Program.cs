@@ -9,6 +9,8 @@ namespace Roguelike
         public const int ScreenWidth = 80;
         public const int ScreenHeight = 50;
 
+        public static Map Map { get; set; }
+
         public static List<Entity> Entities { get; } = new List<Entity>();
         public static Entity Player { get; set; }
 
@@ -34,6 +36,9 @@ namespace Roguelike
             Terminal.Open();
             Terminal.Set($"window: size={ScreenWidth}x{ScreenHeight};");
             Terminal.Set($"font: Cheepicus_8x8x2.png, size=16x16, codepage=437;");
+
+            Map = new Map(80, 50);
+            Map.Generate();
 
             Player = new Entity(ScreenWidth / 2, ScreenHeight / 2, '@', Color.White);
             Entities.Add(Player);
@@ -69,6 +74,8 @@ namespace Roguelike
         private static void Draw()
         {
             Terminal.Clear();
+
+            Map.Draw();
 
             foreach (var entity in Entities)
             {

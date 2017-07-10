@@ -22,8 +22,11 @@ namespace Roguelike
 
         public void Move(int x, int y)
         {
-            X += x;
-            Y += y;
+            if (Program.Map.IsWalkable(X + x, Y + y))
+            {
+                X += x;
+                Y += y;
+            }
         }
 
         public void Draw()
