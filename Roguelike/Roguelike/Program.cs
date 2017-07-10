@@ -1,4 +1,5 @@
 ﻿using BearLib;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Roguelike
@@ -8,8 +9,8 @@ namespace Roguelike
         public const int ScreenWidth = 80;
         public const int ScreenHeight = 50;
 
-        public static int PlayerX { get; set; } = ScreenWidth / 2;
-        public static int PlayerY { get; set; } = ScreenHeight / 2;
+        public static List<Entity> Entities { get; } = new List<Entity>();
+        public static Entity Player { get; set; }
 
         static void Main(string[] args)
         {
@@ -33,6 +34,9 @@ namespace Roguelike
             Terminal.Open();
             Terminal.Set($"window: size={ScreenWidth}x{ScreenHeight};");
             Terminal.Set($"font: Cheepicus_8x8x2.png, size=16x16, codepage=437;");
+
+            Player = new Entity(ScreenWidth / 2, ScreenHeight / 2, '@', Color.White);
+            Entities.Add(Player);
         }
 
         private static bool Update()
@@ -46,16 +50,16 @@ namespace Roguelike
                     return false;
 
                 case Terminal.TK_LEFT:
-                    PlayerX--;
+                    Player.Move(-1, 0);
                     break;
                 case Terminal.TK_RIGHT:
-                    PlayerX++;
+                    Player.Move(1, 0);
                     break;
                 case Terminal.TK_UP:
-                    PlayerY--;
+                    Player.Move(0, -1);
                     break;
                 case Terminal.TK_DOWN:
-                    PlayerY++;
+                    Player.Move(0, 1);
                     break;
             }
 
@@ -66,7 +70,10 @@ namespace Roguelike
         {
             Terminal.Clear();
 
-            Terminal.Put(PlayerX, PlayerY, '@');
+            foreach (var entity in Entities)
+            {
+                entity.Draw();
+            }
 
             Terminal.Refresh();
         }
