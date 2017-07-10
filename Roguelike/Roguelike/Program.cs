@@ -47,7 +47,8 @@ namespace Roguelike
             Entities.Add(Player);
 
             Map = new Map(80, 50);
-            Map.Generate();
+            //Map.Generate();
+            Map.GenerateBsp();
         }
 
         private static bool Update()

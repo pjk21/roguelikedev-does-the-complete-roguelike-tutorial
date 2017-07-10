@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Linq;
 using Rectangle = RogueSharp.Rectangle;
 
+// BSP code adapted from: https://gamedevelopment.tutsplus.com/tutorials/how-to-use-bsp-trees-to-generate-game-maps--gamedev-12268
+
 namespace Roguelike
 {
     public class Map : RogueSharp.Map
@@ -12,6 +14,8 @@ namespace Roguelike
         private const int MinimumRoomSize = 6;
         private const int MaximumRoomSize = 10;
         private const int MaximumRooms = 30;
+
+        private const int MinimumBspRoomSize = 7;
 
         public static Color WallDark { get; } = Color.FromArgb(0, 0, 100);
         public static Color FloorDark { get; } = Color.FromArgb(50, 50, 150);
@@ -66,6 +70,16 @@ namespace Roguelike
             }
         }
 
+        public void GenerateBsp()
+        {
+            var entireMap = new Rectangle(0, 0, Width, Height);
+
+            var root = new BspNode(null, entireMap);
+            root.Split();
+
+            root.CreateRoom(CreateRoom, CreateHorizontalTunnel, CreateVerticalTunnel);
+        }
+
         public void Draw()
         {
             for (int x = 0; x < Width; x++)
@@ -110,6 +124,160 @@ namespace Roguelike
             for (int y = Math.Min(y1, y2); y <= Math.Max(y1, y2); y++)
             {
                 SetCellProperties(x, y, true, true);
+            }
+        }
+
+        class BspNode
+        {
+            public BspNode Parent { get; }
+            public BspNode ChildA { get; private set; }
+            public BspNode ChildB { get; private set; }
+
+            public Rectangle Room { get; set; }
+            public bool IsRoomCreated { get; set; }
+
+            public BspNode(BspNode parent, Rectangle room)
+            {
+                Parent = parent;
+                Room = room;
+            }
+
+            public void Split()
+            {
+                int direction = -1;
+
+                if (Room.Width > Room.Height)
+                {
+                    direction = 0;
+                }
+                else if (Room.Height > Room.Width)
+                {
+                    direction = 1;
+                }
+                else
+                {
+                    direction = Program.Random.Next(2);
+                }
+
+                if (direction == 0)
+                {
+                    var childRoomWidth = (Room.Width / 2) + Program.Random.Next(-3, 4);
+
+                    if (childRoomWidth >= MinimumBspRoomSize && Room.Width - childRoomWidth >= MinimumBspRoomSize)
+                    {
+                        ChildA = new BspNode(this, new Rectangle(Room.Left, Room.Top, childRoomWidth, Room.Height));
+                        ChildA.Split();
+
+                        ChildB = new BspNode(this, new Rectangle(Room.Left + childRoomWidth, Room.Top, Room.Width - childRoomWidth, Room.Height));
+                        ChildB.Split();
+                    }
+                }
+                else
+                {
+                    var childRoomHeight = (Room.Height / 2) + Program.Random.Next(-3, 4);
+
+                    if (childRoomHeight >= MinimumBspRoomSize && Room.Height - childRoomHeight >= MinimumBspRoomSize)
+                    {
+                        ChildA = new BspNode(this, new Rectangle(Room.Left, Room.Top, Room.Width, childRoomHeight));
+                        ChildA.Split();
+
+                        ChildB = new BspNode(this, new Rectangle(Room.Left, Room.Top + childRoomHeight, Room.Width, Room.Height - childRoomHeight));
+                        ChildB.Split();
+                    }
+                }
+            }
+
+            public void CreateRoom(Action<Rectangle> createRoomFunction, Action<int, int, int> horizontalTunnelFunction, Action<int, int, int> verticalTunnelFunction)
+            {
+                if (ChildA != null || ChildB != null)
+                {
+                    ChildA?.CreateRoom(createRoomFunction, horizontalTunnelFunction, verticalTunnelFunction);
+                    ChildB?.CreateRoom(createRoomFunction, horizontalTunnelFunction, verticalTunnelFunction);
+
+                    if (ChildA != null && ChildB != null)
+                    {
+                        var roomA = ChildA.GetRoom();
+                        var roomB = ChildB.GetRoom();
+
+                        if (roomA.Left == roomB.Left || roomA.Right == roomB.Right)
+                        {
+                            if (roomA.Width >= roomB.Width)
+                            {
+                                verticalTunnelFunction(roomA.Center.Y, roomB.Center.Y, roomB.Center.X);
+                            }
+                            else
+                            {
+                                verticalTunnelFunction(roomA.Center.Y, roomB.Center.Y, roomA.Center.X);
+                            }
+                        }
+                        else if (roomA.Top == roomB.Top || roomA.Bottom == roomB.Bottom)
+                        {
+                            if (roomA.Height >= roomB.Height)
+                            {
+                                horizontalTunnelFunction(roomA.Center.X, roomB.Center.X, roomB.Center.Y);
+                            }
+                            else
+                            {
+                                horizontalTunnelFunction(roomA.Center.X, roomB.Center.X, roomA.Center.Y);
+                            }
+                        }
+                        else
+                        {
+                            if (roomA.Width >= roomB.Width)
+                            {
+                                verticalTunnelFunction(roomA.Center.Y, roomB.Center.Y, roomB.Center.X);
+                            }
+                            else
+                            {
+                                verticalTunnelFunction(roomA.Center.Y, roomB.Center.Y, roomA.Center.X);
+                            }
+
+                            if (roomA.Height >= roomB.Height)
+                            {
+                                horizontalTunnelFunction(roomA.Center.X, roomB.Center.X, roomB.Center.Y);
+                            }
+                            else
+                            {
+                                horizontalTunnelFunction(roomA.Center.X, roomB.Center.X, roomA.Center.Y);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    IsRoomCreated = true;
+                    createRoomFunction(Room);
+                }
+            }
+
+            public Rectangle GetRoom()
+            {
+                if (IsRoomCreated)
+                {
+                    return Room;
+                }
+                else
+                {
+                    if (ChildA != null && ChildB == null)
+                    {
+                        return ChildA.GetRoom();
+                    }
+                    else if (ChildA == null && ChildB != null)
+                    {
+                        return ChildB.GetRoom();
+                    }
+                    else
+                    {
+                        if (Program.Random.Next(2) == 0)
+                        {
+                            return ChildA.GetRoom();
+                        }
+                        else
+                        {
+                            return ChildB.GetRoom();
+                        }
+                    }
+                }
             }
         }
     }
