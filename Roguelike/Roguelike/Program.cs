@@ -1,4 +1,5 @@
 ﻿using BearLib;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -11,6 +12,8 @@ namespace Roguelike
 
         public const int MapLayer = 0;
         public const int EntityLayer = 1;
+
+        public static Random Random { get; set; } = new Random(123456789);
 
         public static Map Map { get; set; }
 
@@ -40,11 +43,11 @@ namespace Roguelike
             Terminal.Set($"window: size={ScreenWidth}x{ScreenHeight};");
             Terminal.Set($"font: Cheepicus_8x8x2.png, size=16x16, codepage=437;");
 
+            Player = new Entity(25, 23, '@', Color.White);
+            Entities.Add(Player);
+
             Map = new Map(80, 50);
             Map.Generate();
-
-            Player = new Entity(ScreenWidth / 2, ScreenHeight / 2, '@', Color.White);
-            Entities.Add(Player);
         }
 
         private static bool Update()
