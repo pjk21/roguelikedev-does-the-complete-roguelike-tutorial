@@ -9,6 +9,9 @@ namespace Roguelike
         public const int ScreenWidth = 80;
         public const int ScreenHeight = 50;
 
+        public const int MapLayer = 0;
+        public const int EntityLayer = 1;
+
         public static Map Map { get; set; }
 
         public static List<Entity> Entities { get; } = new List<Entity>();
@@ -75,8 +78,10 @@ namespace Roguelike
         {
             Terminal.Clear();
 
+            Terminal.Layer(MapLayer);
             Map.Draw();
 
+            Terminal.Layer(EntityLayer);
             foreach (var entity in Entities)
             {
                 entity.Draw();
