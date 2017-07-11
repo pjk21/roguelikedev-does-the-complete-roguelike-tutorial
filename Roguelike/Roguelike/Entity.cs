@@ -11,6 +11,9 @@ namespace Roguelike
         public char Character { get; set; }
         public Color Colour { get; set; } = Color.White;
 
+        public int? SpriteIndex { get; set; }
+        public Color SpriteTint { get; set; } = Color.White;
+
         public Entity(int x, int y, char character, Color colour)
         {
             X = x;
@@ -27,12 +30,6 @@ namespace Roguelike
                 X += x;
                 Y += y;
             }
-        }
-
-        public void Draw()
-        {
-            Terminal.Color(Colour);
-            Terminal.Put(X, Y, Character);
         }
     }
 }

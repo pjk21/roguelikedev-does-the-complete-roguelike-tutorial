@@ -15,7 +15,7 @@ namespace Roguelike
 
         public static Random Random { get; set; } = new Random(123456789);
 
-        public static IRenderer ActiveRenderer { get; set; } = new AsciiRenderer();
+        public static IRenderer ActiveRenderer { get; set; } = new SpriteRenderer();
 
         public static Map Map { get; set; }
 
@@ -44,8 +44,14 @@ namespace Roguelike
             Terminal.Open();
             Terminal.Set($"window: size={ScreenWidth}x{ScreenHeight};");
             Terminal.Set($"font: Cheepicus_8x8x2.png, size=16x16, codepage=437;");
+            Terminal.Set($"0xE000: Tiles.png, size=16x16");
+            Terminal.Set($"0xE800: Entities.png, size=16x16;");
 
-            Player = new Entity(25, 23, '@', Color.White);
+            Player = new Entity(25, 23, '@', Color.White)
+            {
+                SpriteIndex = EntitySprites.Player
+            };
+
             Entities.Add(Player);
 
             Map = new BspMapGenerator().Generate(80, 50);

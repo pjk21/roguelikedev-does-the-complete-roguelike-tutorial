@@ -49,9 +49,12 @@
     <Compile Include="BearLibTerminal.cs" />
     <Compile Include="Colours.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="EntitySprites.cs" />
     <Compile Include="Render\AsciiRenderer.cs" />
     <Compile Include="Render\IRenderer.cs" />
     <Compile Include="Render\Renderer.cs" />
+    <Compile Include="Render\SpriteRenderer.cs" />
+    <Compile Include="TileSprites.cs" />
     <Compile Include="World\MapGeneration\BspMapGenerator.cs" />
     <Compile Include="World\MapGeneration\IMapGenerator.cs" />
     <Compile Include="World\Map.cs" />
@@ -70,6 +73,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Cheepicus_8x8x2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entities.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Tiles.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
