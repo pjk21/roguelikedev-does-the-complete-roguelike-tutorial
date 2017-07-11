@@ -1,4 +1,6 @@
 ﻿using BearLib;
+using Roguelike.World;
+using Roguelike.World.MapGeneration;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -46,9 +48,7 @@ namespace Roguelike
             Player = new Entity(25, 23, '@', Color.White);
             Entities.Add(Player);
 
-            Map = new Map(80, 50);
-            //Map.Generate();
-            Map.GenerateBsp();
+            Map = new BspMapGenerator().Generate(80, 50);
         }
 
         private static bool Update()
