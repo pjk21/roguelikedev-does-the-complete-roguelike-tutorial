@@ -67,6 +67,10 @@ namespace Roguelike
                 case Terminal.TK_CLOSE:
                     return false;
 
+                case Terminal.TK_R when Terminal.Check(Terminal.TK_CONTROL):
+                    SwitchRenderer();
+                    break;
+
                 case Terminal.TK_LEFT:
                     Player.Move(-1, 0);
                     break;
@@ -92,6 +96,18 @@ namespace Roguelike
             ActiveRenderer.RenderEntities(Entities);
 
             Terminal.Refresh();
+        }
+
+        private static void SwitchRenderer()
+        {
+            if (ActiveRenderer is AsciiRenderer)
+            {
+                ActiveRenderer = new SpriteRenderer();
+            }
+            else
+            {
+                ActiveRenderer = new AsciiRenderer();
+            }
         }
     }
 }
