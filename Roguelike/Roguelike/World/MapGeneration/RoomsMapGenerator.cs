@@ -71,7 +71,7 @@ namespace Roguelike.World.MapGeneration
 
                 if (Program.Random.NextDouble() < 0.8)
                 {
-                    var rat = new Entity(x, y, 'r', Colours.Rat, true)
+                    var rat = new Entity("Rat", x, y, 'r', Colours.Rat, true)
                     {
                         SpriteIndex = EntitySprites.Rat
                     };
@@ -80,7 +80,7 @@ namespace Roguelike.World.MapGeneration
                 }
                 else
                 {
-                    var hound = new Entity(x, y, 'h', Colours.Hound, true)
+                    var hound = new Entity("Hound", x, y, 'h', Colours.Hound, true)
                     {
                         SpriteIndex = EntitySprites.Hound
                     };

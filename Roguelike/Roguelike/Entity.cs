@@ -6,6 +6,8 @@ namespace Roguelike
     {
         public const int PlayerFovRadius = 10;
 
+        public string Name { get; set; }
+
         public int X { get; set; }
         public int Y { get; set; }
 
@@ -17,8 +19,10 @@ namespace Roguelike
 
         public bool IsSolid { get; set; } = false;
 
-        public Entity(int x, int y, char character, Color colour, bool solid = false)
+        public Entity(string name, int x, int y, char character, Color colour, bool solid = false)
         {
+            Name = name;
+
             X = x;
             Y = y;
 
