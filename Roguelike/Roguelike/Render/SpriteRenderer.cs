@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BearLib;
 using Roguelike.World;
-using BearLib;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Roguelike.Render
@@ -17,15 +13,18 @@ namespace Roguelike.Render
 
             foreach (var entity in entities)
             {
-                if (entity.SpriteIndex.HasValue)
+                if (Program.Map.IsInFov(entity.X, entity.Y))
                 {
-                    Terminal.Color(entity.SpriteTint);
-                    Terminal.Put(entity.X, entity.Y, entity.SpriteIndex.Value);
-                }
-                else
-                {
-                    Terminal.Color(entity.Colour);
-                    Terminal.Put(entity.X, entity.Y, entity.Character);
+                    if (entity.SpriteIndex.HasValue)
+                    {
+                        Terminal.Color(entity.SpriteTint);
+                        Terminal.Put(entity.X, entity.Y, entity.SpriteIndex.Value);
+                    }
+                    else
+                    {
+                        Terminal.Color(entity.Colour);
+                        Terminal.Put(entity.X, entity.Y, entity.Character);
+                    }
                 }
             }
         }
@@ -38,15 +37,36 @@ namespace Roguelike.Render
             {
                 for (int y = 0; y < map.Height; y++)
                 {
-                    if (map.IsWalkable(x, y))
+                    if (map.IsInFov(x, y))
                     {
-                        Terminal.Color(Color.White);
-                        Terminal.Put(x, y, TileSprites.Floor);
+                        if (map.IsWalkable(x, y))
+                        {
+                            Terminal.Color(Color.White);
+                            Terminal.Put(x, y, TileSprites.Floor);
+                        }
+                        else
+                        {
+                            Terminal.Color(Color.White);
+                            Terminal.Put(x, y, TileSprites.Wall);
+                        }
+
+                        map.SetCellProperties(x, y, map.IsTransparent(x, y), map.IsWalkable(x, y), true);
                     }
                     else
                     {
-                        Terminal.Color(Color.White);
-                        Terminal.Put(x, y, TileSprites.Wall);
+                        if (map.IsExplored(x, y))
+                        {
+                            if (map.IsWalkable(x, y))
+                            {
+                                Terminal.Color(Color.Gray);
+                                Terminal.Put(x, y, TileSprites.Floor);
+                            }
+                            else
+                            {
+                                Terminal.Color(Color.Gray);
+                                Terminal.Put(x, y, TileSprites.Wall);
+                            }
+                        }
                     }
                 }
             }

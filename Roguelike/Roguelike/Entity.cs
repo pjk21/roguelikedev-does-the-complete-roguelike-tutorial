@@ -5,6 +5,8 @@ namespace Roguelike
 {
     public class Entity
     {
+        public const int PlayerFovRadius = 10;
+
         public int X { get; set; }
         public int Y { get; set; }
 

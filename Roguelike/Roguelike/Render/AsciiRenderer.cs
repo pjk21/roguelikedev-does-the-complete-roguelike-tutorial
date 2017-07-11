@@ -1,6 +1,7 @@
 ﻿using BearLib;
 using Roguelike.World;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Roguelike.Render
 {
@@ -12,8 +13,11 @@ namespace Roguelike.Render
 
             foreach (var entity in entities)
             {
-                Terminal.Color(entity.Colour);
-                Terminal.Put(entity.X, entity.Y, entity.Character);
+                if (Program.Map.IsInFov(entity.X, entity.Y))
+                {
+                    Terminal.Color(entity.Colour);
+                    Terminal.Put(entity.X, entity.Y, entity.Character);
+                }
             }
         }
 
@@ -25,16 +29,38 @@ namespace Roguelike.Render
             {
                 for (int y = 0; y < map.Height; y++)
                 {
-                    if (map.IsWalkable(x, y))
+                    Terminal.BkColor(Color.Black);
+
+                    if (map.IsInFov(x, y))
                     {
-                        Terminal.BkColor(Colours.FloorDark);
+                        if (map.IsWalkable(x, y))
+                        {
+                            Terminal.BkColor(Colours.FloorLight);
+                        }
+                        else
+                        {
+                            Terminal.BkColor(Colours.WallLight);
+                        }
+
+                        map.SetCellProperties(x, y, map.IsTransparent(x, y), map.IsWalkable(x, y), true);
+                        Terminal.Put(x, y, 0x0020);
                     }
                     else
                     {
-                        Terminal.BkColor(Colours.WallDark);
-                    }
+                        if (map.IsExplored(x, y))
+                        {
+                            if (map.IsWalkable(x, y))
+                            {
+                                Terminal.BkColor(Colours.FloorDark);
+                            }
+                            else
+                            {
+                                Terminal.BkColor(Colours.WallDark);
+                            }
+                        }
 
-                    Terminal.Put(x, y, 0x0020);
+                        Terminal.Put(x, y, 0x0020);
+                    }
                 }
             }
         }

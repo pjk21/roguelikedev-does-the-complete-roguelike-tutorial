@@ -55,11 +55,13 @@ namespace Roguelike
             Entities.Add(Player);
 
             Map = new BspMapGenerator().Generate(80, 50);
+            Map.ComputeFov(Player.X, Player.Y, Entity.PlayerFovRadius, true);
         }
 
         private static bool Update()
         {
             var input = Terminal.Read();
+            var computeFov = false;
 
             switch (input)
             {
@@ -73,16 +75,25 @@ namespace Roguelike
 
                 case Terminal.TK_LEFT:
                     Player.Move(-1, 0);
+                    computeFov = true;
                     break;
                 case Terminal.TK_RIGHT:
                     Player.Move(1, 0);
+                    computeFov = true;
                     break;
                 case Terminal.TK_UP:
                     Player.Move(0, -1);
+                    computeFov = true;
                     break;
                 case Terminal.TK_DOWN:
                     Player.Move(0, 1);
+                    computeFov = true;
                     break;
+            }
+
+            if (computeFov)
+            {
+                Map.ComputeFov(Player.X, Player.Y, Entity.PlayerFovRadius, true);
             }
 
             return true;
