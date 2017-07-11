@@ -54,7 +54,7 @@ namespace Roguelike
 
             Entities.Add(Player);
 
-            Map = new BspMapGenerator().Generate(80, 50);
+            Map = new RoomsMapGenerator().Generate(80, 50);
             Map.ComputeFov(Player.X, Player.Y, Entity.PlayerFovRadius, true);
         }
 

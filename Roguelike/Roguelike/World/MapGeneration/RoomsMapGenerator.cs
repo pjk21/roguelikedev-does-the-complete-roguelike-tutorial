@@ -49,6 +49,8 @@ namespace Roguelike.World.MapGeneration
                             map.CreateHorizontalTunnel(previousRoom.Center.X, room.Center.X, room.Center.Y);
                             map.CreateVerticalTunnel(previousRoom.Center.Y, room.Center.Y, previousRoom.Center.X);
                         }
+
+                        SpawnMonsters(room);
                     }
 
                     rooms.Add(room);
@@ -56,6 +58,36 @@ namespace Roguelike.World.MapGeneration
             }
 
             return map;
+        }
+
+        private void SpawnMonsters(Rectangle room)
+        {
+            int numberOfMonsters = Program.Random.Next(4);
+
+            for (int i = 0; i < numberOfMonsters; i++)
+            {
+                int x = Program.Random.Next(room.Left + 1, room.Right);
+                int y = Program.Random.Next(room.Top + 1, room.Bottom);
+
+                if (Program.Random.NextDouble() < 0.8)
+                {
+                    var rat = new Entity(x, y, 'r', Colours.Rat)
+                    {
+                        SpriteIndex = EntitySprites.Rat
+                    };
+
+                    Program.Entities.Add(rat);
+                }
+                else
+                {
+                    var hound = new Entity(x, y, 'h', Colours.Hound)
+                    {
+                        SpriteIndex = EntitySprites.Hound
+                    };
+
+                    Program.Entities.Add(hound);
+                }
+            }
         }
     }
 }
