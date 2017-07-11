@@ -1,5 +1,4 @@
-﻿using BearLib;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace Roguelike
 {
@@ -16,18 +15,22 @@ namespace Roguelike
         public int? SpriteIndex { get; set; }
         public Color SpriteTint { get; set; } = Color.White;
 
-        public Entity(int x, int y, char character, Color colour)
+        public bool IsSolid { get; set; } = false;
+
+        public Entity(int x, int y, char character, Color colour, bool solid = false)
         {
             X = x;
             Y = y;
 
             Character = character;
             Colour = colour;
+
+            IsSolid = solid;
         }
 
         public void Move(int x, int y)
         {
-            if (Program.Map.IsWalkable(X + x, Y + y))
+            if (Program.Map.CanEnter(X + x, Y + y))
             {
                 X += x;
                 Y += y;

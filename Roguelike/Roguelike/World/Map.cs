@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Rectangle = RogueSharp.Rectangle;
 
 namespace Roguelike.World
@@ -36,6 +37,16 @@ namespace Roguelike.World
             {
                 SetCellProperties(x, y, true, true);
             }
+        }
+
+        public bool CanEnter(int x, int y)
+        {
+            if (!IsWalkable(x, y) || Program.Entities.Any(e => e.IsSolid && e.X == x && e.Y == y))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
