@@ -90,6 +90,8 @@ namespace Roguelike
 
         private static void Draw()
         {
+            Terminal.Color(Color.White);
+            Terminal.BkColor(Color.Black);
             Terminal.Clear();
 
             ActiveRenderer.RenderMap(Map);
