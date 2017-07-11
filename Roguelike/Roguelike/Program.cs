@@ -1,5 +1,5 @@
 ﻿using BearLib;
-using Roguelike.Render;
+using Roguelike.States;
 using Roguelike.World;
 using Roguelike.World.MapGeneration;
 using System;
@@ -15,7 +15,7 @@ namespace Roguelike
 
         public static Random Random { get; set; } = new Random(123456789);
 
-        public static IRenderer ActiveRenderer { get; set; } = new SpriteRenderer();
+        public static IState CurrentState { get; } = new GameState();
 
         public static Map Map { get; set; }
 
@@ -61,42 +61,8 @@ namespace Roguelike
         private static bool Update()
         {
             var input = Terminal.Read();
-            var computeFov = false;
 
-            switch (input)
-            {
-                case Terminal.TK_ESCAPE:
-                case Terminal.TK_CLOSE:
-                    return false;
-
-                case Terminal.TK_R when Terminal.Check(Terminal.TK_CONTROL):
-                    SwitchRenderer();
-                    break;
-
-                case Terminal.TK_LEFT:
-                    Player.Move(-1, 0);
-                    computeFov = true;
-                    break;
-                case Terminal.TK_RIGHT:
-                    Player.Move(1, 0);
-                    computeFov = true;
-                    break;
-                case Terminal.TK_UP:
-                    Player.Move(0, -1);
-                    computeFov = true;
-                    break;
-                case Terminal.TK_DOWN:
-                    Player.Move(0, 1);
-                    computeFov = true;
-                    break;
-            }
-
-            if (computeFov)
-            {
-                Map.ComputeFov(Player.X, Player.Y, Entity.PlayerFovRadius, true);
-            }
-
-            return true;
+            return CurrentState?.Update(input) ?? true;
         }
 
         private static void Draw()
@@ -105,26 +71,9 @@ namespace Roguelike
             Terminal.BkColor(Color.Black);
             Terminal.Clear();
 
-            ActiveRenderer.RenderMap(Map);
-            ActiveRenderer.RenderEntities(Entities);
+            CurrentState?.Draw();
 
             Terminal.Refresh();
-        }
-
-        private static void SwitchRenderer()
-        {
-            if (ActiveRenderer is AsciiRenderer)
-            {
-                ActiveRenderer = new SpriteRenderer();
-            }
-            else if (ActiveRenderer is SpriteRenderer)
-            {
-                ActiveRenderer = new DebugRenderer();
-            }
-            else
-            {
-                ActiveRenderer = new AsciiRenderer();
-            }
         }
     }
 }
