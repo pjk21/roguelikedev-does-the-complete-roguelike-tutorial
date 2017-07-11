@@ -1,5 +1,6 @@
 ﻿using BearLib;
 using Roguelike.Render;
+using System.Linq;
 
 namespace Roguelike.States
 {
@@ -18,7 +19,7 @@ namespace Roguelike.States
             var player = Program.Player;
             var map = Program.Map;
 
-            var computeFov = false;
+            var didPlayerAct = false;
 
             switch (input)
             {
@@ -31,26 +32,30 @@ namespace Roguelike.States
                     break;
 
                 case Terminal.TK_LEFT:
-                    player.Move(-1, 0);
-                    computeFov = true;
+                    didPlayerAct = PlayerMoveOrAttack(-1, 0);
                     break;
                 case Terminal.TK_RIGHT:
-                    player.Move(1, 0);
-                    computeFov = true;
+                    didPlayerAct = PlayerMoveOrAttack(1, 0);
                     break;
                 case Terminal.TK_UP:
-                    player.Move(0, -1);
-                    computeFov = true;
+                    didPlayerAct = PlayerMoveOrAttack(0, -1);
                     break;
                 case Terminal.TK_DOWN:
-                    player.Move(0, 1);
-                    computeFov = true;
+                    didPlayerAct = PlayerMoveOrAttack(0, 1);
                     break;
             }
 
-            if (computeFov)
+            if (didPlayerAct)
             {
                 map.ComputeFov(player.X, player.Y, Entity.PlayerFovRadius, true);
+
+                foreach (var entity in Program.Entities)
+                {
+                    if (entity != player)
+                    {
+                        System.Console.WriteLine($"The {entity.Name} growls.");
+                    }
+                }
             }
 
             return true;
@@ -70,6 +75,22 @@ namespace Roguelike.States
             {
                 ActiveRenderer = new AsciiRenderer();
             }
+        }
+
+        private bool PlayerMoveOrAttack(int x, int y)
+        {
+            var target = Program.Entities.FirstOrDefault(e => e.X == Program.Player.X + x && e.Y == Program.Player.Y + y);
+
+            if (target != null)
+            {
+                System.Console.WriteLine($"You awkwardly smack the {target.Name}.");
+            }
+            else
+            {
+                return Program.Player.Move(x, y);
+            }
+
+            return true;
         }
     }
 }

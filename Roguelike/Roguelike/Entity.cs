@@ -32,13 +32,17 @@ namespace Roguelike
             IsSolid = solid;
         }
 
-        public void Move(int x, int y)
+        public bool Move(int x, int y)
         {
             if (Program.Map.CanEnter(X + x, Y + y))
             {
                 X += x;
                 Y += y;
+
+                return true;
             }
+
+            return false;
         }
     }
 }
