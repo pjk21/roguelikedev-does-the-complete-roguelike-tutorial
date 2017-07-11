@@ -18,7 +18,7 @@ namespace Roguelike.World.MapGeneration
             var root = new BspNode(null, entireMap);
             root.Split(MinimumRoomSize);
 
-            root.CreateRoom(map.CreateRoom, map.CreateHorizontalTunnel, map.CreateVerticalTunnel);
+            root.CreateRoom(map, MinimumRoomSize);
 
             var spawnRoom = root.GetRoom();
             Program.Player.X = spawnRoom.Center.X;
@@ -33,24 +33,24 @@ namespace Roguelike.World.MapGeneration
             public BspNode ChildA { get; private set; }
             public BspNode ChildB { get; private set; }
 
+            public Rectangle Size { get; set; }
             public Rectangle Room { get; set; }
-            public bool IsRoomCreated { get; set; }
 
-            public BspNode(BspNode parent, Rectangle room)
+            public BspNode(BspNode parent, Rectangle size)
             {
                 Parent = parent;
-                Room = room;
+                Size = size;
             }
 
             public void Split(int minimumRoomSize)
             {
                 int direction = -1;
 
-                if (Room.Width > Room.Height)
+                if (Size.Width > Size.Height)
                 {
                     direction = 0;
                 }
-                else if (Room.Height > Room.Width)
+                else if (Size.Height > Size.Width)
                 {
                     direction = 1;
                 }
@@ -61,38 +61,38 @@ namespace Roguelike.World.MapGeneration
 
                 if (direction == 0)
                 {
-                    var childRoomWidth = (Room.Width / 2) + Program.Random.Next(-3, 4);
+                    var childRoomWidth = (Size.Width / 2) + Program.Random.Next(-3, 4);
 
-                    if (childRoomWidth >= minimumRoomSize && Room.Width - childRoomWidth >= minimumRoomSize)
+                    if (childRoomWidth >= minimumRoomSize && Size.Width - childRoomWidth >= minimumRoomSize)
                     {
-                        ChildA = new BspNode(this, new Rectangle(Room.Left, Room.Top, childRoomWidth, Room.Height));
+                        ChildA = new BspNode(this, new Rectangle(Size.Left, Size.Top, childRoomWidth, Size.Height));
                         ChildA.Split(minimumRoomSize);
 
-                        ChildB = new BspNode(this, new Rectangle(Room.Left + childRoomWidth, Room.Top, Room.Width - childRoomWidth, Room.Height));
+                        ChildB = new BspNode(this, new Rectangle(Size.Left + childRoomWidth, Size.Top, Size.Width - childRoomWidth, Size.Height));
                         ChildB.Split(minimumRoomSize);
                     }
                 }
                 else
                 {
-                    var childRoomHeight = (Room.Height / 2) + Program.Random.Next(-3, 4);
+                    var childRoomHeight = (Size.Height / 2) + Program.Random.Next(-3, 4);
 
-                    if (childRoomHeight >= minimumRoomSize && Room.Height - childRoomHeight >= minimumRoomSize)
+                    if (childRoomHeight >= minimumRoomSize && Size.Height - childRoomHeight >= minimumRoomSize)
                     {
-                        ChildA = new BspNode(this, new Rectangle(Room.Left, Room.Top, Room.Width, childRoomHeight));
+                        ChildA = new BspNode(this, new Rectangle(Size.Left, Size.Top, Size.Width, childRoomHeight));
                         ChildA.Split(minimumRoomSize);
 
-                        ChildB = new BspNode(this, new Rectangle(Room.Left, Room.Top + childRoomHeight, Room.Width, Room.Height - childRoomHeight));
+                        ChildB = new BspNode(this, new Rectangle(Size.Left, Size.Top + childRoomHeight, Size.Width, Size.Height - childRoomHeight));
                         ChildB.Split(minimumRoomSize);
                     }
                 }
             }
 
-            public void CreateRoom(Action<Rectangle> createRoomFunction, Action<int, int, int> horizontalTunnelFunction, Action<int, int, int> verticalTunnelFunction)
+            public void CreateRoom(Map map, int minimumRoomSize)
             {
                 if (ChildA != null || ChildB != null)
                 {
-                    ChildA?.CreateRoom(createRoomFunction, horizontalTunnelFunction, verticalTunnelFunction);
-                    ChildB?.CreateRoom(createRoomFunction, horizontalTunnelFunction, verticalTunnelFunction);
+                    ChildA?.CreateRoom(map, minimumRoomSize);
+                    ChildB?.CreateRoom(map, minimumRoomSize);
 
                     if (ChildA != null && ChildB != null)
                     {
@@ -103,56 +103,66 @@ namespace Roguelike.World.MapGeneration
                         {
                             if (roomA.Width >= roomB.Width)
                             {
-                                verticalTunnelFunction(roomA.Center.Y, roomB.Center.Y, roomB.Center.X);
+                                map.CreateVerticalTunnel(roomA.Center.Y, roomB.Center.Y, roomB.Center.X);
                             }
                             else
                             {
-                                verticalTunnelFunction(roomA.Center.Y, roomB.Center.Y, roomA.Center.X);
+                                map.CreateVerticalTunnel(roomA.Center.Y, roomB.Center.Y, roomA.Center.X);
                             }
                         }
                         else if (roomA.Top == roomB.Top || roomA.Bottom == roomB.Bottom)
                         {
                             if (roomA.Height >= roomB.Height)
                             {
-                                horizontalTunnelFunction(roomA.Center.X, roomB.Center.X, roomB.Center.Y);
+                                map.CreateHorizontalTunnel(roomA.Center.X, roomB.Center.X, roomB.Center.Y);
                             }
                             else
                             {
-                                horizontalTunnelFunction(roomA.Center.X, roomB.Center.X, roomA.Center.Y);
+                                map.CreateHorizontalTunnel(roomA.Center.X, roomB.Center.X, roomA.Center.Y);
                             }
                         }
                         else
                         {
                             if (roomA.Width >= roomB.Width)
                             {
-                                verticalTunnelFunction(roomA.Center.Y, roomB.Center.Y, roomB.Center.X);
+                                map.CreateVerticalTunnel(roomA.Center.Y, roomB.Center.Y, roomB.Center.X);
                             }
                             else
                             {
-                                verticalTunnelFunction(roomA.Center.Y, roomB.Center.Y, roomA.Center.X);
+                                map.CreateVerticalTunnel(roomA.Center.Y, roomB.Center.Y, roomA.Center.X);
                             }
 
                             if (roomA.Height >= roomB.Height)
                             {
-                                horizontalTunnelFunction(roomA.Center.X, roomB.Center.X, roomB.Center.Y);
+                                map.CreateHorizontalTunnel(roomA.Center.X, roomB.Center.X, roomB.Center.Y);
                             }
                             else
                             {
-                                horizontalTunnelFunction(roomA.Center.X, roomB.Center.X, roomA.Center.Y);
+                                map.CreateHorizontalTunnel(roomA.Center.X, roomB.Center.X, roomA.Center.Y);
                             }
                         }
                     }
                 }
                 else
                 {
-                    IsRoomCreated = true;
-                    createRoomFunction(Room);
+                    Room = new Rectangle();
+
+                    int maxShrinkX = Size.Width - minimumRoomSize;
+                    int maxShrinkY = Size.Height - minimumRoomSize;
+
+                    Room.Width = Size.Width - Program.Random.Next(maxShrinkX);
+                    Room.Height = Size.Height - Program.Random.Next(maxShrinkY);
+
+                    Room.X = Program.Random.Next(Size.Left, Size.Right - Room.Width);
+                    Room.Y = Program.Random.Next(Size.Top, Size.Bottom - Room.Height);
+
+                    map.CreateRoom(Room);
                 }
             }
 
             public Rectangle GetRoom()
             {
-                if (IsRoomCreated)
+                if (Room != null)
                 {
                     return Room;
                 }
