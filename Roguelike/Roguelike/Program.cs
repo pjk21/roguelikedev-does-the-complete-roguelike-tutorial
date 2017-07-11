@@ -1,4 +1,5 @@
 ﻿using BearLib;
+using Roguelike.Render;
 using Roguelike.World;
 using Roguelike.World.MapGeneration;
 using System;
@@ -12,10 +13,9 @@ namespace Roguelike
         public const int ScreenWidth = 80;
         public const int ScreenHeight = 50;
 
-        public const int MapLayer = 0;
-        public const int EntityLayer = 1;
-
         public static Random Random { get; set; } = new Random(123456789);
+
+        public static IRenderer ActiveRenderer { get; set; } = new AsciiRenderer();
 
         public static Map Map { get; set; }
 
@@ -82,14 +82,8 @@ namespace Roguelike
         {
             Terminal.Clear();
 
-            Terminal.Layer(MapLayer);
-            Map.Draw();
-
-            Terminal.Layer(EntityLayer);
-            foreach (var entity in Entities)
-            {
-                entity.Draw();
-            }
+            ActiveRenderer.RenderMap(Map);
+            ActiveRenderer.RenderEntities(Entities);
 
             Terminal.Refresh();
         }

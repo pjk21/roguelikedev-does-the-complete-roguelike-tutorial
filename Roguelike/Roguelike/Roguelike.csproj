@@ -47,7 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BearLibTerminal.cs" />
+    <Compile Include="Colours.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="Render\AsciiRenderer.cs" />
+    <Compile Include="Render\IRenderer.cs" />
+    <Compile Include="Render\Renderer.cs" />
     <Compile Include="World\MapGeneration\BspMapGenerator.cs" />
     <Compile Include="World\MapGeneration\IMapGenerator.cs" />
     <Compile Include="World\Map.cs" />

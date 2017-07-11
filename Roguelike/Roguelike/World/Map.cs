@@ -1,39 +1,14 @@
-﻿using BearLib;
-using System;
-using System.Drawing;
+﻿using System;
 using Rectangle = RogueSharp.Rectangle;
 
 namespace Roguelike.World
 {
     public class Map : RogueSharp.Map
     {
-        public static Color WallDark { get; } = Color.FromArgb(0, 0, 100);
-        public static Color FloorDark { get; } = Color.FromArgb(50, 50, 150);
-
         public Map(int width, int height)
             : base(width, height)
         {
 
-        }
-
-        public void Draw()
-        {
-            for (int x = 0; x < Width; x++)
-            {
-                for (int y = 0; y < Height; y++)
-                {
-                    if (IsWalkable(x, y))
-                    {
-                        Terminal.BkColor(FloorDark);
-                    }
-                    else
-                    {
-                        Terminal.BkColor(WallDark);
-                    }
-
-                    Terminal.Put(x, y, 0x0020);
-                }
-            }
         }
 
         public void CreateRoom(Rectangle room)
