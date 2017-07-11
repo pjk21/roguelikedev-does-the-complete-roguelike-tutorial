@@ -51,6 +51,7 @@
     <Compile Include="Entity.cs" />
     <Compile Include="EntitySprites.cs" />
     <Compile Include="Render\AsciiRenderer.cs" />
+    <Compile Include="Render\DebugRenderer.cs" />
     <Compile Include="Render\IRenderer.cs" />
     <Compile Include="Render\Renderer.cs" />
     <Compile Include="Render\SpriteRenderer.cs" />

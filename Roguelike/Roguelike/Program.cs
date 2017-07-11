@@ -117,6 +117,10 @@ namespace Roguelike
             {
                 ActiveRenderer = new SpriteRenderer();
             }
+            else if (ActiveRenderer is SpriteRenderer)
+            {
+                ActiveRenderer = new DebugRenderer();
+            }
             else
             {
                 ActiveRenderer = new AsciiRenderer();
