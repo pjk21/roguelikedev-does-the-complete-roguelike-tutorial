@@ -58,6 +58,7 @@
     <Compile Include="States\GameState.cs" />
     <Compile Include="States\IState.cs" />
     <Compile Include="TileSprites.cs" />
+    <Compile Include="Utils\ColorExtensions.cs" />
     <Compile Include="World\MapGeneration\BspMapGenerator.cs" />
     <Compile Include="World\MapGeneration\IMapGenerator.cs" />
     <Compile Include="World\Map.cs" />
