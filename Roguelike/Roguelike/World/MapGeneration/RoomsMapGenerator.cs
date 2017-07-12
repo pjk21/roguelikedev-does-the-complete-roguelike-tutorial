@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace Roguelike.World.MapGeneration
 {
-    public class RoomsMapGenerator : IMapGenerator
+    public class RoomsMapGenerator : MapGenerator
     {
         public int MinimumRoomSize { get; set; } = 6;
         public int MaximumRoomSize { get; set; } = 10;
         public int MaximumRooms { get; set; } = 30;
 
-        public Map Generate(int width, int height)
+        public override Map Generate(int width, int height)
         {
             var map = new Map(width, height);
 
@@ -58,36 +58,6 @@ namespace Roguelike.World.MapGeneration
             }
 
             return map;
-        }
-
-        private void SpawnMonsters(Rectangle room)
-        {
-            int numberOfMonsters = Program.Random.Next(4);
-
-            for (int i = 0; i < numberOfMonsters; i++)
-            {
-                int x = Program.Random.Next(room.Left + 1, room.Right);
-                int y = Program.Random.Next(room.Top + 1, room.Bottom);
-
-                if (Program.Random.NextDouble() < 0.8)
-                {
-                    var rat = new Entity("Rat", x, y, 'r', Colours.Rat, true)
-                    {
-                        SpriteIndex = EntitySprites.Rat
-                    };
-
-                    Program.Entities.Add(rat);
-                }
-                else
-                {
-                    var hound = new Entity("Hound", x, y, 'h', Colours.Hound, true)
-                    {
-                        SpriteIndex = EntitySprites.Hound
-                    };
-
-                    Program.Entities.Add(hound);
-                }
-            }
         }
     }
 }

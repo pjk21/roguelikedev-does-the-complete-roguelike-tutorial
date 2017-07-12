@@ -1,18 +1,19 @@
 ﻿using RogueSharp;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 // BSP code adapted from: https://gamedevelopment.tutsplus.com/tutorials/how-to-use-bsp-trees-to-generate-game-maps--gamedev-12268
 
 namespace Roguelike.World.MapGeneration
 {
-    public class BspMapGenerator : IMapGenerator
+    public class BspMapGenerator : MapGenerator
     {
         private List<Rectangle> rooms;
 
         public int MinimumRoomSize { get; set; } = 7;
 
-        public Map Generate(int width, int height)
+        public override Map Generate(int width, int height)
         {
             var map = new Map(width, height);
             rooms = new List<Rectangle>();

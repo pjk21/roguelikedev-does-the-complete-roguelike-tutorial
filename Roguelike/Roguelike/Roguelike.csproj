@@ -64,6 +64,7 @@
     <Compile Include="World\Map.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="World\MapGeneration\MapGenerator.cs" />
     <Compile Include="World\MapGeneration\RoomsMapGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
