@@ -1,7 +1,5 @@
 ﻿using RogueSharp;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 // BSP code adapted from: https://gamedevelopment.tutsplus.com/tutorials/how-to-use-bsp-trees-to-generate-game-maps--gamedev-12268
 
@@ -28,6 +26,15 @@ namespace Roguelike.World.MapGeneration
             var spawnRoom = root.GetRoom();
             Program.Player.X = spawnRoom.Center.X;
             Program.Player.Y = spawnRoom.Center.Y;
+
+            foreach (var room in rooms)
+            {
+                // Don't spawn monsters in the player's room.
+                if (room != spawnRoom)
+                {
+                    SpawnMonsters(room);
+                }
+            }
 
             return map;
         }
