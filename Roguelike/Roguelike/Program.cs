@@ -47,7 +47,7 @@ namespace Roguelike
             Terminal.Set($"0xE000: Tiles.png, size=16x16");
             Terminal.Set($"0xE800: Entities.png, size=16x16;");
 
-            Player = new Entity("Player", 25, 23, '@', Color.White, true)
+            Player = new Entity("Player", 25, 23, '@', Colours.Player, true)
             {
                 SpriteIndex = EntitySprites.Player
             };
