@@ -29,21 +29,21 @@ namespace Roguelike.Render
             {
                 for (int y = 0; y < map.Height; y++)
                 {
-                    Terminal.BkColor(Color.Black);
-
                     if (map.IsInFov(x, y))
                     {
                         if (map.IsWalkable(x, y))
                         {
                             Terminal.BkColor(Colours.FloorLight);
+                            Terminal.Put(x, y, 0x0020);
                         }
                         else
                         {
+                            Terminal.Color(Color.DimGray);
                             Terminal.BkColor(Colours.WallLight);
+                            Terminal.Put(x, y, 0x2591);
                         }
 
                         map.SetCellProperties(x, y, map.IsTransparent(x, y), map.IsWalkable(x, y), true);
-                        Terminal.Put(x, y, 0x0020);
                     }
                     else
                     {
@@ -52,14 +52,15 @@ namespace Roguelike.Render
                             if (map.IsWalkable(x, y))
                             {
                                 Terminal.BkColor(Colours.FloorDark);
+                                Terminal.Put(x, y, 0x0020);
                             }
                             else
                             {
+                                Terminal.Color(Color.FromArgb(Color.DimGray.R / 2, Color.DimGray.G / 2, Color.DimGray.B / 2));
                                 Terminal.BkColor(Colours.WallDark);
+                                Terminal.Put(x, y, 0x2591);
                             }
                         }
-
-                        Terminal.Put(x, y, 0x0020);
                     }
                 }
             }

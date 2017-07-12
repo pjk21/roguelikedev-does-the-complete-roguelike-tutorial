@@ -1,6 +1,7 @@
 ﻿using BearLib;
 using Roguelike.World;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Roguelike.Render
 {
@@ -28,13 +29,14 @@ namespace Roguelike.Render
                     if (map.IsWalkable(x, y))
                     {
                         Terminal.BkColor(Colours.FloorLight);
+                        Terminal.Put(x, y, 0x0020);
                     }
                     else
                     {
+                        Terminal.Color(Color.DimGray);
                         Terminal.BkColor(Colours.WallLight);
+                        Terminal.Put(x, y, 0x2591);
                     }
-
-                    Terminal.Put(x, y, 0x0020);
                 }
             }
         }
