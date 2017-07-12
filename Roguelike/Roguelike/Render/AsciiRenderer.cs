@@ -56,7 +56,7 @@ namespace Roguelike.Render
                             }
                             else
                             {
-                                Terminal.Color(Color.FromArgb(Color.DimGray.R / 2, Color.DimGray.G / 2, Color.DimGray.B / 2));
+                                Terminal.Color(Color.DimGray.Lerp(Color.Black));
                                 Terminal.BkColor(Colours.WallDark);
                                 Terminal.Put(x, y, 0x2591);
                             }
