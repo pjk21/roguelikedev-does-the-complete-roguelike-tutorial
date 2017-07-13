@@ -1,4 +1,5 @@
-﻿using Roguelike.World;
+﻿using BearLib;
+using Roguelike.World;
 using System.Collections.Generic;
 
 namespace Roguelike.Render
@@ -9,6 +10,20 @@ namespace Roguelike.Render
         public const int EntityLayer = 1;
 
         public abstract void RenderEntities(IEnumerable<Entity> entities, Camera camera);
-        public abstract void RenderMap(Map map, Camera camera);
+
+        public void RenderMap(Map map, Camera camera)
+        {
+            Terminal.Layer(MapLayer);
+
+            for (int x = camera.Left; x < camera.Right; x++)
+            {
+                for (int y = camera.Top; y < camera.Bottom; y++)
+                {
+                    RenderTile(map, x, y, camera);
+                }
+            }
+        }
+
+        protected abstract void RenderTile(Map map, int x, int y, Camera camera);
     }
 }

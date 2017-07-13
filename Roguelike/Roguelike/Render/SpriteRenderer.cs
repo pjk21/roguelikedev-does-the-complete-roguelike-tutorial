@@ -1,6 +1,5 @@
 ﻿using BearLib;
 using Roguelike.World;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -30,44 +29,36 @@ namespace Roguelike.Render
             }
         }
 
-        public override void RenderMap(Map map, Camera camera)
+        protected override void RenderTile(Map map, int x, int y, Camera camera)
         {
-            Terminal.Layer(MapLayer);
-
-            for (int x = camera.Left; x < camera.Right; x++)
+            if (map.IsInFov(x, y))
             {
-                for (int y = camera.Top; y < camera.Bottom; y++)
+                if (map.IsWalkable(x, y))
                 {
-                    if (map.IsInFov(x, y))
-                    {
-                        if (map.IsWalkable(x, y))
-                        {
-                            Terminal.Color(Color.White);
-                            Terminal.Put(x - camera.X, y - camera.Y, TileSprites.Floor);
-                        }
-                        else
-                        {
-                            Terminal.Color(Color.White);
-                            Terminal.Put(x - camera.X, y - camera.Y, TileSprites.Wall);
-                        }
+                    Terminal.Color(Color.White);
+                    Terminal.Put(x - camera.X, y - camera.Y, TileSprites.Floor);
+                }
+                else
+                {
+                    Terminal.Color(Color.White);
+                    Terminal.Put(x - camera.X, y - camera.Y, TileSprites.Wall);
+                }
 
-                        map.SetCellProperties(x, y, map.IsTransparent(x, y), map.IsWalkable(x, y), true);
+                map.SetCellProperties(x, y, map.IsTransparent(x, y), map.IsWalkable(x, y), true);
+            }
+            else
+            {
+                if (map.IsExplored(x, y))
+                {
+                    if (map.IsWalkable(x, y))
+                    {
+                        Terminal.Color(Color.Gray);
+                        Terminal.Put(x - camera.X, y - camera.Y, TileSprites.Floor);
                     }
                     else
                     {
-                        if (map.IsExplored(x, y))
-                        {
-                            if (map.IsWalkable(x, y))
-                            {
-                                Terminal.Color(Color.Gray);
-                                Terminal.Put(x - camera.X, y - camera.Y, TileSprites.Floor);
-                            }
-                            else
-                            {
-                                Terminal.Color(Color.Gray);
-                                Terminal.Put(x - camera.X, y - camera.Y, TileSprites.Wall);
-                            }
-                        }
+                        Terminal.Color(Color.Gray);
+                        Terminal.Put(x - camera.X, y - camera.Y, TileSprites.Wall);
                     }
                 }
             }

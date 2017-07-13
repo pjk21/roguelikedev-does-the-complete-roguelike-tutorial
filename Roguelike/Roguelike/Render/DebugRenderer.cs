@@ -21,26 +21,18 @@ namespace Roguelike.Render
             }
         }
 
-        public override void RenderMap(Map map, Camera camera)
+        protected override void RenderTile(Map map, int x, int y, Camera camera)
         {
-            Terminal.Layer(MapLayer);
-
-            for (int x = camera.Left; x < camera.Right; x++)
+            if (map.IsWalkable(x, y))
             {
-                for (int y = camera.Top; y < camera.Bottom; y++)
-                {
-                    if (map.IsWalkable(x, y))
-                    {
-                        Terminal.BkColor(Colours.FloorLight);
-                        Terminal.Put(x - camera.X, y - camera.Y, 0x0020);
-                    }
-                    else
-                    {
-                        Terminal.Color(Color.DimGray);
-                        Terminal.BkColor(Colours.WallLight);
-                        Terminal.Put(x - camera.X, y - camera.Y, 0x2591);
-                    }
-                }
+                Terminal.BkColor(Colours.FloorLight);
+                Terminal.Put(x - camera.X, y - camera.Y, 0x0020);
+            }
+            else
+            {
+                Terminal.Color(Color.DimGray);
+                Terminal.BkColor(Colours.WallLight);
+                Terminal.Put(x - camera.X, y - camera.Y, 0x2591);
             }
         }
     }
