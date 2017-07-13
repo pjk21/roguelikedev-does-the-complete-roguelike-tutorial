@@ -1,4 +1,5 @@
 ﻿using BearLib;
+using Roguelike.Input;
 using Roguelike.States;
 using Roguelike.World;
 using Roguelike.World.MapGeneration;
@@ -60,9 +61,9 @@ namespace Roguelike
 
         private static bool Update()
         {
-            var input = Terminal.Read();
+            InputManager.Update();
 
-            return CurrentState?.Update(input) ?? true;
+            return CurrentState?.Update() ?? true;
         }
 
         private static void Draw()

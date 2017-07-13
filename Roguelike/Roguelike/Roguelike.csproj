@@ -50,6 +50,9 @@
     <Compile Include="Colours.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntitySprites.cs" />
+    <Compile Include="Input\InputManager.cs" />
+    <Compile Include="Input\Command.cs" />
+    <Compile Include="Input\KeyPress.cs" />
     <Compile Include="Render\AsciiRenderer.cs" />
     <Compile Include="Render\DebugRenderer.cs" />
     <Compile Include="Render\IRenderer.cs" />

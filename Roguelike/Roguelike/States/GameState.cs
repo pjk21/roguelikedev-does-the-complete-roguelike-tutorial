@@ -1,4 +1,4 @@
-﻿using BearLib;
+﻿using Roguelike.Input;
 using Roguelike.Render;
 using System.Linq;
 
@@ -14,33 +14,32 @@ namespace Roguelike.States
             ActiveRenderer.RenderEntities(Program.Entities);
         }
 
-        public bool Update(int input)
+        public bool Update()
         {
             var player = Program.Player;
             var map = Program.Map;
 
             var didPlayerAct = false;
 
-            switch (input)
+            switch (InputManager.LastCommand)
             {
-                case Terminal.TK_ESCAPE:
-                case Terminal.TK_CLOSE:
+                case Command.Quit:
                     return false;
 
-                case Terminal.TK_R when Terminal.Check(Terminal.TK_CONTROL):
+                case Command.CycleRenderer:
                     SwitchRenderer();
                     break;
 
-                case Terminal.TK_LEFT:
+                case Command.MoveEast:
                     didPlayerAct = PlayerMoveOrAttack(-1, 0);
                     break;
-                case Terminal.TK_RIGHT:
+                case Command.MoveWest:
                     didPlayerAct = PlayerMoveOrAttack(1, 0);
                     break;
-                case Terminal.TK_UP:
+                case Command.MoveNorth:
                     didPlayerAct = PlayerMoveOrAttack(0, -1);
                     break;
-                case Terminal.TK_DOWN:
+                case Command.MoveSouth:
                     didPlayerAct = PlayerMoveOrAttack(0, 1);
                     break;
             }
@@ -53,7 +52,7 @@ namespace Roguelike.States
                 {
                     if (entity != player)
                     {
-                        System.Console.WriteLine($"The {entity.Name} growls.");
+                        //System.Console.WriteLine($"The {entity.Name} growls.");
                     }
                 }
             }
