@@ -8,7 +8,7 @@ namespace Roguelike.Render
         public const int MapLayer = 0;
         public const int EntityLayer = 1;
 
-        public abstract void RenderEntities(IEnumerable<Entity> entities);
-        public abstract void RenderMap(Map map);
+        public abstract void RenderEntities(IEnumerable<Entity> entities, Camera camera);
+        public abstract void RenderMap(Map map, Camera camera);
     }
 }

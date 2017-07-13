@@ -57,6 +57,7 @@
     <Compile Include="Input\Command.cs" />
     <Compile Include="Input\KeyPress.cs" />
     <Compile Include="Render\AsciiRenderer.cs" />
+    <Compile Include="Render\Camera.cs" />
     <Compile Include="Render\DebugRenderer.cs" />
     <Compile Include="Render\IRenderer.cs" />
     <Compile Include="Render\Renderer.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="States\IState.cs" />
     <Compile Include="TileSprites.cs" />
     <Compile Include="Utils\ColorExtensions.cs" />
+    <Compile Include="Utils\SystemExtensions.cs" />
     <Compile Include="World\MapGeneration\BspMapGenerator.cs" />
     <Compile Include="World\MapGeneration\IMapGenerator.cs" />
     <Compile Include="World\Map.cs" />

@@ -7,35 +7,38 @@ namespace Roguelike.Render
 {
     public class DebugRenderer : Renderer
     {
-        public override void RenderEntities(IEnumerable<Entity> entities)
+        public override void RenderEntities(IEnumerable<Entity> entities, Camera camera)
         {
             Terminal.Layer(EntityLayer);
 
             foreach (var entity in entities)
             {
-                Terminal.Color(entity.Colour);
-                Terminal.Put(entity.X, entity.Y, entity.Character);
+                if (camera.Contains(entity.X, entity.Y))
+                {
+                    Terminal.Color(entity.Colour);
+                    Terminal.Put(entity.X - camera.X, entity.Y - camera.Y, entity.Character);
+                }
             }
         }
 
-        public override void RenderMap(Map map)
+        public override void RenderMap(Map map, Camera camera)
         {
             Terminal.Layer(MapLayer);
 
-            for (int x = 0; x < map.Width; x++)
+            for (int x = camera.Left; x < camera.Right; x++)
             {
-                for (int y = 0; y < map.Height; y++)
+                for (int y = camera.Top; y < camera.Bottom; y++)
                 {
                     if (map.IsWalkable(x, y))
                     {
                         Terminal.BkColor(Colours.FloorLight);
-                        Terminal.Put(x, y, 0x0020);
+                        Terminal.Put(x - camera.X, y - camera.Y, 0x0020);
                     }
                     else
                     {
                         Terminal.Color(Color.DimGray);
                         Terminal.BkColor(Colours.WallLight);
-                        Terminal.Put(x, y, 0x2591);
+                        Terminal.Put(x - camera.X, y - camera.Y, 0x2591);
                     }
                 }
             }

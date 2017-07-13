@@ -6,12 +6,19 @@ namespace Roguelike.States
 {
     public class GameState : IState
     {
+        private Camera camera = new Camera(0, 0, Program.ScreenWidth, Program.ScreenHeight);
+
         public IRenderer ActiveRenderer { get; set; } = new SpriteRenderer();
+
+        public void Initialise()
+        {
+            camera.Follow(Program.Player);
+        }
 
         public void Draw()
         {
-            ActiveRenderer.RenderMap(Program.Map);
-            ActiveRenderer.RenderEntities(Program.Entities);
+            ActiveRenderer.RenderMap(Program.Map, camera);
+            ActiveRenderer.RenderEntities(Program.Entities, camera);
         }
 
         public bool Update()
@@ -47,6 +54,7 @@ namespace Roguelike.States
             if (didPlayerAct)
             {
                 map.ComputeFov(player.X, player.Y, Entity.PlayerFovRadius, true);
+                camera.Follow(player);
 
                 foreach (var entity in Program.Entities)
                 {

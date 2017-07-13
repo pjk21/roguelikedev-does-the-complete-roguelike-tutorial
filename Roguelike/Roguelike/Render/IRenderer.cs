@@ -5,7 +5,7 @@ namespace Roguelike.Render
 {
     public interface IRenderer
     {
-        void RenderMap(Map map);
-        void RenderEntities(IEnumerable<Entity> entities);
+        void RenderMap(Map map, Camera camera);
+        void RenderEntities(IEnumerable<Entity> entities, Camera camera);
     }
 }
