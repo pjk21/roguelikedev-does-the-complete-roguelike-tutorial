@@ -1,12 +1,16 @@
 ﻿using BearLib;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Roguelike.Input
 {
     public static class InputManager
     {
-        private static readonly Dictionary<Command, List<KeyPress>> inputMap = new Dictionary<Command, List<KeyPress>>();
+        private const string KeyMapFile = "keys.json";
+
+        private static Dictionary<Command, List<KeyPress>> inputMap = new Dictionary<Command, List<KeyPress>>();
 
         private static int lastInput;
 
@@ -14,13 +18,33 @@ namespace Roguelike.Input
 
         static InputManager()
         {
-            inputMap = GetDefaultInputMap();
+            if (!File.Exists(KeyMapFile))
+            {
+                inputMap = GetDefaultInputMap();
+                SaveKeyMap(KeyMapFile);
+            }
+            else
+            {
+                inputMap = LoadKeyMap(KeyMapFile);
+            }
         }
 
         public static void Update()
         {
             lastInput = Terminal.Read();
             LastCommand = inputMap.FirstOrDefault(kvp => kvp.Value.Any(map => map.Check(lastInput))).Key;
+        }
+
+        public static void SaveKeyMap(string file)
+        {
+            var json = JsonConvert.SerializeObject(inputMap, Formatting.Indented);
+            File.WriteAllText(file, json);
+        }
+
+        public static Dictionary<Command, List<KeyPress>> LoadKeyMap(string file)
+        {
+            var json = File.ReadAllText(file);
+            return JsonConvert.DeserializeObject<Dictionary<Command, List<KeyPress>>>(json);
         }
 
         private static Dictionary<Command, List<KeyPress>> GetDefaultInputMap()
