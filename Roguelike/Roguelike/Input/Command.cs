@@ -6,6 +6,7 @@
 
         Quit,
         CycleRenderer,
+        ToggleDebugMode,
 
         MoveNorth,
         MoveSouth,

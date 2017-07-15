@@ -52,7 +52,8 @@ namespace Roguelike.Input
             var map = new Dictionary<Command, List<KeyPress>>();
 
             map.Add(Command.Quit, new List<KeyPress> { new KeyPress(Terminal.TK_ESCAPE), new KeyPress(Terminal.TK_CLOSE) });
-            map.Add(Command.CycleRenderer, new List<KeyPress> { new KeyPress(Terminal.TK_F9) });
+            map.Add(Command.CycleRenderer, new List<KeyPress> { new KeyPress(Terminal.TK_F2) });
+            map.Add(Command.ToggleDebugMode, new List<KeyPress> { new KeyPress(Terminal.TK_F3) });
 
             map.Add(Command.MoveEast, new List<KeyPress> { new KeyPress(Terminal.TK_LEFT), new KeyPress(Terminal.TK_KP_4) });
             map.Add(Command.MoveWest, new List<KeyPress> { new KeyPress(Terminal.TK_RIGHT), new KeyPress(Terminal.TK_KP_6) });

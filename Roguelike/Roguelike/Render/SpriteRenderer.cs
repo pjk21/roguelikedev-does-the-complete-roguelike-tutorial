@@ -13,7 +13,7 @@ namespace Roguelike.Render
 
             foreach (var entity in entities)
             {
-                if (camera.Contains(entity.X, entity.Y) && Program.Map.IsInFov(entity.X, entity.Y))
+                if (camera.Contains(entity.X, entity.Y) && Program.Map.IsInFov(entity.X, entity.Y) || Program.IsDebugModeEnabled)
                 {
                     if (entity.SpriteIndex.HasValue)
                     {
@@ -31,7 +31,7 @@ namespace Roguelike.Render
 
         protected override void RenderTile(Map map, int x, int y, Camera camera)
         {
-            if (map.IsInFov(x, y))
+            if (map.IsInFov(x, y) || Program.IsDebugModeEnabled)
             {
                 if (map.IsWalkable(x, y))
                 {
@@ -46,7 +46,10 @@ namespace Roguelike.Render
                     Terminal.Put(x - camera.X, y - camera.Y, TileSprites.Wall + offset);
                 }
 
-                map.SetCellProperties(x, y, map.IsTransparent(x, y), map.IsWalkable(x, y), true);
+                if (map.IsInFov(x, y))
+                {
+                    map.SetCellProperties(x, y, map.IsTransparent(x, y), map.IsWalkable(x, y), true);
+                }
             }
             else
             {

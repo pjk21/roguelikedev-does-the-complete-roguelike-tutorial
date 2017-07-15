@@ -36,6 +36,9 @@ namespace Roguelike.States
                 case Command.CycleRenderer:
                     SwitchRenderer();
                     break;
+                case Command.ToggleDebugMode:
+                    Program.IsDebugModeEnabled = !Program.IsDebugModeEnabled;
+                    break;
 
                 case Command.MoveEast:
                     didPlayerAct = PlayerMoveOrAttack(-1, 0);
@@ -73,10 +76,6 @@ namespace Roguelike.States
             if (ActiveRenderer is AsciiRenderer)
             {
                 ActiveRenderer = new SpriteRenderer();
-            }
-            else if (ActiveRenderer is SpriteRenderer)
-            {
-                ActiveRenderer = new DebugRenderer();
             }
             else
             {

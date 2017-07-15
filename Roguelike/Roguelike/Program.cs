@@ -14,6 +14,8 @@ namespace Roguelike
         public const int ScreenWidth = 80;
         public const int ScreenHeight = 50;
 
+        public static bool IsDebugModeEnabled { get; set; } = false;
+
         public static Random Random { get; set; } = new Random(123456789);
 
         public static IState CurrentState { get; } = new GameState();
