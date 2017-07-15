@@ -2,7 +2,7 @@
 {
     public interface IState
     {
-        void Initialise();
+        void Initialize();
         bool Update();
         void Draw();
     }

@@ -10,7 +10,7 @@ namespace Roguelike.States
 
         public IRenderer ActiveRenderer { get; set; } = new SpriteRenderer();
 
-        public void Initialise()
+        public void Initialize()
         {
             camera.Follow(Program.Player);
         }
