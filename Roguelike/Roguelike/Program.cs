@@ -67,7 +67,12 @@ namespace Roguelike
         {
             InputManager.Update();
 
-            return CurrentState?.Update() ?? true;
+            if (CurrentState == null)
+            {
+                throw new NullReferenceException(nameof(CurrentState));
+            }
+
+            return CurrentState.Update();
         }
 
         private static void Draw()
