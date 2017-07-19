@@ -76,5 +76,13 @@ namespace Roguelike.Entities
 
             return false;
         }
+
+        public float DistanceTo(Entity other)
+        {
+            var dx = other.X - X;
+            var dy = other.Y - Y;
+
+            return (float)Math.Sqrt(dx * dx + dy * dy);
+        }
     }
 }

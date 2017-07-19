@@ -1,4 +1,5 @@
 ﻿using Roguelike.Entities;
+using Roguelike.Entities.Components;
 using Roguelike.Input;
 using Roguelike.Render;
 using System.Linq;
@@ -64,7 +65,7 @@ namespace Roguelike.States
                 {
                     if (entity != player)
                     {
-                        //System.Console.WriteLine($"The {entity.Name} growls.");
+                        entity.GetComponent<BasicMonsterComponent>()?.TakeTurn();
                     }
                 }
             }
