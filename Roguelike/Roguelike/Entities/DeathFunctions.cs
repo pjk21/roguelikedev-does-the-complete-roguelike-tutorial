@@ -1,4 +1,5 @@
 ﻿using Roguelike.Entities.Components;
+using Roguelike.UI;
 using System;
 using System.Drawing;
 
@@ -8,7 +9,7 @@ namespace Roguelike.Entities
     {
         public static void PlayerDeath(Entity entity)
         {
-            Console.WriteLine("You died!");
+            MessageLog.Add("You died!");
 
             entity.Character = '%';
             entity.Colour = Color.Red;
@@ -18,7 +19,7 @@ namespace Roguelike.Entities
 
         public static void MonsterDeath(Entity entity)
         {
-            Console.WriteLine($"The {entity.Name} died!");
+            MessageLog.Add($"The {entity.Name} died!");
 
             entity.Character = '%';
             entity.Colour = Color.Red;

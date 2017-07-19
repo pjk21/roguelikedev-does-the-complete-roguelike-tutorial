@@ -2,6 +2,8 @@
 using Roguelike.Entities.Components;
 using Roguelike.Input;
 using Roguelike.Render;
+using Roguelike.UI;
+using System.Drawing;
 using System.Linq;
 
 namespace Roguelike.States
@@ -15,6 +17,8 @@ namespace Roguelike.States
         public void Initialize()
         {
             camera.Follow(Program.Player);
+
+            MessageLog.Add("Welcome to the dungeon, punk.", Color.LightSteelBlue);
         }
 
         public void Draw()

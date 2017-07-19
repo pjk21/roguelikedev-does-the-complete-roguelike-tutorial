@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Roguelike.UI;
+using System;
 
 namespace Roguelike.Entities.Components
 {
@@ -32,12 +33,12 @@ namespace Roguelike.Entities.Components
 
             if (damage > 0)
             {
-                Console.WriteLine($"{Entity.Name} attacks {target.Name} for {damage} HP. {target.GetComponent<FighterComponent>().CurrentHealth}");
+                MessageLog.Add($"{Entity.Name} attacks {target.Name} for {damage} HP.");
                 target.GetComponent<FighterComponent>().Damage(damage);
             }
             else
             {
-                Console.WriteLine($"{Entity.Name} attacks {target.Name} but it has no effect!");
+                MessageLog.Add($"{Entity.Name} attacks {target.Name} but it has no effect!");
             }
         }
     }

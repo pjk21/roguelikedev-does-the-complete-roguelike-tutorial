@@ -68,6 +68,7 @@
     <Compile Include="States\GameOverState.cs" />
     <Compile Include="States\GameState.cs" />
     <Compile Include="States\IState.cs" />
+    <Compile Include="UI\MessageLog.cs" />
     <Compile Include="World\TileSprites.cs" />
     <Compile Include="Utils\ColorExtensions.cs" />
     <Compile Include="Utils\SystemExtensions.cs" />

@@ -1,6 +1,7 @@
 ﻿using BearLib;
 using Roguelike.Entities;
 using Roguelike.Entities.Components;
+using Roguelike.UI;
 using Roguelike.World;
 using System.Collections.Generic;
 using System.Drawing;
@@ -52,6 +53,8 @@ namespace Roguelike.Render
             Terminal.Print(Program.ScreenWidth - playerFighter.Power.ToString().Length - 1, 3, playerFighter.Power.ToString());
             Terminal.Print(x + 1, 4, $"DEF");
             Terminal.Print(Program.ScreenWidth - playerFighter.Defense.ToString().Length - 1, 4, playerFighter.Defense.ToString());
+
+            MessageLog.Render();
         }
     }
 }
