@@ -61,6 +61,11 @@ namespace Roguelike.States
                     case Command.MoveSouth:
                         didPlayerAct = PlayerMoveOrAttack(0, 1);
                         break;
+                    case Command.Rest:
+                        didPlayerAct = true;
+                        var healed = Program.Player.GetComponent<FighterComponent>().HealPercent(0.1f);
+                        MessageLog.Add($"You rest for a turn and regain {healed} HP.", Color.LightGreen);
+                        break;
                 }
             }
             else

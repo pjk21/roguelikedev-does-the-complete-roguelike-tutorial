@@ -52,5 +52,15 @@ namespace Roguelike.Entities.Components
                 MessageLog.Add($"{Entity.Name} attacks {target.Name} but it has no effect!");
             }
         }
+
+        public int HealPercent(float percent)
+        {
+            var amount = (int)Math.Round(MaximumHealth * percent);
+            amount = amount.Clamp(0, MaximumHealth - CurrentHealth);
+
+            CurrentHealth += amount;
+
+            return (int)amount;
+        }
     }
 }

@@ -74,6 +74,7 @@ namespace Roguelike.Input
             map.Add(Command.MoveWest, new List<KeyPress> { new KeyPress(Terminal.TK_RIGHT), new KeyPress(Terminal.TK_KP_6) });
             map.Add(Command.MoveNorth, new List<KeyPress> { new KeyPress(Terminal.TK_UP), new KeyPress(Terminal.TK_KP_8) });
             map.Add(Command.MoveSouth, new List<KeyPress> { new KeyPress(Terminal.TK_DOWN), new KeyPress(Terminal.TK_KP_2) });
+            map.Add(Command.Rest, new List<KeyPress> { new KeyPress(Terminal.TK_SPACE) });
 
             return map;
         }

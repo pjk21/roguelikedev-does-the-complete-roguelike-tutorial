@@ -12,5 +12,6 @@
         MoveSouth,
         MoveEast,
         MoveWest,
+        Rest
     }
 }
