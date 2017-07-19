@@ -1,5 +1,7 @@
 ﻿using BearLib;
 using Newtonsoft.Json;
+using Roguelike.Render;
+using RogueSharp;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,6 +18,8 @@ namespace Roguelike.Input
 
         public static Command LastCommand { get; private set; }
 
+        public static Point MousePosition { get; private set; } = new Point();
+
         static InputManager()
         {
             if (!File.Exists(KeyMapFile))
@@ -29,10 +33,21 @@ namespace Roguelike.Input
             }
         }
 
+        public static Point GetMouseWorldPosition(Camera camera)
+        {
+            int x = MousePosition.X + camera.X;
+            int y = MousePosition.Y + camera.Y;
+
+            return new Point(x, y);
+        }
+
         public static void Update()
         {
             lastInput = Terminal.Read();
             LastCommand = inputMap.FirstOrDefault(kvp => kvp.Value.Any(map => map.Check(lastInput))).Key;
+
+            MousePosition.X = Terminal.State(Terminal.TK_MOUSE_X);
+            MousePosition.Y = Terminal.State(Terminal.TK_MOUSE_Y);
         }
 
         public static void SaveKeyMap(string file)

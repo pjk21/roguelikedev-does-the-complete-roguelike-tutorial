@@ -50,6 +50,7 @@ namespace Roguelike
         {
             Terminal.Open();
             Terminal.Set($"window: size={ScreenWidth}x{ScreenHeight};");
+            Terminal.Set($"input: filter=[keyboard, mouse];");
             Terminal.Set($"font: Cheepicus_8x8x2.png, size=16x16, codepage=437;");
             Terminal.Set($"0xE000: Tiles.png, size=16x16");
             Terminal.Set($"0xE800: Entities.png, size=16x16;");

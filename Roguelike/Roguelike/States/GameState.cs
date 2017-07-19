@@ -25,7 +25,7 @@ namespace Roguelike.States
         {
             ActiveRenderer.RenderMap(Program.Map, camera);
             ActiveRenderer.RenderEntities(Program.Entities, camera);
-            ActiveRenderer.RenderUI();
+            ActiveRenderer.RenderUI(camera);
         }
 
         public bool Update()

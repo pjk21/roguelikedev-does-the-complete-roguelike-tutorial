@@ -8,6 +8,6 @@ namespace Roguelike.Render
     {
         void RenderMap(Map map, Camera camera);
         void RenderEntities(IEnumerable<Entity> entities, Camera camera);
-        void RenderUI();
+        void RenderUI(Camera camera);
     }
 }

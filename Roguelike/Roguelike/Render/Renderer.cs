@@ -1,10 +1,12 @@
 ﻿using BearLib;
 using Roguelike.Entities;
 using Roguelike.Entities.Components;
+using Roguelike.Input;
 using Roguelike.UI;
 using Roguelike.World;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace Roguelike.Render
 {
@@ -31,7 +33,7 @@ namespace Roguelike.Render
 
         protected abstract void RenderTile(Map map, int x, int y, Camera camera);
 
-        public virtual void RenderUI()
+        public virtual void RenderUI(Camera camera)
         {
             Terminal.Layer(UILayer);
 
@@ -44,7 +46,7 @@ namespace Roguelike.Render
             var playerFighter = Program.Player.GetComponent<FighterComponent>();
 
             Terminal.Color(Color.Gold);
-            Terminal.Print(x, 1, "Player");
+            Terminal.Print(x, 1, $"Player");
 
             Terminal.Color(Color.White);
             Terminal.Print(x + 1, 2, $"HP");
@@ -53,6 +55,17 @@ namespace Roguelike.Render
             Terminal.Print(Program.ScreenWidth - playerFighter.Power.ToString().Length - 1, 3, playerFighter.Power.ToString());
             Terminal.Print(x + 1, 4, $"DEF");
             Terminal.Print(Program.ScreenWidth - playerFighter.Defense.ToString().Length - 1, 4, playerFighter.Defense.ToString());
+
+            var mouse = InputManager.GetMouseWorldPosition(camera);
+            var entitiesUnderMouse = Program.Entities
+                .Where(e => e.X == mouse.X && e.Y == mouse.Y)
+                .Take(5);
+
+            int entityUnderMouseY = 6;
+            foreach (var entity in entitiesUnderMouse)
+            {
+                Terminal.Print(x, entityUnderMouseY++, entity.Name);
+            }
 
             MessageLog.Render();
         }
