@@ -1,5 +1,6 @@
 ﻿using BearLib;
 using Roguelike.Entities;
+using Roguelike.Entities.Components;
 using Roguelike.Input;
 using Roguelike.States;
 using Roguelike.World;
@@ -55,6 +56,8 @@ namespace Roguelike
             {
                 SpriteIndex = EntitySprites.Player
             };
+
+            Player.AddComponent(new FighterComponent { MaximumHealth = 30, CurrentHealth = 30, Power = 5, Defense = 2 });
 
             Entities.Add(Player);
 

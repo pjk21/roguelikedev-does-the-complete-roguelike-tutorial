@@ -1,10 +1,14 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace Roguelike.Entities
 {
     public class Entity
     {
         public const int PlayerFovRadius = 10;
+
+        private readonly Dictionary<Type, Component> components = new Dictionary<Type, Component>();
 
         public string Name { get; set; }
 
@@ -30,6 +34,34 @@ namespace Roguelike.Entities
             Colour = colour;
 
             IsSolid = solid;
+        }
+
+        public Entity AddComponent<T>(T component) where T : Component
+        {
+            component.Entity = this;
+            components[typeof(T)] = component;
+
+            return this;
+        }
+
+        public void RemoveComponent<T>() where T : Component
+        {
+            components.Remove(typeof(T));
+        }
+
+        public bool HasComponent<T>() where T : Component
+        {
+            return components.ContainsKey(typeof(T));
+        }
+
+        public T GetComponent<T>() where T : Component
+        {
+            if (components.TryGetValue(typeof(T), out Component component))
+            {
+                return (T)component;
+            }
+
+            return null;
         }
 
         public bool Move(int x, int y)

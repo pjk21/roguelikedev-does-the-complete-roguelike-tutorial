@@ -1,4 +1,5 @@
 ﻿using Roguelike.Entities;
+using Roguelike.Entities.Components;
 using RogueSharp;
 
 namespace Roguelike.World.MapGeneration
@@ -25,6 +26,9 @@ namespace Roguelike.World.MapGeneration
                         SpriteIndex = EntitySprites.Rat
                     };
 
+                    rat.AddComponent(new FighterComponent { MaximumHealth = 3, CurrentHealth = 3, Power = 1, Defense = 0 })
+                        .AddComponent(new BasicMonsterComponent());
+
                     Program.Entities.Add(rat);
                 }
                 else
@@ -33,6 +37,9 @@ namespace Roguelike.World.MapGeneration
                     {
                         SpriteIndex = EntitySprites.Hound
                     };
+
+                    hound.AddComponent(new FighterComponent { MaximumHealth = 8, CurrentHealth = 8, Power = 3, Defense = 0 })
+                        .AddComponent(new BasicMonsterComponent());
 
                     Program.Entities.Add(hound);
                 }
