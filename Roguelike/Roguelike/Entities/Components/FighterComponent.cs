@@ -5,6 +5,8 @@ namespace Roguelike.Entities.Components
 {
     public class FighterComponent : Component
     {
+        public const float CriticalHitChance = 0.05f;
+
         public int MaximumHealth { get; set; }
         public int CurrentHealth { get; set; }
         public int Power { get; set; }
@@ -29,7 +31,16 @@ namespace Roguelike.Entities.Components
                 return;
             }
 
-            var damage = Power - target.GetComponent<FighterComponent>().Defense;
+            int damage = 0;
+
+            if (Program.Random.NextDouble() < CriticalHitChance)
+            {
+                damage = Power;
+            }
+            else
+            {
+                damage = Power - target.GetComponent<FighterComponent>().Defense;
+            }
 
             if (damage > 0)
             {
