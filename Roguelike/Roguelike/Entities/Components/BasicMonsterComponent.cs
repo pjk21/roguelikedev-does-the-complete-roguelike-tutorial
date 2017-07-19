@@ -15,7 +15,7 @@ namespace Roguelike.Entities.Components
 
                     if (path != null)
                     {
-                        var nextPosition = path.StepForward();
+                        var nextPosition = path.CurrentStep;
                         Entity.Move(nextPosition.X - Entity.X, nextPosition.Y - Entity.Y);
                     }
                 }
