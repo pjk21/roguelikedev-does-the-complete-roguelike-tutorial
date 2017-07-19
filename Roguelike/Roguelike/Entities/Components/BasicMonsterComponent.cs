@@ -19,9 +19,9 @@ namespace Roguelike.Entities.Components
                         Entity.Move(nextPosition.X - Entity.X, nextPosition.Y - Entity.Y);
                     }
                 }
-                else if (Program.Player.GetComponent<FighterComponent>()?.CurrentHealth > 0)
+                else if (Entity.HasComponent<FighterComponent>() && Program.Player.GetComponent<FighterComponent>()?.CurrentHealth > 0)
                 {
-                    Console.WriteLine($"The {Entity.Name} attempts to attack you!");
+                    Entity.GetComponent<FighterComponent>().Attack(Program.Player);
                 }
             }
         }

@@ -91,7 +91,7 @@ namespace Roguelike.States
 
             if (target != null)
             {
-                System.Console.WriteLine($"You awkwardly smack the {target.Name}.");
+                Program.Player.GetComponent<FighterComponent>().Attack(target);
             }
             else
             {
