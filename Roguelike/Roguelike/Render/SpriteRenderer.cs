@@ -1,4 +1,5 @@
 ﻿using BearLib;
+using Roguelike.Entities;
 using Roguelike.World;
 using System.Collections.Generic;
 using System.Drawing;

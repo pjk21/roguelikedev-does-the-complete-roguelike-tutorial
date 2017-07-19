@@ -1,4 +1,6 @@
-﻿namespace Roguelike.Render
+﻿using Roguelike.Entities;
+
+namespace Roguelike.Render
 {
     public class Camera : RogueSharp.Rectangle
     {

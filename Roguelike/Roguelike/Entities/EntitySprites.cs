@@ -1,4 +1,4 @@
-﻿namespace Roguelike
+﻿namespace Roguelike.Entities
 {
     public static class EntitySprites
     {

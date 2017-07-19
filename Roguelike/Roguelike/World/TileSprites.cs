@@ -1,4 +1,4 @@
-﻿namespace Roguelike
+﻿namespace Roguelike.World
 {
     public static class TileSprites
     {

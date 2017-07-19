@@ -1,4 +1,5 @@
 ﻿using BearLib;
+using Roguelike.Entities;
 using Roguelike.Input;
 using Roguelike.States;
 using Roguelike.World;

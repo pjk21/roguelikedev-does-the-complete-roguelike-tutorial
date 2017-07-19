@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Roguelike
+namespace Roguelike.Entities
 {
     public class Entity
     {

@@ -1,4 +1,5 @@
-﻿using Roguelike.Input;
+﻿using Roguelike.Entities;
+using Roguelike.Input;
 using Roguelike.Render;
 using System.Linq;
 

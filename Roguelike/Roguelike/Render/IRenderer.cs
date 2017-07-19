@@ -1,4 +1,5 @@
-﻿using Roguelike.World;
+﻿using Roguelike.Entities;
+using Roguelike.World;
 using System.Collections.Generic;
 
 namespace Roguelike.Render

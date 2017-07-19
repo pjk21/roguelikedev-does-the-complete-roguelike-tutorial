@@ -51,8 +51,8 @@
   <ItemGroup>
     <Compile Include="BearLibTerminal.cs" />
     <Compile Include="Colours.cs" />
-    <Compile Include="Entity.cs" />
-    <Compile Include="EntitySprites.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\EntitySprites.cs" />
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="Input\Command.cs" />
     <Compile Include="Input\KeyPress.cs" />
@@ -63,7 +63,7 @@
     <Compile Include="Render\SpriteRenderer.cs" />
     <Compile Include="States\GameState.cs" />
     <Compile Include="States\IState.cs" />
-    <Compile Include="TileSprites.cs" />
+    <Compile Include="World\TileSprites.cs" />
     <Compile Include="Utils\ColorExtensions.cs" />
     <Compile Include="Utils\SystemExtensions.cs" />
     <Compile Include="World\MapGeneration\BspMapGenerator.cs" />
