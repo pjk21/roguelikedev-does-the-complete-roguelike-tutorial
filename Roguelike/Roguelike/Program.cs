@@ -20,7 +20,7 @@ namespace Roguelike
 
         public static Random Random { get; set; } = new Random(123456789);
 
-        public static IState CurrentState { get; } = new GameState();
+        public static IState CurrentState { get; set; } = new GameState();
 
         public static Map Map { get; set; }
 
@@ -57,7 +57,7 @@ namespace Roguelike
                 SpriteIndex = EntitySprites.Player
             };
 
-            Player.AddComponent(new FighterComponent { MaximumHealth = 30, CurrentHealth = 30, Power = 5, Defense = 2 });
+            Player.AddComponent(new FighterComponent { MaximumHealth = 30, CurrentHealth = 30, Power = 5, Defense = 2, DeathFunction = DeathFunctions.PlayerDeath });
 
             Entities.Add(Player);
 

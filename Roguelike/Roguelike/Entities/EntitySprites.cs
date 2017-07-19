@@ -5,5 +5,7 @@
         public const int Player = 0xE800;
         public const int Rat = 0xE801;
         public const int Hound = 0xE802;
+
+        public const int TombStone = 0xE803;
     }
 }

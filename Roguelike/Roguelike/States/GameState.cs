@@ -30,30 +30,40 @@ namespace Roguelike.States
 
             var didPlayerAct = false;
 
-            switch (InputManager.LastCommand)
+            if (Program.Player.GetComponent<FighterComponent>().CurrentHealth > 0)
             {
-                case Command.Quit:
-                    return false;
+                switch (InputManager.LastCommand)
+                {
+                    case Command.Quit:
+                        return false;
 
-                case Command.CycleRenderer:
-                    SwitchRenderer();
-                    break;
-                case Command.ToggleDebugMode:
-                    Program.IsDebugModeEnabled = !Program.IsDebugModeEnabled;
-                    break;
+                    case Command.CycleRenderer:
+                        SwitchRenderer();
+                        break;
+                    case Command.ToggleDebugMode:
+                        Program.IsDebugModeEnabled = !Program.IsDebugModeEnabled;
+                        break;
 
-                case Command.MoveEast:
-                    didPlayerAct = PlayerMoveOrAttack(-1, 0);
-                    break;
-                case Command.MoveWest:
-                    didPlayerAct = PlayerMoveOrAttack(1, 0);
-                    break;
-                case Command.MoveNorth:
-                    didPlayerAct = PlayerMoveOrAttack(0, -1);
-                    break;
-                case Command.MoveSouth:
-                    didPlayerAct = PlayerMoveOrAttack(0, 1);
-                    break;
+                    case Command.MoveEast:
+                        didPlayerAct = PlayerMoveOrAttack(-1, 0);
+                        break;
+                    case Command.MoveWest:
+                        didPlayerAct = PlayerMoveOrAttack(1, 0);
+                        break;
+                    case Command.MoveNorth:
+                        didPlayerAct = PlayerMoveOrAttack(0, -1);
+                        break;
+                    case Command.MoveSouth:
+                        didPlayerAct = PlayerMoveOrAttack(0, 1);
+                        break;
+                }
+            }
+            else
+            {
+                if (InputManager.LastCommand != Command.None)
+                {
+                    Program.CurrentState = new GameOverState();
+                }
             }
 
             if (didPlayerAct)
@@ -87,7 +97,7 @@ namespace Roguelike.States
 
         private bool PlayerMoveOrAttack(int x, int y)
         {
-            var target = Program.Entities.FirstOrDefault(e => e.X == Program.Player.X + x && e.Y == Program.Player.Y + y);
+            var target = Program.Entities.FirstOrDefault(e => e.HasComponent<FighterComponent>() && e.X == Program.Player.X + x && e.Y == Program.Player.Y + y);
 
             if (target != null)
             {

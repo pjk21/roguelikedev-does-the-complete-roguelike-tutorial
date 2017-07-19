@@ -10,12 +10,12 @@ namespace Roguelike.Render
     {
         public override void RenderEntities(IEnumerable<Entity> entities, Camera camera)
         {
-            Terminal.Layer(EntityLayer);
-
             foreach (var entity in entities)
             {
                 if (camera.Contains(entity.X, entity.Y) && Program.Map.IsInFov(entity.X, entity.Y) || Program.IsDebugModeEnabled)
                 {
+                    Terminal.Layer(EntityLayer + entity.LayerOffset);
+
                     if (entity.SpriteIndex.HasValue)
                     {
                         Terminal.Color(entity.SpriteTint);

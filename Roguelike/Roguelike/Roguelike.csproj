@@ -54,6 +54,7 @@
     <Compile Include="Entities\Component.cs" />
     <Compile Include="Entities\Components\BasicMonsterComponent.cs" />
     <Compile Include="Entities\Components\FighterComponent.cs" />
+    <Compile Include="Entities\DeathFunctions.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\EntitySprites.cs" />
     <Compile Include="Input\InputManager.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Render\IRenderer.cs" />
     <Compile Include="Render\Renderer.cs" />
     <Compile Include="Render\SpriteRenderer.cs" />
+    <Compile Include="States\GameOverState.cs" />
     <Compile Include="States\GameState.cs" />
     <Compile Include="States\IState.cs" />
     <Compile Include="World\TileSprites.cs" />

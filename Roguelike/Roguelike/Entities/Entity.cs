@@ -17,6 +17,7 @@ namespace Roguelike.Entities
 
         public char Character { get; set; }
         public Color Colour { get; set; } = Color.White;
+        public int LayerOffset { get; set; }
 
         public int? SpriteIndex { get; set; }
         public Color SpriteTint { get; set; } = Color.White;
