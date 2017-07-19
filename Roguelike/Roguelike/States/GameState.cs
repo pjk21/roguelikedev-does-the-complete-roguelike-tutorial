@@ -8,7 +8,7 @@ namespace Roguelike.States
 {
     public class GameState : IState
     {
-        private Camera camera = new Camera(0, 0, Program.ScreenWidth, Program.ScreenHeight);
+        private Camera camera = new Camera(0, 0, Program.MapDisplayWidth, Program.MapDisplayHeight);
 
         public IRenderer ActiveRenderer { get; set; } = new SpriteRenderer();
 
@@ -21,6 +21,7 @@ namespace Roguelike.States
         {
             ActiveRenderer.RenderMap(Program.Map, camera);
             ActiveRenderer.RenderEntities(Program.Entities, camera);
+            ActiveRenderer.RenderUI();
         }
 
         public bool Update()

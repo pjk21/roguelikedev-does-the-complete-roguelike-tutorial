@@ -15,6 +15,8 @@ namespace Roguelike
     {
         public const int ScreenWidth = 80;
         public const int ScreenHeight = 50;
+        public const int MapDisplayWidth = ScreenWidth - 20;
+        public const int MapDisplayHeight = ScreenHeight;
 
         public static bool IsDebugModeEnabled { get; set; } = false;
 
