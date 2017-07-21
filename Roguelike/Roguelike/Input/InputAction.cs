@@ -1,6 +1,6 @@
 ﻿namespace Roguelike.Input
 {
-    public enum Command
+    public enum InputAction
     {
         None,
 

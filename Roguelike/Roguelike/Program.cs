@@ -61,6 +61,7 @@ namespace Roguelike
             };
 
             Player.AddComponent(new FighterComponent { MaximumHealth = 30, CurrentHealth = 30, Power = 5, Defense = 2, DeathFunction = DeathFunctions.PlayerDeath });
+            Player.AddComponent(new PlayerInputComponent());
 
             Entities.Add(Player);
 

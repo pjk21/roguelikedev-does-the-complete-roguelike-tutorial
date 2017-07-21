@@ -3,6 +3,7 @@ using Roguelike.Entities.Components;
 using Roguelike.Input;
 using Roguelike.Render;
 using Roguelike.UI;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
@@ -13,6 +14,8 @@ namespace Roguelike.States
         private Camera camera = new Camera(0, 0, Program.MapDisplayWidth, Program.MapDisplayHeight);
 
         public IRenderer ActiveRenderer { get; set; } = new SpriteRenderer();
+
+        private Queue<Entity> entityActQueue = new Queue<Entity>();
 
         public void Initialize()
         {
@@ -30,64 +33,86 @@ namespace Roguelike.States
 
         public bool Update()
         {
-            var player = Program.Player;
-            var map = Program.Map;
+            switch (InputManager.LastCommand)
+            {
+                case InputAction.Quit:
+                    return false;
 
-            var didPlayerAct = false;
+                case InputAction.CycleRenderer:
+                    SwitchRenderer();
+                    break;
+                case InputAction.ToggleDebugMode:
+                    Program.IsDebugModeEnabled = !Program.IsDebugModeEnabled;
+                    break;
+            }
 
             if (Program.Player.GetComponent<FighterComponent>().CurrentHealth > 0)
             {
-                switch (InputManager.LastCommand)
+                if (entityActQueue.Count == 0)
                 {
-                    case Command.Quit:
-                        return false;
+                    entityActQueue = new Queue<Entity>(Program.Entities.Where(e => e.HasComponent<ActorComponent>()));
+                }
 
-                    case Command.CycleRenderer:
-                        SwitchRenderer();
-                        break;
-                    case Command.ToggleDebugMode:
-                        Program.IsDebugModeEnabled = !Program.IsDebugModeEnabled;
-                        break;
+                while (entityActQueue.Count > 0)
+                {
+                    var currentEntity = entityActQueue.Peek();
 
-                    case Command.MoveEast:
-                        didPlayerAct = PlayerMoveOrAttack(-1, 0);
-                        break;
-                    case Command.MoveWest:
-                        didPlayerAct = PlayerMoveOrAttack(1, 0);
-                        break;
-                    case Command.MoveNorth:
-                        didPlayerAct = PlayerMoveOrAttack(0, -1);
-                        break;
-                    case Command.MoveSouth:
-                        didPlayerAct = PlayerMoveOrAttack(0, 1);
-                        break;
-                    case Command.Rest:
-                        didPlayerAct = true;
-                        var healed = Program.Player.GetComponent<FighterComponent>().HealPercent(0.1f);
-                        MessageLog.Add($"You rest for a turn and regain {healed} HP.", Color.LightGreen);
-                        break;
+                    if (!ProcessEntity(currentEntity))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        entityActQueue.Dequeue();
+                    }
                 }
             }
             else
             {
-                if (InputManager.LastCommand != Command.None)
+                if (InputManager.LastCommand != InputAction.None)
                 {
                     Program.CurrentState = new GameOverState();
                 }
             }
 
-            if (didPlayerAct)
-            {
-                map.ComputeFov(player.X, player.Y, Entity.PlayerFovRadius, true);
-                camera.Follow(player);
+            return true;
+        }
 
-                foreach (var entity in Program.Entities)
+        private bool ProcessEntity(Entity entity)
+        {
+            if (!entity.HasComponent<ActorComponent>())
+            {
+                return true;
+            }
+
+            var command = entity.GetComponent<ActorComponent>().GetCommand();
+
+            if (command == null)
+            {
+                return false;
+            }
+
+            while (true)
+            {
+                var result = command.Execute(entity);
+
+                if (result.Result)
                 {
-                    if (entity != player)
-                    {
-                        entity.GetComponent<BasicMonsterComponent>()?.TakeTurn();
-                    }
+                    break;
                 }
+
+                if (!result.Result && result.Alternative == null)
+                {
+                    return false;
+                }
+
+                command = result.Alternative;
+            }
+
+            if (entity == Program.Player)
+            {
+                Program.Map.ComputeFov(entity.X, entity.Y, Entity.PlayerFovRadius, true);
+                camera.Follow(entity);
             }
 
             return true;
@@ -103,22 +128,6 @@ namespace Roguelike.States
             {
                 ActiveRenderer = new AsciiRenderer();
             }
-        }
-
-        private bool PlayerMoveOrAttack(int x, int y)
-        {
-            var target = Program.Entities.FirstOrDefault(e => e.HasComponent<FighterComponent>() && e.X == Program.Player.X + x && e.Y == Program.Player.Y + y);
-
-            if (target != null)
-            {
-                Program.Player.GetComponent<FighterComponent>().Attack(target);
-            }
-            else
-            {
-                return Program.Player.Move(x, y);
-            }
-
-            return true;
         }
     }
 }

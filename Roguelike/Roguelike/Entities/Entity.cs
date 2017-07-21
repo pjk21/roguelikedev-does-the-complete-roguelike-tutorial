@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace Roguelike.Entities
 {
@@ -52,7 +53,12 @@ namespace Roguelike.Entities
 
         public bool HasComponent<T>() where T : Component
         {
-            return components.ContainsKey(typeof(T));
+            if (components.ContainsKey(typeof(T)))
+            {
+                return true;
+            }
+
+            return components.Keys.Any(t => typeof(T).IsAssignableFrom(t));
         }
 
         public T GetComponent<T>() where T : Component
@@ -60,6 +66,15 @@ namespace Roguelike.Entities
             if (components.TryGetValue(typeof(T), out Component component))
             {
                 return (T)component;
+            }
+            else
+            {
+                var derived = components.Keys.FirstOrDefault(t => typeof(T).IsAssignableFrom(t));
+
+                if (derived != null)
+                {
+                    return (T)components[derived];
+                }
             }
 
             return null;

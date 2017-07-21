@@ -1,11 +1,11 @@
-﻿using RogueSharp;
-using System;
+﻿using Roguelike.Entities.Commands;
+using RogueSharp;
 
 namespace Roguelike.Entities.Components
 {
-    public class BasicMonsterComponent : Component
+    public class BasicMonsterComponent : ActorComponent
     {
-        public void TakeTurn()
+        public override Command GetCommand()
         {
             if (Program.Map.IsInFov(Entity.X, Entity.Y))
             {
@@ -16,14 +16,16 @@ namespace Roguelike.Entities.Components
                     if (path != null)
                     {
                         var nextPosition = path.CurrentStep;
-                        Entity.Move(nextPosition.X - Entity.X, nextPosition.Y - Entity.Y);
+                        return new MoveCommand(nextPosition.X - Entity.X, nextPosition.Y - Entity.Y);
                     }
                 }
                 else if (Entity.HasComponent<FighterComponent>() && Program.Player.GetComponent<FighterComponent>()?.CurrentHealth > 0)
                 {
-                    Entity.GetComponent<FighterComponent>().Attack(Program.Player);
+                    return new AttackCommand(Program.Player);
                 }
             }
+
+            return new RestCommand();
         }
     }
 }

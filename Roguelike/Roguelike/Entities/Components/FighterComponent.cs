@@ -5,8 +5,6 @@ namespace Roguelike.Entities.Components
 {
     public class FighterComponent : Component
     {
-        public const float CriticalHitChance = 0.05f;
-
         public int MaximumHealth { get; set; }
         public int CurrentHealth { get; set; }
         public int Power { get; set; }
@@ -21,35 +19,6 @@ namespace Roguelike.Entities.Components
             if (CurrentHealth <= 0)
             {
                 DeathFunction?.Invoke(Entity);
-            }
-        }
-
-        public void Attack(Entity target)
-        {
-            if (target.GetComponent<FighterComponent>() == null)
-            {
-                return;
-            }
-
-            int damage = 0;
-
-            if (Program.Random.NextDouble() < CriticalHitChance)
-            {
-                damage = Power;
-            }
-            else
-            {
-                damage = Power - target.GetComponent<FighterComponent>().Defense;
-            }
-
-            if (damage > 0)
-            {
-                MessageLog.Add($"{Entity.Name} attacks {target.Name} for {damage} HP.");
-                target.GetComponent<FighterComponent>().Damage(damage);
-            }
-            else
-            {
-                MessageLog.Add($"{Entity.Name} attacks {target.Name} but it has no effect!");
             }
         }
 

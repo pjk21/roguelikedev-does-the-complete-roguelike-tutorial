@@ -12,11 +12,11 @@ namespace Roguelike.Input
     {
         private const string KeyMapFile = "keys.json";
 
-        private static Dictionary<Command, List<KeyPress>> inputMap = new Dictionary<Command, List<KeyPress>>();
+        private static Dictionary<InputAction, List<KeyPress>> inputMap = new Dictionary<InputAction, List<KeyPress>>();
 
         private static int lastInput;
 
-        public static Command LastCommand { get; private set; }
+        public static InputAction LastCommand { get; private set; }
 
         public static Point MousePosition { get; private set; } = new Point();
 
@@ -56,25 +56,25 @@ namespace Roguelike.Input
             File.WriteAllText(file, json);
         }
 
-        public static Dictionary<Command, List<KeyPress>> LoadKeyMap(string file)
+        public static Dictionary<InputAction, List<KeyPress>> LoadKeyMap(string file)
         {
             var json = File.ReadAllText(file);
-            return JsonConvert.DeserializeObject<Dictionary<Command, List<KeyPress>>>(json);
+            return JsonConvert.DeserializeObject<Dictionary<InputAction, List<KeyPress>>>(json);
         }
 
-        private static Dictionary<Command, List<KeyPress>> GetDefaultInputMap()
+        private static Dictionary<InputAction, List<KeyPress>> GetDefaultInputMap()
         {
-            var map = new Dictionary<Command, List<KeyPress>>();
+            var map = new Dictionary<InputAction, List<KeyPress>>();
 
-            map.Add(Command.Quit, new List<KeyPress> { new KeyPress(Terminal.TK_ESCAPE), new KeyPress(Terminal.TK_CLOSE) });
-            map.Add(Command.CycleRenderer, new List<KeyPress> { new KeyPress(Terminal.TK_F2) });
-            map.Add(Command.ToggleDebugMode, new List<KeyPress> { new KeyPress(Terminal.TK_F3) });
+            map.Add(InputAction.Quit, new List<KeyPress> { new KeyPress(Terminal.TK_ESCAPE), new KeyPress(Terminal.TK_CLOSE) });
+            map.Add(InputAction.CycleRenderer, new List<KeyPress> { new KeyPress(Terminal.TK_F2) });
+            map.Add(InputAction.ToggleDebugMode, new List<KeyPress> { new KeyPress(Terminal.TK_F3) });
 
-            map.Add(Command.MoveEast, new List<KeyPress> { new KeyPress(Terminal.TK_LEFT), new KeyPress(Terminal.TK_KP_4) });
-            map.Add(Command.MoveWest, new List<KeyPress> { new KeyPress(Terminal.TK_RIGHT), new KeyPress(Terminal.TK_KP_6) });
-            map.Add(Command.MoveNorth, new List<KeyPress> { new KeyPress(Terminal.TK_UP), new KeyPress(Terminal.TK_KP_8) });
-            map.Add(Command.MoveSouth, new List<KeyPress> { new KeyPress(Terminal.TK_DOWN), new KeyPress(Terminal.TK_KP_2) });
-            map.Add(Command.Rest, new List<KeyPress> { new KeyPress(Terminal.TK_SPACE) });
+            map.Add(InputAction.MoveEast, new List<KeyPress> { new KeyPress(Terminal.TK_RIGHT), new KeyPress(Terminal.TK_KP_6) });
+            map.Add(InputAction.MoveWest, new List<KeyPress> { new KeyPress(Terminal.TK_LEFT), new KeyPress(Terminal.TK_KP_4) });
+            map.Add(InputAction.MoveNorth, new List<KeyPress> { new KeyPress(Terminal.TK_UP), new KeyPress(Terminal.TK_KP_8) });
+            map.Add(InputAction.MoveSouth, new List<KeyPress> { new KeyPress(Terminal.TK_DOWN), new KeyPress(Terminal.TK_KP_2) });
+            map.Add(InputAction.Rest, new List<KeyPress> { new KeyPress(Terminal.TK_SPACE) });
 
             return map;
         }
