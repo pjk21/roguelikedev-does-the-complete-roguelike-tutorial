@@ -38,12 +38,10 @@ namespace Roguelike.Entities
             IsSolid = solid;
         }
 
-        public Entity AddComponent<T>(T component) where T : Component
+        public void AddComponent<T>(T component) where T : Component
         {
             component.Entity = this;
             components[typeof(T)] = component;
-
-            return this;
         }
 
         public void RemoveComponent<T>() where T : Component
