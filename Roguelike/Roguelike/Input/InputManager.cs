@@ -22,6 +22,9 @@ namespace Roguelike.Input
 
         static InputManager()
         {
+#if DEBUG
+            inputMap = GetDefaultInputMap();
+#else
             if (!File.Exists(KeyMapFile))
             {
                 inputMap = GetDefaultInputMap();
@@ -31,6 +34,7 @@ namespace Roguelike.Input
             {
                 inputMap = LoadKeyMap(KeyMapFile);
             }
+#endif
         }
 
         public static Point GetMouseWorldPosition(Camera camera)
