@@ -68,6 +68,11 @@ namespace Roguelike
             Map = new BspMapGenerator().Generate(80, 50);
             Map.ComputeFov(Player.X, Player.Y, Entity.PlayerFovRadius, true);
 
+            foreach (var cell in Map.GetAllCells())
+            {
+                Map.PathfindingMap.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable);
+            }
+
             CurrentState?.Initialize();
         }
 

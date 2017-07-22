@@ -6,10 +6,12 @@ namespace Roguelike.World
 {
     public class Map : RogueSharp.Map
     {
+        public RogueSharp.Map PathfindingMap { get; }
+
         public Map(int width, int height)
             : base(width, height)
         {
-
+            PathfindingMap = new RogueSharp.Map(Width, Height);
         }
 
         public void CreateRoom(Rectangle room)

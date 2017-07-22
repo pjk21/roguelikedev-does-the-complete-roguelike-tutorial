@@ -33,8 +33,12 @@ namespace Roguelike.Entities.Commands
                 return CommandResult.Failure;
             }
 
+            Program.Map.PathfindingMap.SetCellProperties(entity.X, entity.Y, true, true);
+
             entity.X += X;
             entity.Y += Y;
+
+            Program.Map.PathfindingMap.SetCellProperties(entity.X, entity.Y, true, false);
 
             return CommandResult.Success;
         }

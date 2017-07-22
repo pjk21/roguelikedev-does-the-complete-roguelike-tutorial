@@ -11,7 +11,20 @@ namespace Roguelike.Entities.Components
             {
                 if (Entity.DistanceTo(Program.Player) >= 2)
                 {
-                    var path = new PathFinder(Program.Map).ShortestPath(Program.Map.GetCell(Entity.X, Entity.Y), Program.Map.GetCell(Program.Player.X, Program.Player.Y));
+                    Program.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, true);
+                    Program.Map.PathfindingMap.SetCellProperties(Program.Player.X, Program.Player.Y, true, true);
+
+                    var pathFinder = new PathFinder(Program.Map.PathfindingMap);
+                    Path path = null;
+
+                    try
+                    {
+                        path = pathFinder.ShortestPath(Program.Map.PathfindingMap.GetCell(Entity.X, Entity.Y), Program.Map.PathfindingMap.GetCell(Program.Player.X, Program.Player.Y));
+                    }
+                    catch (PathNotFoundException) { }
+
+                    Program.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, false);
+                    Program.Map.PathfindingMap.SetCellProperties(Program.Player.X, Program.Player.Y, true, false);
 
                     if (path != null)
                     {
