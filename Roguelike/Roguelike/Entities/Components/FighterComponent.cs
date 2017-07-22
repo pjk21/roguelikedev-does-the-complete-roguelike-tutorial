@@ -15,6 +15,7 @@ namespace Roguelike.Entities.Components
         public void Damage(int amount)
         {
             CurrentHealth -= amount;
+            MessageLog.Add($"{source.Name} attacks {Entity.Name} for {amount} HP.");
 
             if (CurrentHealth <= 0)
             {

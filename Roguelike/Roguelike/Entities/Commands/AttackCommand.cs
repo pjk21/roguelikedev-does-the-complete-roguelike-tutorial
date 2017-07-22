@@ -36,8 +36,7 @@ namespace Roguelike.Entities.Commands
 
             if (damage > 0)
             {
-                MessageLog.Add($"{entity.Name} attacks {Target.Name} for {damage} HP.");
-                Target.GetComponent<FighterComponent>().Damage(damage);
+                Target.GetComponent<FighterComponent>().Damage(damage, entity, ElementType.Physical);
             }
             else
             {
