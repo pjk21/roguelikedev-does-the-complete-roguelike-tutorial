@@ -26,7 +26,7 @@ namespace Roguelike.World.MapGeneration
                         SpriteIndex = EntitySprites.Rat
                     };
 
-                    rat.AddComponent(new FighterComponent { MaximumHealth = 3, CurrentHealth = 3, Power = 1, Defense = 0, DeathFunction = DeathFunctions.MonsterDeath });
+                    rat.AddComponent(new FighterComponent { MaximumHealth = 3, CurrentHealth = 3, Power = 1, Defense = 0, AttackElement = ElementType.Poison, DeathFunction = DeathFunctions.MonsterDeath });
                     rat.AddComponent(new BasicMonsterComponent());
 
                     Program.Entities.Add(rat);

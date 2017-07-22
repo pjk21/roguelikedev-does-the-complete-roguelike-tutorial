@@ -62,6 +62,7 @@
     <Compile Include="Entities\Components\FighterComponent.cs" />
     <Compile Include="Entities\Components\PlayerInputComponent.cs" />
     <Compile Include="Entities\DeathFunctions.cs" />
+    <Compile Include="Entities\ElementType.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\EntitySprites.cs" />
     <Compile Include="Input\InputManager.cs" />
