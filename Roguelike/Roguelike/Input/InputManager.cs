@@ -47,8 +47,16 @@ namespace Roguelike.Input
 
         public static void Update()
         {
-            lastInput = Terminal.Read();
-            LastCommand = inputMap.FirstOrDefault(kvp => kvp.Value.Any(map => map.Check(lastInput))).Key;
+            if (Terminal.HasInput())
+            {
+                lastInput = Terminal.Read();
+                LastCommand = inputMap.FirstOrDefault(kvp => kvp.Value.Any(map => map.Check(lastInput))).Key;
+            }
+            else
+            {
+                lastInput = Terminal.TK_INPUT_NONE;
+                LastCommand = InputAction.None;
+            }
 
             MousePosition.X = Terminal.State(Terminal.TK_MOUSE_X);
             MousePosition.Y = Terminal.State(Terminal.TK_MOUSE_Y);
