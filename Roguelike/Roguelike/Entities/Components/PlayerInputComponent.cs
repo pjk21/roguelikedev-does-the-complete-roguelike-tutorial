@@ -43,13 +43,21 @@ namespace Roguelike.Entities.Components
                 switch (InputManager.LastCommand)
                 {
                     case InputAction.MoveEast:
-                        return new MoveCommand(-1, 0);
-                    case InputAction.MoveWest:
                         return new MoveCommand(1, 0);
+                    case InputAction.MoveWest:
+                        return new MoveCommand(-1, 0);
                     case InputAction.MoveNorth:
                         return new MoveCommand(0, -1);
                     case InputAction.MoveSouth:
                         return new MoveCommand(0, 1);
+                    case InputAction.MoveNorthEast:
+                        return new MoveCommand(1, -1);
+                    case InputAction.MoveNorthWest:
+                        return new MoveCommand(-1, -1);
+                    case InputAction.MoveSouthEast:
+                        return new MoveCommand(1, 1);
+                    case InputAction.MoveSouthWest:
+                        return new MoveCommand(-1, 1);
                     case InputAction.Rest:
                         return new RestCommand();
 

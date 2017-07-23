@@ -12,6 +12,10 @@
         MoveSouth,
         MoveEast,
         MoveWest,
+        MoveNorthEast,
+        MoveNorthWest,
+        MoveSouthEast,
+        MoveSouthWest,
         Rest,
 
         ClickMove
