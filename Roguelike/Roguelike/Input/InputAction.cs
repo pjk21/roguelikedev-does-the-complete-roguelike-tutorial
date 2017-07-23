@@ -12,6 +12,8 @@
         MoveSouth,
         MoveEast,
         MoveWest,
-        Rest
+        Rest,
+
+        ClickMove
     }
 }

@@ -88,6 +88,8 @@ namespace Roguelike.Input
             map.Add(InputAction.MoveSouth, new List<KeyPress> { new KeyPress(Terminal.TK_DOWN), new KeyPress(Terminal.TK_KP_2) });
             map.Add(InputAction.Rest, new List<KeyPress> { new KeyPress(Terminal.TK_R) });
 
+            map.Add(InputAction.ClickMove, new List<KeyPress> { new KeyPress(Terminal.TK_MOUSE_LEFT) });
+
             return map;
         }
     }
