@@ -11,7 +11,7 @@ namespace Roguelike.States
 {
     public class GameState : IState
     {
-        private Camera camera = new Camera(0, 0, Program.MapDisplayWidth, Program.MapDisplayHeight);
+        public static Camera Camera { get; } = new Camera(0, 0, Program.MapDisplayWidth, Program.MapDisplayHeight);
 
         public IRenderer ActiveRenderer { get; set; } = new SpriteRenderer();
 
@@ -19,16 +19,16 @@ namespace Roguelike.States
 
         public void Initialize()
         {
-            camera.Follow(Program.Player);
+            Camera.Follow(Program.Player);
 
             MessageLog.Add("Welcome to the dungeon, punk.", Color.LightSteelBlue);
         }
 
         public void Draw()
         {
-            ActiveRenderer.RenderMap(Program.Map, camera);
-            ActiveRenderer.RenderEntities(Program.Entities, camera);
-            ActiveRenderer.RenderUI(camera);
+            ActiveRenderer.RenderMap(Program.Map, Camera);
+            ActiveRenderer.RenderEntities(Program.Entities, Camera);
+            ActiveRenderer.RenderUI(Camera);
         }
 
         public bool Update()
@@ -112,7 +112,7 @@ namespace Roguelike.States
             if (entity == Program.Player)
             {
                 Program.Map.ComputeFov(entity.X, entity.Y, Entity.PlayerFovRadius, true);
-                camera.Follow(entity);
+                Camera.Follow(entity);
             }
 
             return true;
