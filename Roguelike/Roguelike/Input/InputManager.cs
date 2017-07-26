@@ -62,6 +62,12 @@ namespace Roguelike.Input
             MousePosition.Y = Terminal.State(Terminal.TK_MOUSE_Y);
         }
 
+        public static InputAction AwaitInput()
+        {
+            var input = Terminal.Read();
+            return inputMap.FirstOrDefault(kvp => kvp.Value.Any(map => map.Check(input))).Key;
+        }
+
         public static void SaveKeyMap(string file)
         {
             var json = JsonConvert.SerializeObject(inputMap, Formatting.Indented);
@@ -93,6 +99,8 @@ namespace Roguelike.Input
 
             map.Add(InputAction.Rest, new List<KeyPress> { new KeyPress(Terminal.TK_R) });
             map.Add(InputAction.Take, new List<KeyPress> { new KeyPress(Terminal.TK_G) });
+
+            map.Add(InputAction.ShowInventory, new List<KeyPress> { new KeyPress(Terminal.TK_I) });
 
             map.Add(InputAction.ClickMove, new List<KeyPress> { new KeyPress(Terminal.TK_MOUSE_LEFT) });
 

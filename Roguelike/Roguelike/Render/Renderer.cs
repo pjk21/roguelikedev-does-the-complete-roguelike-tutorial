@@ -17,6 +17,7 @@ namespace Roguelike.Render
         public const int ItemLayer = 9;
         public const int ActorLayer = 10;
         public const int UILayer = 20;
+        public const int DialogLayer = 25;
 
         public abstract void RenderEntities(IEnumerable<Entity> entities, Camera camera);
 

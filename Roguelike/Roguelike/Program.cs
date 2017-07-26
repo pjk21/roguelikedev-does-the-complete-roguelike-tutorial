@@ -55,6 +55,8 @@ namespace Roguelike
             Terminal.Set($"font: Cheepicus_8x8x2.png, size=16x16, codepage=437;");
             Terminal.Set($"0xE000: Tiles.png, size=16x16");
             Terminal.Set($"0xE800: Entities.png, size=16x16;");
+            Terminal.Set($"0xEF9B: UI.png, size=16x16;");
+            Terminal.Composition(true);
 
             Player = new Entity("Player", 25, 23, '@', Colours.Player, true)
             {

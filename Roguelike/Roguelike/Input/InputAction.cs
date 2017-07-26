@@ -20,6 +20,8 @@
         Rest,
         Take,
 
+        ShowInventory,
+
         ClickMove
     }
 }

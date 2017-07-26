@@ -79,7 +79,10 @@
     <Compile Include="States\GameOverState.cs" />
     <Compile Include="States\GameState.cs" />
     <Compile Include="States\IState.cs" />
+    <Compile Include="UI\Dialog.cs" />
+    <Compile Include="UI\InventoryDialog.cs" />
     <Compile Include="UI\MessageLog.cs" />
+    <Compile Include="UI\UISprites.cs" />
     <Compile Include="World\TileSprites.cs" />
     <Compile Include="Utils\ColorExtensions.cs" />
     <Compile Include="Utils\SystemExtensions.cs" />
@@ -112,6 +115,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Tiles.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UI.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

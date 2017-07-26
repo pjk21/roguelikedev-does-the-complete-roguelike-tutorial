@@ -1,6 +1,7 @@
 ﻿using Roguelike.Entities.Commands;
 using Roguelike.Input;
 using Roguelike.States;
+using Roguelike.UI;
 using RogueSharp;
 using System.Linq;
 
@@ -9,6 +10,8 @@ namespace Roguelike.Entities.Components
     public class PlayerInputComponent : ActorComponent
     {
         private Path currentPath;
+
+        private readonly InventoryDialog inventoryDialog = new InventoryDialog(1, 1, Program.MapDisplayWidth - 2, Program.MapDisplayHeight - 2);
 
         public override Command GetCommand()
         {
@@ -63,6 +66,9 @@ namespace Roguelike.Entities.Components
                         return new RestCommand();
                     case InputAction.Take:
                         return new TakeCommand();
+
+                    case InputAction.ShowInventory:
+                        return inventoryDialog.Show();
 
                     case InputAction.ClickMove:
                         return DoMouseMovement();
