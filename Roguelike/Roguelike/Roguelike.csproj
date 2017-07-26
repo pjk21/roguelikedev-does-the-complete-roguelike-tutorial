@@ -56,10 +56,13 @@
     <Compile Include="Entities\Commands\CommandResult.cs" />
     <Compile Include="Entities\Commands\MoveCommand.cs" />
     <Compile Include="Entities\Commands\RestCommand.cs" />
+    <Compile Include="Entities\Commands\TakeCommand.cs" />
     <Compile Include="Entities\Component.cs" />
     <Compile Include="Entities\Components\ActorComponent.cs" />
     <Compile Include="Entities\Components\BasicMonsterComponent.cs" />
     <Compile Include="Entities\Components\FighterComponent.cs" />
+    <Compile Include="Entities\Components\InventoryComponent.cs" />
+    <Compile Include="Entities\Components\ItemComponent.cs" />
     <Compile Include="Entities\Components\PlayerInputComponent.cs" />
     <Compile Include="Entities\DeathFunctions.cs" />
     <Compile Include="Entities\ElementType.cs" />

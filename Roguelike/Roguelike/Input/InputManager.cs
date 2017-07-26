@@ -90,7 +90,9 @@ namespace Roguelike.Input
             map.Add(InputAction.MoveNorthWest, new List<KeyPress> { new KeyPress(Terminal.TK_KP_7) });
             map.Add(InputAction.MoveSouthEast, new List<KeyPress> { new KeyPress(Terminal.TK_KP_3) });
             map.Add(InputAction.MoveSouthWest, new List<KeyPress> { new KeyPress(Terminal.TK_KP_1) });
+
             map.Add(InputAction.Rest, new List<KeyPress> { new KeyPress(Terminal.TK_R) });
+            map.Add(InputAction.Take, new List<KeyPress> { new KeyPress(Terminal.TK_G) });
 
             map.Add(InputAction.ClickMove, new List<KeyPress> { new KeyPress(Terminal.TK_MOUSE_LEFT) });
 

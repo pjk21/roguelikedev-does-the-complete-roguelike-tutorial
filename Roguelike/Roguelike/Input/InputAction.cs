@@ -16,7 +16,9 @@
         MoveNorthWest,
         MoveSouthEast,
         MoveSouthWest,
+
         Rest,
+        Take,
 
         ClickMove
     }

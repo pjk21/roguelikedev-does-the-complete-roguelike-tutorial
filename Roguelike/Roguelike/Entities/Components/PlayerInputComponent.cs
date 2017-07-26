@@ -58,8 +58,11 @@ namespace Roguelike.Entities.Components
                         return new MoveCommand(1, 1);
                     case InputAction.MoveSouthWest:
                         return new MoveCommand(-1, 1);
+
                     case InputAction.Rest:
                         return new RestCommand();
+                    case InputAction.Take:
+                        return new TakeCommand();
 
                     case InputAction.ClickMove:
                         return DoMouseMovement();
