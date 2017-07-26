@@ -7,5 +7,7 @@
         public const int Hound = 0xE802;
 
         public const int TombStone = 0xE803;
+
+        public const int Potion = 0xE804;
     }
 }

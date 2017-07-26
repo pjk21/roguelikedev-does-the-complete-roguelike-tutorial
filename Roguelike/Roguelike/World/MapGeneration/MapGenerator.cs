@@ -59,7 +59,11 @@ namespace Roguelike.World.MapGeneration
 
                 if (map.IsWalkable(x, y))
                 {
-                    var potion = new Entity("Healing Potion", x, y, '!', Color.Violet);
+                    var potion = new Entity("Healing Potion", x, y, '!', Color.Violet)
+                    {
+                        SpriteIndex = EntitySprites.Potion,
+                        LayerOffset = -1
+                    };
                     potion.AddComponent(new ItemComponent());
 
                     Program.Entities.Add(potion);
