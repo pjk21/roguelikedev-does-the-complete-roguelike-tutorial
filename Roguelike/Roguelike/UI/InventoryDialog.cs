@@ -4,6 +4,7 @@ using Roguelike.Entities.Commands;
 using Roguelike.Entities.Components;
 using Roguelike.Input;
 using Roguelike.Render;
+using System;
 using System.Drawing;
 
 namespace Roguelike.UI
@@ -90,7 +91,7 @@ namespace Roguelike.UI
                 var inventory = Program.Player.GetComponent<InventoryComponent>();
                 int y = Y + 3;
 
-                for (int i = 0; i < inventory.Items.Length; i++)
+                for (int i = 0; i < Math.Min(inventory.Items.Length, Height - 6); i++)
                 {
                     var item = inventory.Items[i];
 
@@ -105,6 +106,9 @@ namespace Roguelike.UI
 
                     Terminal.Print(X + 2, y++, item.Name);
                 }
+
+                Terminal.Color(Color.Green);
+                Terminal.Print(X + 2, Bounds.Bottom - 2, "(U)se");
 
                 Terminal.Refresh();
 
@@ -124,7 +128,7 @@ namespace Roguelike.UI
                     case InputAction.UseItem:
                         var item = inventory.Items[selectedIndex];
 
-                        if (item.UseFunction != null)
+                        if (item.GetComponent<ItemComponent>().UseFunction != null)
                         {
                             return new UseCommand(item);
                         }

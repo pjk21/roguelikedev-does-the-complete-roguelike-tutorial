@@ -70,6 +70,14 @@ namespace Roguelike
 
             Entities.Add(Player);
 
+            for (int i = 0; i < 100; i++)
+            {
+                var potion = new Entity("Potion", 0, 0, '!', Color.AliceBlue);
+                potion.AddComponent(new ItemComponent());
+
+                Player.GetComponent<InventoryComponent>().Add(potion);
+            }
+
             Map = new BspMapGenerator().Generate(80, 50);
             Map.ComputeFov(Player.X, Player.Y, Entity.PlayerFovRadius, true);
 

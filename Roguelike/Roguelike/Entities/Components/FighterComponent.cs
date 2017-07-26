@@ -56,14 +56,19 @@ namespace Roguelike.Entities.Components
             }
         }
 
-        public int HealPercent(float percent)
+        public int Heal(int amount)
         {
-            var amount = (int)Math.Round(MaximumHealth * percent);
             amount = amount.Clamp(0, MaximumHealth - CurrentHealth);
 
             CurrentHealth += amount;
 
-            return (int)amount;
+            return amount;
+        }
+
+        public int HealPercent(float percent)
+        {
+            var amount = (int)Math.Round(MaximumHealth * percent);
+            return Heal(amount);
         }
     }
 }

@@ -57,6 +57,7 @@
     <Compile Include="Entities\Commands\MoveCommand.cs" />
     <Compile Include="Entities\Commands\RestCommand.cs" />
     <Compile Include="Entities\Commands\TakeCommand.cs" />
+    <Compile Include="Entities\Commands\UseCommand.cs" />
     <Compile Include="Entities\Component.cs" />
     <Compile Include="Entities\Components\ActorComponent.cs" />
     <Compile Include="Entities\Components\BasicMonsterComponent.cs" />

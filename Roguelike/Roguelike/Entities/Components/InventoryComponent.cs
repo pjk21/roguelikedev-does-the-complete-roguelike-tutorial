@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Roguelike.Entities.Components
 {
@@ -19,13 +15,16 @@ namespace Roguelike.Entities.Components
             Program.Entities.Remove(item);
         }
 
-        public void Remove(Entity item)
+        public void Remove(Entity item, bool drop)
         {
             items.Remove(item);
 
-            item.X = Entity.X;
-            item.Y = Entity.Y;
-            Program.Entities.Add(item);
+            if (drop)
+            {
+                item.X = Entity.X;
+                item.Y = Entity.Y;
+                Program.Entities.Add(item);
+            }
         }
     }
 }

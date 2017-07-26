@@ -21,6 +21,7 @@
         Take,
 
         ShowInventory,
+        UseItem,
 
         ClickMove
     }
