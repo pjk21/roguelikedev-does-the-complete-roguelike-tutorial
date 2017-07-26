@@ -14,7 +14,7 @@ namespace Roguelike.Render
             {
                 if (camera.Contains(entity.X, entity.Y) && Program.Map.IsInFov(entity.X, entity.Y) || Program.IsDebugModeEnabled)
                 {
-                    Terminal.Layer(EntityLayer + entity.LayerOffset);
+                    Terminal.Layer(entity.RenderLayer);
 
                     Terminal.Color(entity.Colour);
                     Terminal.Put(entity.X - camera.X, entity.Y - camera.Y, entity.Character);

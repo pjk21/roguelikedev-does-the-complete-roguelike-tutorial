@@ -13,7 +13,9 @@ namespace Roguelike.Render
     public abstract class Renderer : IRenderer
     {
         public const int MapLayer = 0;
-        public const int EntityLayer = 10;
+        public const int CorpseLayer = 8;
+        public const int ItemLayer = 9;
+        public const int ActorLayer = 10;
         public const int UILayer = 20;
 
         public abstract void RenderEntities(IEnumerable<Entity> entities, Camera camera);

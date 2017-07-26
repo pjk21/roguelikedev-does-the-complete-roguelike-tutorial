@@ -1,5 +1,6 @@
 ﻿using Roguelike.Entities;
 using Roguelike.Entities.Components;
+using Roguelike.Render;
 using System.Drawing;
 using Rectangle = RogueSharp.Rectangle;
 
@@ -25,7 +26,8 @@ namespace Roguelike.World.MapGeneration
                 {
                     var rat = new Entity("Rat", x, y, 'r', Colours.Rat, true)
                     {
-                        SpriteIndex = EntitySprites.Rat
+                        SpriteIndex = EntitySprites.Rat,
+                        RenderLayer = Renderer.ActorLayer
                     };
 
                     rat.AddComponent(new FighterComponent { MaximumHealth = 3, CurrentHealth = 3, Power = 1, Defense = 0, AttackElement = ElementType.Poison, DeathFunction = DeathFunctions.MonsterDeath });
@@ -37,7 +39,8 @@ namespace Roguelike.World.MapGeneration
                 {
                     var hound = new Entity("Hound", x, y, 'h', Colours.Hound, true)
                     {
-                        SpriteIndex = EntitySprites.Hound
+                        SpriteIndex = EntitySprites.Hound,
+                        RenderLayer = Renderer.ActorLayer
                     };
 
                     hound.AddComponent(new FighterComponent { MaximumHealth = 8, CurrentHealth = 8, Power = 3, Defense = 1, DeathFunction = DeathFunctions.MonsterDeath });
@@ -62,7 +65,7 @@ namespace Roguelike.World.MapGeneration
                     var potion = new Entity("Healing Potion", x, y, '!', Color.Violet)
                     {
                         SpriteIndex = EntitySprites.Potion,
-                        LayerOffset = -1
+                        RenderLayer = Renderer.ItemLayer
                     };
                     potion.AddComponent(new ItemComponent());
 

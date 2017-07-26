@@ -1,6 +1,6 @@
 ﻿using Roguelike.Entities.Components;
+using Roguelike.Render;
 using Roguelike.UI;
-using System;
 using System.Drawing;
 
 namespace Roguelike.Entities
@@ -14,7 +14,7 @@ namespace Roguelike.Entities
             entity.Character = '%';
             entity.Colour = Color.Red;
             entity.SpriteIndex = EntitySprites.TombStone;
-            entity.LayerOffset = -1;
+            entity.RenderLayer = Renderer.CorpseLayer;
         }
 
         public static void MonsterDeath(Entity entity)
@@ -24,7 +24,7 @@ namespace Roguelike.Entities
             entity.Character = '%';
             entity.Colour = Color.Red;
             entity.SpriteIndex = EntitySprites.TombStone;
-            entity.LayerOffset = -1;
+            entity.RenderLayer = Renderer.CorpseLayer;
 
             entity.IsSolid = false;
 
