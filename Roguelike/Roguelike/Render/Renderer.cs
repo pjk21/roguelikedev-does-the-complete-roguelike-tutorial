@@ -35,6 +35,7 @@ namespace Roguelike.Render
 
         public virtual void RenderUI(Camera camera)
         {
+            Terminal.Color(Color.White);
             Terminal.Layer(UILayer);
 
             for (int y = 0; y < Program.ScreenHeight; y++)
