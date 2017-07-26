@@ -14,7 +14,7 @@ namespace Roguelike.Entities.Components
         {
             if (currentPath != null)
             {
-                if (Program.Entities.Any(e => e != Entity && Program.Map.IsInFov(e.X, e.Y)) || InputManager.LastCommand == InputAction.ClickMove)
+                if (Program.Entities.Any(e => e != Entity && e.HasComponent<ActorComponent>() && Program.Map.IsInFov(e.X, e.Y)) || InputManager.LastCommand == InputAction.ClickMove)
                 {
                     currentPath = null;
                     return null;
