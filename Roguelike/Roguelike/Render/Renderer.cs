@@ -58,14 +58,18 @@ namespace Roguelike.Render
             Terminal.Print(Program.ScreenWidth - playerFighter.Defense.ToString().Length - 1, 4, playerFighter.Defense.ToString());
 
             var mouse = InputManager.GetMouseWorldPosition(camera);
-            var entitiesUnderMouse = Program.Entities
-                .Where(e => e.X == mouse.X && e.Y == mouse.Y)
-                .Take(5);
 
-            int entityUnderMouseY = 6;
-            foreach (var entity in entitiesUnderMouse)
+            if (Program.Map.IsInFov(mouse.X, mouse.Y))
             {
-                Terminal.Print(x, entityUnderMouseY++, entity.Name);
+                var entitiesUnderMouse = Program.Entities
+                    .Where(e => e.X == mouse.X && e.Y == mouse.Y)
+                    .Take(5);
+
+                int entityUnderMouseY = 6;
+                foreach (var entity in entitiesUnderMouse)
+                {
+                    Terminal.Print(x, entityUnderMouseY++, entity.Name);
+                }
             }
 
             MessageLog.Render();
