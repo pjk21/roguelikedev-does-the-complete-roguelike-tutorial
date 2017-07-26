@@ -1,12 +1,14 @@
 ﻿using Roguelike.Entities;
 using Roguelike.Entities.Components;
-using RogueSharp;
+using System.Drawing;
+using Rectangle = RogueSharp.Rectangle;
 
 namespace Roguelike.World.MapGeneration
 {
     public abstract class MapGenerator : IMapGenerator
     {
         public int MaximumMonstersPerRoom { get; set; } = 3;
+        public int MaximumItemsPerRoom { get; set; } = 2;
 
         public abstract Map Generate(int width, int height);
 
@@ -42,6 +44,24 @@ namespace Roguelike.World.MapGeneration
                     hound.AddComponent(new BasicMonsterComponent());
 
                     Program.Entities.Add(hound);
+                }
+            }
+        }
+
+        protected virtual void SpawnItems(Map map, Rectangle room)
+        {
+            int numberOfItems = Program.Random.Next(MaximumItemsPerRoom + 1);
+
+            for (int i = 0; i < numberOfItems; i++)
+            {
+                int x = Program.Random.Next(room.Left + 1, room.Right);
+                int y = Program.Random.Next(room.Top + 1, room.Bottom);
+
+                if (map.IsWalkable(x, y))
+                {
+                    var potion = new Entity("Healing Potion", x, y, '!', Color.Violet);
+
+                    Program.Entities.Add(potion);
                 }
             }
         }

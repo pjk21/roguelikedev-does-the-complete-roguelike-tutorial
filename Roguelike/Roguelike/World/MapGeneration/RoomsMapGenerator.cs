@@ -51,6 +51,7 @@ namespace Roguelike.World.MapGeneration
                         }
 
                         SpawnMonsters(room);
+                        SpawnItems(map, room);
                     }
 
                     rooms.Add(room);
