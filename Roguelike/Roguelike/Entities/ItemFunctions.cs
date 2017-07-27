@@ -59,21 +59,23 @@ namespace Roguelike.Entities
 
         public static bool ConfuseScroll(Entity target)
         {
-            var closestMonster = Program.Entities
-                .Where(e => e.HasComponent<BasicMonsterComponent>() && e != Program.Player && e.DistanceTo(Program.Player) <= ConfuseRange)
-                .OrderBy(e => e.DistanceTo(Program.Player))
-                .FirstOrDefault();
+            var cell = new SelectCellDialog().Show();
 
-            if (closestMonster != null)
+            if (cell != null)
             {
-                MessageLog.Add($"{closestMonster.Name} is confused.", Color.LightBlue);
+                var enemy = Program.Entities.FirstOrDefault(e => e.HasComponent<FighterComponent>() && e.X == cell.X && e.Y == cell.Y);
 
-                var oldAI = closestMonster.GetComponent<BasicMonsterComponent>();
-                var newAI = new ConfusedMonsterAI { TurnsRemaining = ConfuseTurns, PreviousAI = oldAI };
+                if (enemy != null)
+                {
+                    MessageLog.Add($"{enemy.Name} is confused.", Color.LightBlue);
 
-                closestMonster.RemoveComponent<BasicMonsterComponent>();
-                closestMonster.AddComponent(newAI);
-                return true;
+                    var oldAI = enemy.GetComponent<BasicMonsterComponent>();
+                    var newAI = new ConfusedMonsterAI { TurnsRemaining = ConfuseTurns, PreviousAI = oldAI };
+
+                    enemy.RemoveComponent<BasicMonsterComponent>();
+                    enemy.AddComponent(newAI);
+                    return true;
+                }
             }
 
             MessageLog.Add($"Confuse scroll can not hit any monsters.", Color.Orange);
