@@ -9,5 +9,6 @@
         public const int TombStone = 0xE803;
 
         public const int Potion = 0xE804;
+        public const int Scroll = 0xE805;
     }
 }

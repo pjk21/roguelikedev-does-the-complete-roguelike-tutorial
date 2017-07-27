@@ -62,14 +62,29 @@ namespace Roguelike.World.MapGeneration
 
                 if (map.IsWalkable(x, y))
                 {
-                    var potion = new Entity("Healing Potion", x, y, '!', Color.Violet)
+                    if (Program.Random.NextDouble() < 0.7)
                     {
-                        SpriteIndex = EntitySprites.Potion,
-                        RenderLayer = Renderer.ItemLayer
-                    };
-                    potion.AddComponent(new ItemComponent { UseFunction = ItemFunctions.PotionFunction });
+                        var potion = new Entity("Healing Potion", x, y, '!', Color.Violet)
+                        {
+                            SpriteIndex = EntitySprites.Potion,
+                            RenderLayer = Renderer.ItemLayer
+                        };
+                        potion.AddComponent(new ItemComponent { UseFunction = ItemFunctions.PotionFunction });
 
-                    Program.Entities.Add(potion);
+                        Program.Entities.Add(potion);
+                    }
+                    else
+                    {
+                        var lightningScroll = new Entity("Lightning Scroll", x, y, '[', Color.LightBlue)
+                        {
+                            SpriteIndex = EntitySprites.Scroll,
+                            SpriteTint = Color.LightBlue,
+                            RenderLayer = Renderer.ItemLayer
+                        };
+                        lightningScroll.AddComponent(new ItemComponent { UseFunction = ItemFunctions.LightningScroll });
+
+                        Program.Entities.Add(lightningScroll);
+                    }
                 }
             }
         }

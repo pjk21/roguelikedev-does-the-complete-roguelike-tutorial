@@ -1,6 +1,7 @@
 ﻿using Roguelike.UI;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Roguelike.Entities.Components
 {
@@ -43,11 +44,7 @@ namespace Roguelike.Entities.Components
 
             if (source != null)
             {
-                MessageLog.Add($"{source.Name} attacks {Entity.Name} for {amount} HP.");
-            }
-            else
-            {
-                MessageLog.Add($"{Entity.Name} is damaged for {amount} HP.");
+                MessageLog.Add($"{source.Name} attacks {Entity.Name} for {amount} HP.", Color.Red);
             }
 
             if (CurrentHealth <= 0)
