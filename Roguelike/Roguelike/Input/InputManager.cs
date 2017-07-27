@@ -102,6 +102,7 @@ namespace Roguelike.Input
 
             map.Add(InputAction.ShowInventory, new List<KeyPress> { new KeyPress(Terminal.TK_I) });
             map.Add(InputAction.UseItem, new List<KeyPress> { new KeyPress(Terminal.TK_U) });
+            map.Add(InputAction.DropItem, new List<KeyPress> { new KeyPress(Terminal.TK_D) });
 
             map.Add(InputAction.ClickMove, new List<KeyPress> { new KeyPress(Terminal.TK_MOUSE_LEFT) });
 

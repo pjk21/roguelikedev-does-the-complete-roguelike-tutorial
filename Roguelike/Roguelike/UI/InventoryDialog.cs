@@ -115,7 +115,7 @@ namespace Roguelike.UI
                 }
 
                 Terminal.Color(Color.Green);
-                Terminal.Print(X + 2, Bounds.Bottom - 2, "(U)se");
+                Terminal.Print(X + 2, Bounds.Bottom - 2, "(U)se - (D)rop");
 
                 Terminal.Refresh();
 
@@ -162,6 +162,9 @@ namespace Roguelike.UI
                         {
                             return new UseCommand(item);
                         }
+                        break;
+                    case InputAction.DropItem:
+                        inventory.Remove(inventory.Items[selectedIndex], true);
                         break;
                 }
             }
