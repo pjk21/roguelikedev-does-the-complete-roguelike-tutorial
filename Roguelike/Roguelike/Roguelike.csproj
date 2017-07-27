@@ -69,6 +69,7 @@
     <Compile Include="Entities\ElementType.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\EntitySprites.cs" />
+    <Compile Include="Entities\ItemFunctions.cs" />
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="Input\InputAction.cs" />
     <Compile Include="Input\KeyPress.cs" />

@@ -67,7 +67,7 @@ namespace Roguelike.World.MapGeneration
                         SpriteIndex = EntitySprites.Potion,
                         RenderLayer = Renderer.ItemLayer
                     };
-                    potion.AddComponent(new ItemComponent { UseFunction = ItemComponent.PotionFunction });
+                    potion.AddComponent(new ItemComponent { UseFunction = ItemFunctions.PotionFunction });
 
                     Program.Entities.Add(potion);
                 }
