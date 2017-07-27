@@ -41,7 +41,7 @@ namespace Roguelike.Entities
         public void AddComponent<T>(T component) where T : Component
         {
             component.Entity = this;
-            components[typeof(T)] = component;
+            components[component.GetType()] = component;
         }
 
         public void RemoveComponent<T>() where T : Component

@@ -61,6 +61,7 @@
     <Compile Include="Entities\Component.cs" />
     <Compile Include="Entities\Components\ActorComponent.cs" />
     <Compile Include="Entities\Components\BasicMonsterComponent.cs" />
+    <Compile Include="Entities\Components\ConfusedMonsterAI.cs" />
     <Compile Include="Entities\Components\FighterComponent.cs" />
     <Compile Include="Entities\Components\InventoryComponent.cs" />
     <Compile Include="Entities\Components\ItemComponent.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="UI\InventoryDialog.cs" />
     <Compile Include="UI\MessageLog.cs" />
     <Compile Include="UI\UISprites.cs" />
+    <Compile Include="Utils\RandomExtensions.cs" />
     <Compile Include="World\TileSprites.cs" />
     <Compile Include="Utils\ColorExtensions.cs" />
     <Compile Include="Utils\SystemExtensions.cs" />

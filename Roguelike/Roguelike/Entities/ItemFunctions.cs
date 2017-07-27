@@ -12,6 +12,9 @@ namespace Roguelike.Entities
         public const int LightningRange = 5;
         public const int LightningDamage = 10;
 
+        public const int ConfuseRange = 8;
+        public const int ConfuseTurns = 5;
+
         public static bool PotionFunction(Entity target)
         {
             if (target.HasComponent<FighterComponent>())
@@ -48,6 +51,29 @@ namespace Roguelike.Entities
             }
 
             MessageLog.Add($"Lightning scroll can not hit any monsters.", Color.Orange);
+            return false;
+        }
+
+        public static bool ConfuseScroll(Entity target)
+        {
+            var closestMonster = Program.Entities
+                .Where(e => e.HasComponent<BasicMonsterComponent>() && e != Program.Player && e.DistanceTo(Program.Player) <= ConfuseRange)
+                .OrderBy(e => e.DistanceTo(Program.Player))
+                .FirstOrDefault();
+
+            if (closestMonster != null)
+            {
+                MessageLog.Add($"{closestMonster.Name} is confused.", Color.LightBlue);
+
+                var oldAI = closestMonster.GetComponent<BasicMonsterComponent>();
+                var newAI = new ConfusedMonsterAI { TurnsRemaining = ConfuseTurns, PreviousAI = oldAI };
+
+                closestMonster.RemoveComponent<BasicMonsterComponent>();
+                closestMonster.AddComponent(newAI);
+                return true;
+            }
+
+            MessageLog.Add($"Confuse scroll can not hit any monsters.", Color.Orange);
             return false;
         }
     }

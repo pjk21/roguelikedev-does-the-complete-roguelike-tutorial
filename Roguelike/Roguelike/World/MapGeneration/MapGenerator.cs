@@ -62,7 +62,9 @@ namespace Roguelike.World.MapGeneration
 
                 if (map.IsWalkable(x, y))
                 {
-                    if (Program.Random.NextDouble() < 0.7)
+                    var itemChance = Program.Random.NextDouble();
+
+                    if (itemChance < 0.7)
                     {
                         var potion = new Entity("Healing Potion", x, y, '!', Color.Violet)
                         {
@@ -73,7 +75,7 @@ namespace Roguelike.World.MapGeneration
 
                         Program.Entities.Add(potion);
                     }
-                    else
+                    else if (itemChance < 0.85)
                     {
                         var lightningScroll = new Entity("Lightning Scroll", x, y, '[', Color.LightBlue)
                         {
@@ -84,6 +86,18 @@ namespace Roguelike.World.MapGeneration
                         lightningScroll.AddComponent(new ItemComponent { UseFunction = ItemFunctions.LightningScroll });
 
                         Program.Entities.Add(lightningScroll);
+                    }
+                    else
+                    {
+                        var confuseScroll = new Entity("Confuse Scroll", x, y, '[', Color.LightYellow)
+                        {
+                            SpriteIndex = EntitySprites.Scroll,
+                            SpriteTint = Color.LightYellow,
+                            RenderLayer = Renderer.ItemLayer
+                        };
+                        confuseScroll.AddComponent(new ItemComponent { UseFunction = ItemFunctions.ConfuseScroll });
+
+                        Program.Entities.Add(confuseScroll);
                     }
                 }
             }
