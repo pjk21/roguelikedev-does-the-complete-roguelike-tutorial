@@ -93,7 +93,6 @@ namespace Roguelike.UI
 
                 string title = $"Inventory ({currentPage}/{pageCount})";
                 Terminal.Print(X + Width / 2 - title.Length / 2, Y + 1, title);
-                Terminal.Print(X + Width / 2, Y + 2, $"{selectedIndex}");
 
                 int y = Y + 3;
 
@@ -150,6 +149,11 @@ namespace Roguelike.UI
                         currentPage = currentPage.Clamp(0, pageCount);
 
                         selectedIndex = itemsPerPage * currentPage;
+                        break;
+                    case InputAction.ClickMove:
+                        var mouseY = Terminal.State(Terminal.TK_MOUSE_Y);
+                        selectedIndex = (itemsPerPage * currentPage) + (mouseY - Y - 3);
+                        selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);
                         break;
                     case InputAction.UseItem:
                         var item = inventory.Items[selectedIndex];
