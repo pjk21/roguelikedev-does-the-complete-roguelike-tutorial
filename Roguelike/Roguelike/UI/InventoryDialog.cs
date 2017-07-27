@@ -79,6 +79,11 @@ namespace Roguelike.UI
             Terminal.Layer(Renderer.DialogLayer + 1);
 
             int selectedIndex = 0;
+            var inventory = Program.Player.GetComponent<InventoryComponent>();
+
+            int itemsPerPage = Height - 6;
+            int pageCount = inventory.Items.Length / itemsPerPage;
+            int currentPage = 0;
 
             while (show)
             {
@@ -86,12 +91,15 @@ namespace Roguelike.UI
                 Terminal.BkColor(Color.Black);
                 Terminal.ClearArea(X, Y, Width, Height);
 
-                Terminal.Print(X + Width / 2 - "Inventory".Length / 2, Y + 1, "Inventory");
+                string title = $"Inventory ({currentPage}/{pageCount})";
+                Terminal.Print(X + Width / 2 - title.Length / 2, Y + 1, title);
+                Terminal.Print(X + Width / 2, Y + 2, $"{selectedIndex}");
 
-                var inventory = Program.Player.GetComponent<InventoryComponent>();
                 int y = Y + 3;
 
-                for (int i = 0; i < Math.Min(inventory.Items.Length, Height - 6); i++)
+                int start = itemsPerPage * currentPage;
+                int end = start + itemsPerPage;
+                for (int i = start; i < Math.Min(end, inventory.Items.Length); i++)
                 {
                     var item = inventory.Items[i];
 
@@ -121,9 +129,27 @@ namespace Roguelike.UI
 
                     case InputAction.MoveNorth:
                         selectedIndex--;
+                        selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);
+
+                        currentPage = selectedIndex / itemsPerPage;
                         break;
                     case InputAction.MoveSouth:
                         selectedIndex++;
+                        selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);
+
+                        currentPage = selectedIndex / itemsPerPage;
+                        break;
+                    case InputAction.MoveEast:
+                        currentPage++;
+                        currentPage = currentPage.Clamp(0, pageCount);
+
+                        selectedIndex = itemsPerPage * currentPage;
+                        break;
+                    case InputAction.MoveWest:
+                        currentPage--;
+                        currentPage = currentPage.Clamp(0, pageCount);
+
+                        selectedIndex = itemsPerPage * currentPage;
                         break;
                     case InputAction.UseItem:
                         var item = inventory.Items[selectedIndex];
@@ -134,8 +160,6 @@ namespace Roguelike.UI
                         }
                         break;
                 }
-
-                selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);
             }
 
             return null;
