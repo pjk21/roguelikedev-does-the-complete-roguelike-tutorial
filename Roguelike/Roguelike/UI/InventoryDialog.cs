@@ -82,7 +82,7 @@ namespace Roguelike.UI
             var inventory = Program.Player.GetComponent<InventoryComponent>();
 
             int itemsPerPage = Height - 6;
-            int pageCount = inventory.Items.Length / itemsPerPage;
+            int pageCount = (inventory.Items.Length - 1) / itemsPerPage;
             int currentPage = 0;
 
             while (show)
