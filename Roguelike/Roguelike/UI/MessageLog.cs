@@ -32,6 +32,7 @@ namespace Roguelike.UI
 
         public static void Render()
         {
+            Terminal.Color(Color.White);
             Terminal.Layer(Renderer.UILayer);
             int yOffset = 0;
 

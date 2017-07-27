@@ -16,6 +16,7 @@ namespace Roguelike.Render
         public const int CorpseLayer = 8;
         public const int ItemLayer = 9;
         public const int ActorLayer = 10;
+        public const int OverlayLayer = 11;
         public const int UILayer = 20;
         public const int DialogLayer = 25;
 
@@ -75,6 +76,7 @@ namespace Roguelike.Render
                 }
             }
 
+            Terminal.Layer(OverlayLayer);
             Terminal.Color(Color.Yellow);
             Terminal.Put(mouse.X - camera.X, mouse.Y - camera.Y, UISprites.TileHighlighter);
 

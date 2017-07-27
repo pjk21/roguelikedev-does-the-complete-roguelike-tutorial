@@ -15,6 +15,9 @@ namespace Roguelike.Entities
         public const int ConfuseRange = 8;
         public const int ConfuseTurns = 5;
 
+        public const int FireballRadius = 3;
+        public const int FireballDamage = 10;
+
         public static bool PotionFunction(Entity target)
         {
             if (target.HasComponent<FighterComponent>())
@@ -74,6 +77,28 @@ namespace Roguelike.Entities
             }
 
             MessageLog.Add($"Confuse scroll can not hit any monsters.", Color.Orange);
+            return false;
+        }
+
+        public static bool FireballScroll(Entity target)
+        {
+            var cell = new SelectCellDialog().Show();
+
+            if (cell != null)
+            {
+                MessageLog.Add("The fireball explodes!", Color.Red);
+
+                var victims = Program.Entities.Where(e => e.HasComponent<FighterComponent>() && e.DistanceTo(cell.X, cell.Y) <= FireballRadius);
+
+                foreach (var victim in victims)
+                {
+                    MessageLog.Add($"{victim.Name} is burned for {FireballDamage} HP!", Color.Red);
+                    victim.GetComponent<FighterComponent>().Damage(FireballDamage, null, ElementType.Fire);
+                }
+
+                return true;
+            }
+
             return false;
         }
     }

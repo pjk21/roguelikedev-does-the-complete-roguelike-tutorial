@@ -93,8 +93,13 @@ namespace Roguelike.Entities
 
         public float DistanceTo(Entity other)
         {
-            var dx = other.X - X;
-            var dy = other.Y - Y;
+            return DistanceTo(other.X, other.Y);
+        }
+
+        public float DistanceTo(int x, int y)
+        {
+            var dx = x - X;
+            var dy = y - Y;
 
             return (float)Math.Sqrt(dx * dx + dy * dy);
         }
