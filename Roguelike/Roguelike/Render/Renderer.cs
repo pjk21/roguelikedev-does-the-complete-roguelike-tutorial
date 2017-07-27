@@ -75,6 +75,9 @@ namespace Roguelike.Render
                 }
             }
 
+            Terminal.Color(Color.Yellow);
+            Terminal.Put(mouse.X - camera.X, mouse.Y - camera.Y, UISprites.TileHighlighter);
+
             MessageLog.Render();
         }
     }

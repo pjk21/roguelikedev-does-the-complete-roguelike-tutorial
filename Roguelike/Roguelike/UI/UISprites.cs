@@ -3,6 +3,7 @@
     public static class UISprites
     {
         public const int DialogBackground = 0xEF9B;
+        public const int TileHighlighter = 0xEF9C;
 
         public const int VerticalBorder = 0x2502;
         public const int HorizontalBorder = 0x2500;
