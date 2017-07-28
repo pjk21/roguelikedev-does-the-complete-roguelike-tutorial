@@ -20,7 +20,18 @@ namespace Roguelike.Render
         public const int UILayer = 20;
         public const int DialogLayer = 25;
 
-        public abstract void RenderEntities(IEnumerable<Entity> entities, Camera camera);
+        public void RenderEntities(IEnumerable<Entity> entities, Camera camera)
+        {
+            foreach (var entity in entities)
+            {
+                if (camera.Contains(entity.X, entity.Y) && (Program.Map.IsInFov(entity.X, entity.Y) || Program.IsDebugModeEnabled))
+                {
+                    RenderEntity(entity, camera);
+                }
+            }
+        }
+
+        protected abstract void RenderEntity(Entity entity, Camera camera);
 
         public void RenderMap(Map map, Camera camera)
         {

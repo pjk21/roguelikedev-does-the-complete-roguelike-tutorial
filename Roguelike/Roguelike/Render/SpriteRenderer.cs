@@ -1,32 +1,25 @@
 ﻿using BearLib;
 using Roguelike.Entities;
 using Roguelike.World;
-using System.Collections.Generic;
 using System.Drawing;
 
 namespace Roguelike.Render
 {
     public class SpriteRenderer : Renderer
     {
-        public override void RenderEntities(IEnumerable<Entity> entities, Camera camera)
+        protected override void RenderEntity(Entity entity, Camera camera)
         {
-            foreach (var entity in entities)
-            {
-                if (camera.Contains(entity.X, entity.Y) && Program.Map.IsInFov(entity.X, entity.Y) || Program.IsDebugModeEnabled)
-                {
-                    Terminal.Layer(entity.RenderLayer);
+            Terminal.Layer(entity.RenderLayer);
 
-                    if (entity.SpriteIndex.HasValue)
-                    {
-                        Terminal.Color(entity.SpriteTint);
-                        Terminal.Put(entity.X - camera.X, entity.Y - camera.Y, entity.SpriteIndex.Value);
-                    }
-                    else
-                    {
-                        Terminal.Color(entity.Colour);
-                        Terminal.Put(entity.X - camera.X, entity.Y - camera.Y, entity.Character);
-                    }
-                }
+            if (entity.SpriteIndex.HasValue)
+            {
+                Terminal.Color(entity.SpriteTint);
+                Terminal.Put(entity.X - camera.X, entity.Y - camera.Y, entity.SpriteIndex.Value);
+            }
+            else
+            {
+                Terminal.Color(entity.Colour);
+                Terminal.Put(entity.X - camera.X, entity.Y - camera.Y, entity.Character);
             }
         }
 
