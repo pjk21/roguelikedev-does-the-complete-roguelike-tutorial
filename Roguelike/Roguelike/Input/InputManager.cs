@@ -16,8 +16,6 @@ namespace Roguelike.Input
 
         private static int lastInput;
 
-        public static InputAction LastCommand { get; private set; }
-
         public static Point MousePosition { get; private set; } = new Point();
 
         static InputManager()
@@ -45,27 +43,47 @@ namespace Roguelike.Input
             return new Point(x, y);
         }
 
-        public static void Update()
+        public static void Update(bool shouldBlock = false)
         {
-            if (Terminal.HasInput())
+            if (Terminal.HasInput() || shouldBlock)
             {
                 lastInput = Terminal.Read();
-                LastCommand = inputMap.FirstOrDefault(kvp => kvp.Value.Any(map => map.Check(lastInput))).Key;
             }
             else
             {
                 lastInput = Terminal.TK_INPUT_NONE;
-                LastCommand = InputAction.None;
             }
 
             MousePosition.X = Terminal.State(Terminal.TK_MOUSE_X);
             MousePosition.Y = Terminal.State(Terminal.TK_MOUSE_Y);
         }
 
-        public static InputAction AwaitInput()
+        public static bool AnyKeyPress()
         {
-            var input = Terminal.Read();
-            return inputMap.FirstOrDefault(kvp => kvp.Value.Any(map => map.Check(input))).Key;
+            return lastInput != Terminal.TK_INPUT_NONE &&
+                lastInput != Terminal.TK_MOUSE_LEFT &&
+                lastInput != Terminal.TK_MOUSE_RIGHT &&
+                lastInput != Terminal.TK_MOUSE_MIDDLE &&
+                lastInput != Terminal.TK_MOUSE_MOVE &&
+                lastInput != Terminal.TK_MOUSE_SCROLL &&
+                lastInput != Terminal.TK_MOUSE_WHEEL;
+        }
+
+        public static bool CheckAction(InputAction action, bool consume = true)
+        {
+            if (inputMap.TryGetValue(action, out List<KeyPress> binds))
+            {
+                var result = binds.Any(bind => bind.Check(lastInput));
+
+                if (result && consume)
+                {
+                    lastInput = Terminal.TK_INPUT_NONE;
+                }
+
+                return result;
+            }
+
+            return false;
         }
 
         public static void SaveKeyMap(string file)

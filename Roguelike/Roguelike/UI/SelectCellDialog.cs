@@ -1,4 +1,5 @@
 ﻿using BearLib;
+using Roguelike.Input;
 using Roguelike.Render;
 using Roguelike.States;
 using System.Drawing;
@@ -36,19 +37,15 @@ namespace Roguelike.UI
 
                 Terminal.ClearArea(mouseX, mouseY, 1, 1);
 
-                if (Terminal.HasInput())
+                InputManager.Update(false);
+
+                if (InputManager.CheckAction(InputAction.ClickMove))
                 {
-                    var input = Terminal.Read();
-
-                    if (Terminal.Check(Terminal.TK_MOUSE_LEFT))
-                    {
-                        return new Point(mouseX + GameState.Camera.X, mouseY + GameState.Camera.Y);
-                    }
-
-                    if (input == Terminal.TK_ESCAPE)
-                    {
-                        show = false;
-                    }
+                    return new Point(mouseX + GameState.Camera.X, mouseY + GameState.Camera.Y);
+                }
+                else if (InputManager.CheckAction(InputAction.Quit))
+                {
+                    show = false;
                 }
             }
 

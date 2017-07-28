@@ -17,7 +17,7 @@ namespace Roguelike.Entities.Components
         {
             if (currentPath != null)
             {
-                if (Program.Entities.Any(e => e != Entity && e.HasComponent<ActorComponent>() && Program.Map.IsInFov(e.X, e.Y)) || InputManager.LastCommand == InputAction.ClickMove)
+                if (Program.Entities.Any(e => e != Entity && e.HasComponent<ActorComponent>() && Program.Map.IsInFov(e.X, e.Y)) || InputManager.CheckAction(InputAction.ClickMove))
                 {
                     currentPath = null;
                     return null;
@@ -43,39 +43,56 @@ namespace Roguelike.Entities.Components
             }
             else
             {
-                switch (InputManager.LastCommand)
+                if (InputManager.CheckAction(InputAction.MoveEast))
                 {
-                    case InputAction.MoveEast:
-                        return new MoveCommand(1, 0);
-                    case InputAction.MoveWest:
-                        return new MoveCommand(-1, 0);
-                    case InputAction.MoveNorth:
-                        return new MoveCommand(0, -1);
-                    case InputAction.MoveSouth:
-                        return new MoveCommand(0, 1);
-                    case InputAction.MoveNorthEast:
-                        return new MoveCommand(1, -1);
-                    case InputAction.MoveNorthWest:
-                        return new MoveCommand(-1, -1);
-                    case InputAction.MoveSouthEast:
-                        return new MoveCommand(1, 1);
-                    case InputAction.MoveSouthWest:
-                        return new MoveCommand(-1, 1);
-
-                    case InputAction.Rest:
-                        return new RestCommand();
-                    case InputAction.Take:
-                        return new TakeCommand();
-
-                    case InputAction.ShowInventory:
-                        return inventoryDialog.Show();
-
-                    case InputAction.ClickMove:
-                        return DoMouseMovement();
-
-                    default:
-                        return null;
+                    return new MoveCommand(1, 0);
                 }
+                else if (InputManager.CheckAction(InputAction.MoveWest))
+                {
+                    return new MoveCommand(-1, 0);
+                }
+                else if (InputManager.CheckAction(InputAction.MoveNorth))
+                {
+                    return new MoveCommand(0, -1);
+                }
+                else if (InputManager.CheckAction(InputAction.MoveSouth))
+                {
+                    return new MoveCommand(0, 1);
+                }
+                else if (InputManager.CheckAction(InputAction.MoveNorthEast))
+                {
+                    return new MoveCommand(1, -1);
+                }
+                else if (InputManager.CheckAction(InputAction.MoveNorthWest))
+                {
+                    return new MoveCommand(-1, -1);
+                }
+                else if (InputManager.CheckAction(InputAction.MoveSouthEast))
+                {
+                    return new MoveCommand(1, 1);
+                }
+                else if (InputManager.CheckAction(InputAction.MoveSouthWest))
+                {
+                    return new MoveCommand(-1, 1);
+                }
+                else if (InputManager.CheckAction(InputAction.Rest))
+                {
+                    return new RestCommand();
+                }
+                else if (InputManager.CheckAction(InputAction.Take))
+                {
+                    return new TakeCommand();
+                }
+                else if (InputManager.CheckAction(InputAction.ShowInventory))
+                {
+                    return inventoryDialog.Show();
+                }
+                else if (InputManager.CheckAction(InputAction.ClickMove))
+                {
+                    return DoMouseMovement();
+                }
+
+                return null;
             }
         }
 

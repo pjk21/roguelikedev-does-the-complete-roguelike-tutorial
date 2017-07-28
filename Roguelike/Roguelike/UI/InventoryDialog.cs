@@ -119,53 +119,58 @@ namespace Roguelike.UI
 
                 Terminal.Refresh();
 
-                var input = InputManager.AwaitInput();
+                InputManager.Update(true);
 
-                switch (input)
+                if (InputManager.CheckAction(InputAction.Quit))
                 {
-                    case InputAction.Quit:
-                        return null;
+                    return null;
+                }
+                else if (InputManager.CheckAction(InputAction.MoveNorth))
+                {
+                    selectedIndex--;
+                    selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);
 
-                    case InputAction.MoveNorth:
-                        selectedIndex--;
-                        selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);
+                    currentPage = selectedIndex / itemsPerPage;
+                }
+                else if (InputManager.CheckAction(InputAction.MoveSouth))
+                {
+                    selectedIndex++;
+                    selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);
 
-                        currentPage = selectedIndex / itemsPerPage;
-                        break;
-                    case InputAction.MoveSouth:
-                        selectedIndex++;
-                        selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);
+                    currentPage = selectedIndex / itemsPerPage;
+                }
+                else if (InputManager.CheckAction(InputAction.MoveEast))
+                {
+                    currentPage++;
+                    currentPage = currentPage.Clamp(0, pageCount);
 
-                        currentPage = selectedIndex / itemsPerPage;
-                        break;
-                    case InputAction.MoveEast:
-                        currentPage++;
-                        currentPage = currentPage.Clamp(0, pageCount);
+                    selectedIndex = itemsPerPage * currentPage;
+                }
+                else if (InputManager.CheckAction(InputAction.MoveWest))
+                {
+                    currentPage--;
+                    currentPage = currentPage.Clamp(0, pageCount);
 
-                        selectedIndex = itemsPerPage * currentPage;
-                        break;
-                    case InputAction.MoveWest:
-                        currentPage--;
-                        currentPage = currentPage.Clamp(0, pageCount);
+                    selectedIndex = itemsPerPage * currentPage;
+                }
+                else if (InputManager.CheckAction(InputAction.ClickMove))
+                {
+                    var mouseY = Terminal.State(Terminal.TK_MOUSE_Y);
+                    selectedIndex = (itemsPerPage * currentPage) + (mouseY - Y - 3);
+                    selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);
+                }
+                else if (InputManager.CheckAction(InputAction.UseItem))
+                {
+                    var item = inventory.Items[selectedIndex];
 
-                        selectedIndex = itemsPerPage * currentPage;
-                        break;
-                    case InputAction.ClickMove:
-                        var mouseY = Terminal.State(Terminal.TK_MOUSE_Y);
-                        selectedIndex = (itemsPerPage * currentPage) + (mouseY - Y - 3);
-                        selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);
-                        break;
-                    case InputAction.UseItem:
-                        var item = inventory.Items[selectedIndex];
-
-                        if (item.GetComponent<ItemComponent>().UseFunction != null)
-                        {
-                            return new UseCommand(item);
-                        }
-                        break;
-                    case InputAction.DropItem:
-                        inventory.Remove(inventory.Items[selectedIndex], true);
-                        break;
+                    if (item.GetComponent<ItemComponent>().UseFunction != null)
+                    {
+                        return new UseCommand(item);
+                    }
+                }
+                else if (InputManager.CheckAction(InputAction.DropItem))
+                {
+                    inventory.Remove(inventory.Items[selectedIndex], true);
                 }
             }
 

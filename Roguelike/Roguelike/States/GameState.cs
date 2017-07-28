@@ -33,21 +33,22 @@ namespace Roguelike.States
 
         public bool Update()
         {
-            switch (InputManager.LastCommand)
+            if (InputManager.CheckAction(InputAction.CycleRenderer))
             {
-                case InputAction.Quit:
-                    return false;
-
-                case InputAction.CycleRenderer:
-                    SwitchRenderer();
-                    break;
-                case InputAction.ToggleDebugMode:
-                    Program.IsDebugModeEnabled = !Program.IsDebugModeEnabled;
-                    break;
+                SwitchRenderer();
+            }
+            else if (InputManager.CheckAction(InputAction.ToggleDebugMode))
+            {
+                Program.IsDebugModeEnabled = !Program.IsDebugModeEnabled;
             }
 
             if (Program.Player.GetComponent<FighterComponent>().CurrentHealth > 0)
             {
+                if (InputManager.CheckAction(InputAction.Quit))
+                {
+                    return false;
+                }
+
                 if (entityActQueue.Count == 0)
                 {
                     entityActQueue = new Queue<Entity>(Program.Entities.Where(e => e.HasComponent<ActorComponent>()));
@@ -69,7 +70,7 @@ namespace Roguelike.States
             }
             else
             {
-                if (InputManager.LastCommand != InputAction.None)
+                if (InputManager.AnyKeyPress())
                 {
                     Program.CurrentState = new GameOverState();
                 }

@@ -12,7 +12,7 @@ namespace Roguelike.States
 
         public bool Update()
         {
-            if (InputManager.LastCommand == InputAction.Quit)
+            if (InputManager.CheckAction(InputAction.Quit))
             {
                 return false;
             }
