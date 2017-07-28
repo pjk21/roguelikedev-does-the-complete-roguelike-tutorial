@@ -17,7 +17,7 @@ namespace Roguelike.Entities.Components
         {
             if (currentPath != null)
             {
-                if (Program.Entities.Any(e => e != Entity && e.HasComponent<ActorComponent>() && Program.Map.IsInFov(e.X, e.Y)) || InputManager.CheckAction(InputAction.ClickMove))
+                if (Program.Entities.Any(e => e != Entity && e.HasComponent<ActorComponent>() && Program.Map.IsInFov(e.X, e.Y)) || InputManager.CheckAction(InputAction.LeftClick))
                 {
                     currentPath = null;
                     return null;
@@ -87,7 +87,7 @@ namespace Roguelike.Entities.Components
                 {
                     return inventoryDialog.Show();
                 }
-                else if (InputManager.CheckAction(InputAction.ClickMove))
+                else if (InputManager.CheckAction(InputAction.LeftClick))
                 {
                     return DoMouseMovement();
                 }

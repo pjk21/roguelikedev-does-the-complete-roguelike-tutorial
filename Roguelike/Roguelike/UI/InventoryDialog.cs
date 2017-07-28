@@ -121,39 +121,39 @@ namespace Roguelike.UI
 
                 InputManager.Update(true);
 
-                if (InputManager.CheckAction(InputAction.Quit))
+                if (InputManager.CheckAction(InputAction.MenuCancel))
                 {
                     return null;
                 }
-                else if (InputManager.CheckAction(InputAction.MoveNorth))
+                else if (InputManager.CheckAction(InputAction.MenuUp))
                 {
                     selectedIndex--;
                     selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);
 
                     currentPage = selectedIndex / itemsPerPage;
                 }
-                else if (InputManager.CheckAction(InputAction.MoveSouth))
+                else if (InputManager.CheckAction(InputAction.MenuDown))
                 {
                     selectedIndex++;
                     selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);
 
                     currentPage = selectedIndex / itemsPerPage;
                 }
-                else if (InputManager.CheckAction(InputAction.MoveEast))
+                else if (InputManager.CheckAction(InputAction.MenuRight))
                 {
                     currentPage++;
                     currentPage = currentPage.Clamp(0, pageCount);
 
                     selectedIndex = itemsPerPage * currentPage;
                 }
-                else if (InputManager.CheckAction(InputAction.MoveWest))
+                else if (InputManager.CheckAction(InputAction.MenuLeft))
                 {
                     currentPage--;
                     currentPage = currentPage.Clamp(0, pageCount);
 
                     selectedIndex = itemsPerPage * currentPage;
                 }
-                else if (InputManager.CheckAction(InputAction.ClickMove))
+                else if (InputManager.CheckAction(InputAction.LeftClick))
                 {
                     var mouseY = Terminal.State(Terminal.TK_MOUSE_Y);
                     selectedIndex = (itemsPerPage * currentPage) + (mouseY - Y - 3);

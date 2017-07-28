@@ -8,6 +8,13 @@
         CycleRenderer,
         ToggleDebugMode,
 
+        MenuUp,
+        MenuDown,
+        MenuLeft,
+        MenuRight,
+        MenuSelect,
+        MenuCancel,
+
         MoveNorth,
         MoveSouth,
         MoveEast,
@@ -24,6 +31,6 @@
         UseItem,
         DropItem,
 
-        ClickMove
+        LeftClick
     }
 }

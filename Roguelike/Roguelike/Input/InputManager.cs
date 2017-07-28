@@ -106,6 +106,13 @@ namespace Roguelike.Input
             map.Add(InputAction.CycleRenderer, new List<KeyPress> { new KeyPress(Terminal.TK_F2) });
             map.Add(InputAction.ToggleDebugMode, new List<KeyPress> { new KeyPress(Terminal.TK_F3) });
 
+            map.Add(InputAction.MenuUp, new List<KeyPress> { new KeyPress(Terminal.TK_UP) });
+            map.Add(InputAction.MenuDown, new List<KeyPress> { new KeyPress(Terminal.TK_DOWN) });
+            map.Add(InputAction.MenuLeft, new List<KeyPress> { new KeyPress(Terminal.TK_LEFT) });
+            map.Add(InputAction.MenuRight, new List<KeyPress> { new KeyPress(Terminal.TK_RIGHT) });
+            map.Add(InputAction.MenuSelect, new List<KeyPress> { new KeyPress(Terminal.TK_SPACE), new KeyPress(Terminal.TK_RETURN) });
+            map.Add(InputAction.MenuCancel, new List<KeyPress> { new KeyPress(Terminal.TK_ESCAPE) });
+
             map.Add(InputAction.MoveEast, new List<KeyPress> { new KeyPress(Terminal.TK_RIGHT), new KeyPress(Terminal.TK_KP_6) });
             map.Add(InputAction.MoveWest, new List<KeyPress> { new KeyPress(Terminal.TK_LEFT), new KeyPress(Terminal.TK_KP_4) });
             map.Add(InputAction.MoveNorth, new List<KeyPress> { new KeyPress(Terminal.TK_UP), new KeyPress(Terminal.TK_KP_8) });
@@ -122,7 +129,7 @@ namespace Roguelike.Input
             map.Add(InputAction.UseItem, new List<KeyPress> { new KeyPress(Terminal.TK_U) });
             map.Add(InputAction.DropItem, new List<KeyPress> { new KeyPress(Terminal.TK_D) });
 
-            map.Add(InputAction.ClickMove, new List<KeyPress> { new KeyPress(Terminal.TK_MOUSE_LEFT) });
+            map.Add(InputAction.LeftClick, new List<KeyPress> { new KeyPress(Terminal.TK_MOUSE_LEFT) });
 
             return map;
         }

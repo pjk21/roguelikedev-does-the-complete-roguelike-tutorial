@@ -39,11 +39,11 @@ namespace Roguelike.UI
 
                 InputManager.Update(false);
 
-                if (InputManager.CheckAction(InputAction.ClickMove))
+                if (InputManager.CheckAction(InputAction.LeftClick))
                 {
                     return new Point(mouseX + GameState.Camera.X, mouseY + GameState.Camera.Y);
                 }
-                else if (InputManager.CheckAction(InputAction.Quit))
+                else if (InputManager.CheckAction(InputAction.MenuCancel))
                 {
                     show = false;
                 }
