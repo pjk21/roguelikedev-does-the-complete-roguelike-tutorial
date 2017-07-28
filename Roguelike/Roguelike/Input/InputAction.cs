@@ -23,6 +23,7 @@
         MoveNorthWest,
         MoveSouthEast,
         MoveSouthWest,
+        MouseMove,
 
         Rest,
         Take,
