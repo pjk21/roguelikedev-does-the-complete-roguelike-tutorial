@@ -105,33 +105,45 @@ namespace Roguelike.Entities.Components
                 return null;
             }
 
-            if ((Program.Map.IsInFov(destination.X, destination.Y) || Program.Map.IsExplored(destination.X, destination.Y)) && Program.Map.CanEnter(destination.X, destination.Y))
+            if ((Program.Map.IsInFov(destination.X, destination.Y) || Program.Map.IsExplored(destination.X, destination.Y)))
             {
-                Program.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, true);
-
-                var pathFinder = new PathFinder(Program.Map.PathfindingMap);
-                currentPath = null;
-
-                try
+                if (Program.Map.CanEnter(destination.X, destination.Y))
                 {
-                    currentPath = pathFinder.ShortestPath(Program.Map.PathfindingMap.GetCell(Entity.X, Entity.Y), Program.Map.PathfindingMap.GetCell(destination.X, destination.Y));
                     Program.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, true);
-                }
-                catch (PathNotFoundException)
-                {
-                    Program.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, false);
-                    return null;
-                }
 
-                var x = currentPath.CurrentStep.X - Entity.X;
-                var y = currentPath.CurrentStep.Y - Entity.Y;
-
-                if (currentPath.Length == 1)
-                {
+                    var pathFinder = new PathFinder(Program.Map.PathfindingMap);
                     currentPath = null;
-                }
 
-                return new MoveCommand(x, y);
+                    try
+                    {
+                        currentPath = pathFinder.ShortestPath(Program.Map.PathfindingMap.GetCell(Entity.X, Entity.Y), Program.Map.PathfindingMap.GetCell(destination.X, destination.Y));
+                        Program.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, true);
+                    }
+                    catch (PathNotFoundException)
+                    {
+                        Program.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, false);
+                        return null;
+                    }
+
+                    var x = currentPath.CurrentStep.X - Entity.X;
+                    var y = currentPath.CurrentStep.Y - Entity.Y;
+
+                    if (currentPath.Length == 1)
+                    {
+                        currentPath = null;
+                    }
+
+                    return new MoveCommand(x, y);
+                }
+                else
+                {
+                    var target = Program.Entities.FirstOrDefault(e => e.HasComponent<FighterComponent>() && e.X == destination.X && e.Y == destination.Y);
+
+                    if (target != null && Program.Player.DistanceTo(target) < 2)
+                    {
+                        return new AttackCommand(target);
+                    }
+                }
             }
 
             return null;
