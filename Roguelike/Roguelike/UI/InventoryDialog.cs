@@ -122,16 +122,22 @@ namespace Roguelike.UI
                 }
                 else if (InputManager.CheckAction(InputAction.UseItem))
                 {
-                    var item = inventory.Items[selectedIndex];
-
-                    if (item.GetComponent<ItemComponent>().UseFunction != null)
+                    if (inventory.Items.Length > 0)
                     {
-                        return new UseCommand(item);
+                        var item = inventory.Items[selectedIndex];
+
+                        if (item.GetComponent<ItemComponent>().UseFunction != null)
+                        {
+                            return new UseCommand(item);
+                        }
                     }
                 }
                 else if (InputManager.CheckAction(InputAction.DropItem))
                 {
-                    inventory.Remove(inventory.Items[selectedIndex], true);
+                    if (inventory.Items.Length > 0)
+                    {
+                        inventory.Remove(inventory.Items[selectedIndex], true);
+                    }
                 }
             }
 
