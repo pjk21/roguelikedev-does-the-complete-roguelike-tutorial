@@ -86,14 +86,14 @@ namespace Roguelike.UI
                 {
                     return null;
                 }
-                else if (InputManager.CheckAction(InputAction.MenuUp))
+                else if (InputManager.CheckAction(InputAction.MenuUp) || InputManager.MouseScroll < 0)
                 {
                     selectedIndex--;
                     selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);
 
                     currentPage = selectedIndex / itemsPerPage;
                 }
-                else if (InputManager.CheckAction(InputAction.MenuDown))
+                else if (InputManager.CheckAction(InputAction.MenuDown) || InputManager.MouseScroll > 0)
                 {
                     selectedIndex++;
                     selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);

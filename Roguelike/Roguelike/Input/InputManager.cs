@@ -17,6 +17,7 @@ namespace Roguelike.Input
         private static int lastInput;
 
         public static Point MousePosition { get; private set; } = new Point();
+        public static int MouseScroll { get; private set; }
 
         static InputManager()
         {
@@ -56,6 +57,15 @@ namespace Roguelike.Input
 
             MousePosition.X = Terminal.State(Terminal.TK_MOUSE_X);
             MousePosition.Y = Terminal.State(Terminal.TK_MOUSE_Y);
+
+            if (lastInput == Terminal.TK_MOUSE_SCROLL)
+            {
+                MouseScroll = Terminal.State(Terminal.TK_MOUSE_WHEEL);
+            }
+            else
+            {
+                MouseScroll = 0;
+            }
         }
 
         public static bool AnyKeyPress()
