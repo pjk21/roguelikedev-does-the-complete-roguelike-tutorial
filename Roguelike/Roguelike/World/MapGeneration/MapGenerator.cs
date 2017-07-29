@@ -71,7 +71,7 @@ namespace Roguelike.World.MapGeneration
                             SpriteIndex = EntitySprites.Potion,
                             RenderLayer = Renderer.ItemLayer
                         };
-                        potion.AddComponent(new ItemComponent { UseFunction = ItemFunctions.PotionFunction });
+                        potion.AddComponent(new ItemComponent { Description = "Heals you for a small amount of HP.", UseFunction = ItemFunctions.PotionFunction });
 
                         Program.Entities.Add(potion);
                     }
@@ -83,7 +83,7 @@ namespace Roguelike.World.MapGeneration
                             SpriteTint = Color.LightBlue,
                             RenderLayer = Renderer.ItemLayer
                         };
-                        lightningScroll.AddComponent(new ItemComponent { UseFunction = ItemFunctions.LightningScroll });
+                        lightningScroll.AddComponent(new ItemComponent { Description = "Fires bolts of lightning at your enemies.", UseFunction = ItemFunctions.LightningScroll });
 
                         Program.Entities.Add(lightningScroll);
                     }
@@ -95,7 +95,7 @@ namespace Roguelike.World.MapGeneration
                             SpriteTint = Color.LightYellow,
                             RenderLayer = Renderer.ItemLayer
                         };
-                        confuseScroll.AddComponent(new ItemComponent { UseFunction = ItemFunctions.ConfuseScroll });
+                        confuseScroll.AddComponent(new ItemComponent { Description = "Complicated math formulas that confuse your enemies.", UseFunction = ItemFunctions.ConfuseScroll });
 
                         Program.Entities.Add(confuseScroll);
                     }
@@ -107,7 +107,7 @@ namespace Roguelike.World.MapGeneration
                             SpriteTint = Color.Orange,
                             RenderLayer = Renderer.ItemLayer
                         };
-                        fireballScroll.AddComponent(new ItemComponent { UseFunction = ItemFunctions.FireballScroll });
+                        fireballScroll.AddComponent(new ItemComponent { Description = "Launch a ball of fire at your enemies.", UseFunction = ItemFunctions.FireballScroll });
 
                         Program.Entities.Add(fireballScroll);
                     }

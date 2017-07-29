@@ -42,7 +42,7 @@ namespace Roguelike.UI
             int selectedIndex = 0;
             var inventory = Program.Player.GetComponent<InventoryComponent>();
 
-            int itemsPerPage = Height - 6;
+            int itemsPerPage = Height - 8;
             int pageCount = (inventory.Items.Length - 1) / itemsPerPage;
             int currentPage = 0;
 
@@ -73,6 +73,12 @@ namespace Roguelike.UI
                     }
 
                     Terminal.Print(X + 2, y++, item.Name);
+                }
+
+                if (inventory.Items.Length > 0)
+                {
+                    Terminal.Color(Color.LightBlue);
+                    Terminal.Print(X + 2, Bounds.Bottom - 4, $"{inventory.Items[selectedIndex].GetComponent<ItemComponent>().Description}");
                 }
 
                 Terminal.Color(Color.Green);
