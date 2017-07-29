@@ -116,9 +116,26 @@ namespace Roguelike.UI
                 }
                 else if (InputManager.CheckAction(InputAction.LeftClick))
                 {
-                    var mouseY = Terminal.State(Terminal.TK_MOUSE_Y);
-                    selectedIndex = (itemsPerPage * currentPage) + (mouseY - Y - 3);
-                    selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);
+                    int clickCount = Terminal.State(Terminal.TK_MOUSE_CLICKS);
+
+                    if (clickCount == 1)
+                    {
+                        var mouseY = InputManager.MousePosition.Y;
+                        selectedIndex = (itemsPerPage * currentPage) + (mouseY - Y - 3);
+                        selectedIndex = selectedIndex.Clamp(0, inventory.Items.Length - 1);
+                    }
+                    else if (clickCount == 2)
+                    {
+                        if (inventory.Items.Length > 0)
+                        {
+                            var item = inventory.Items[selectedIndex];
+
+                            if (item.GetComponent<ItemComponent>().UseFunction != null)
+                            {
+                                return new UseCommand(item);
+                            }
+                        }
+                    }
                 }
                 else if (InputManager.CheckAction(InputAction.UseItem))
                 {
