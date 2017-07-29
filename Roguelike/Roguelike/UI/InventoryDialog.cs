@@ -126,28 +126,12 @@ namespace Roguelike.UI
                     }
                     else if (clickCount == 2)
                     {
-                        if (inventory.Items.Length > 0)
-                        {
-                            var item = inventory.Items[selectedIndex];
-
-                            if (item.GetComponent<ItemComponent>().UseFunction != null)
-                            {
-                                return new UseCommand(item);
-                            }
-                        }
+                        return UseItem(inventory, selectedIndex);
                     }
                 }
                 else if (InputManager.CheckAction(InputAction.UseItem))
                 {
-                    if (inventory.Items.Length > 0)
-                    {
-                        var item = inventory.Items[selectedIndex];
-
-                        if (item.GetComponent<ItemComponent>().UseFunction != null)
-                        {
-                            return new UseCommand(item);
-                        }
-                    }
+                    return UseItem(inventory, selectedIndex);
                 }
                 else if (InputManager.CheckAction(InputAction.DropItem))
                 {
@@ -155,6 +139,21 @@ namespace Roguelike.UI
                     {
                         inventory.Remove(inventory.Items[selectedIndex], true);
                     }
+                }
+            }
+
+            return null;
+        }
+
+        private Command UseItem(InventoryComponent inventory, int selectedIndex)
+        {
+            if (inventory.Items.Length > 0)
+            {
+                var item = inventory.Items[selectedIndex];
+
+                if (item.GetComponent<ItemComponent>().UseFunction != null)
+                {
+                    return new UseCommand(item);
                 }
             }
 
