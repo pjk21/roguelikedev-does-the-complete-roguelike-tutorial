@@ -35,46 +35,7 @@ namespace Roguelike.UI
             bool show = true;
 
             Terminal.Layer(Renderer.DialogLayer);
-
-            for (int x = Bounds.Left; x < Bounds.Right; x++)
-            {
-                for (int y = Bounds.Top; y < Bounds.Bottom; y++)
-                {
-                    Terminal.Color(Color.FromArgb(128, Color.Black));
-                    Terminal.Put(x, y, UISprites.DialogBackground);
-
-                    if (x == Bounds.Left && y == Bounds.Top)
-                    {
-                        Terminal.Color(Color.White);
-                        Terminal.Put(x, y, UISprites.TopLeftCornerBorder);
-                    }
-                    else if (x == Bounds.Left && y == Bounds.Bottom - 1)
-                    {
-                        Terminal.Color(Color.White);
-                        Terminal.Put(x, y, UISprites.BottomLeftCornerBorder);
-                    }
-                    else if (x == Bounds.Right - 1 && y == Bounds.Top)
-                    {
-                        Terminal.Color(Color.White);
-                        Terminal.Put(x, y, UISprites.TopRightCornerBorder);
-                    }
-                    else if (x == Bounds.Right - 1 && y == Bounds.Bottom - 1)
-                    {
-                        Terminal.Color(Color.White);
-                        Terminal.Put(x, y, UISprites.BottomRightCornerBorder);
-                    }
-                    else if (x == Bounds.Left || x == Bounds.Right - 1)
-                    {
-                        Terminal.Color(Color.White);
-                        Terminal.Put(x, y, UISprites.VerticalBorder);
-                    }
-                    else if (y == Bounds.Top || y == Bounds.Bottom - 1)
-                    {
-                        Terminal.Color(Color.White);
-                        Terminal.Put(x, y, UISprites.HorizontalBorder);
-                    }
-                }
-            }
+            RenderUtils.DrawBox(Bounds, Color.FromArgb(128, Color.Black), Color.White);
 
             Terminal.Layer(Renderer.DialogLayer + 1);
 

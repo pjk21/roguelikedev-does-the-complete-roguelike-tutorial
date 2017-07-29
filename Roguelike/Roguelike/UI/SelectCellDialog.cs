@@ -20,7 +20,11 @@ namespace Roguelike.UI
             Terminal.Layer(Renderer.DialogLayer);
             Terminal.ClearArea(0, 0, Program.ScreenWidth, Program.ScreenHeight);
 
-            Terminal.Print(Program.MapDisplayWidth / 2 - "Select Cell".Length / 2, 2, "Select Cell");
+            string title = "Left-click to select cell";
+
+            Terminal.Color(Color.White);
+            RenderUtils.DrawBox(Program.MapDisplayWidth / 2 - title.Length / 2 - 1, 1, title.Length + 2, 3, Color.FromArgb(128, Color.Black), Color.White);
+            Terminal.Print(Program.MapDisplayWidth / 2 - title.Length / 2, 2, title);
             Terminal.Refresh();
 
             bool show = true;
