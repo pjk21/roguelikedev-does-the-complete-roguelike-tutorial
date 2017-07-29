@@ -59,7 +59,7 @@ namespace Roguelike.Entities
 
         public static bool ConfuseScroll(Entity target)
         {
-            var cell = new SelectCellDialog().Show();
+            var cell = new SelectCellDialog(0).Show();
 
             if (cell != null)
             {
@@ -84,7 +84,7 @@ namespace Roguelike.Entities
 
         public static bool FireballScroll(Entity target)
         {
-            var cell = new SelectCellDialog().Show();
+            var cell = new SelectCellDialog(FireballRadius).Show();
 
             if (cell != null)
             {

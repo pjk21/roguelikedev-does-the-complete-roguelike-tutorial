@@ -2,6 +2,7 @@
 using Roguelike.Input;
 using Roguelike.Render;
 using Roguelike.States;
+using Roguelike.Utils;
 using System.Drawing;
 using Point = RogueSharp.Point;
 
@@ -9,6 +10,13 @@ namespace Roguelike.UI
 {
     public class SelectCellDialog : Dialog<Point>
     {
+        public int Radius { get; }
+
+        public SelectCellDialog(int radius)
+        {
+            Radius = radius;
+        }
+
         public override Point Show()
         {
             Terminal.Layer(Renderer.OverlayLayer);
@@ -31,17 +39,30 @@ namespace Roguelike.UI
 
             while (show)
             {
-                var mouseX = Terminal.State(Terminal.TK_MOUSE_X);
-                var mouseY = Terminal.State(Terminal.TK_MOUSE_Y);
+                InputManager.Update(false);
+
+                var mouseX = InputManager.MousePosition.X;
+                var mouseY = InputManager.MousePosition.Y;
 
                 Terminal.Layer(Renderer.OverlayLayer);
+
+                for (int ox = mouseX - Radius; ox <= mouseX + Radius; ox++)
+                {
+                    for (int oy = mouseY - Radius; oy <= mouseY + Radius; oy++)
+                    {
+                        if (MathUtils.Distance(mouseX, mouseY, ox, oy) <= Radius)
+                        {
+                            Terminal.Color(Color.FromArgb(128, Color.Yellow));
+                            Terminal.Put(ox, oy, UISprites.DialogBackground);
+                        }
+                    }
+                }
+
                 Terminal.Color(Color.Yellow);
                 Terminal.Put(mouseX, mouseY, UISprites.TileHighlighter);
                 Terminal.Refresh();
 
-                Terminal.ClearArea(mouseX, mouseY, 1, 1);
-
-                InputManager.Update(false);
+                Terminal.ClearArea(mouseX - Radius, mouseY - Radius, Radius * 2 + 1, Radius * 2 + 1);
 
                 if (InputManager.CheckAction(InputAction.LeftClick))
                 {

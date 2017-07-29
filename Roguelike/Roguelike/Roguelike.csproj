@@ -88,6 +88,7 @@
     <Compile Include="UI\SelectCellDialog.cs" />
     <Compile Include="UI\UISprites.cs" />
     <Compile Include="Render\RenderUtils.cs" />
+    <Compile Include="Utils\MathUtils.cs" />
     <Compile Include="Utils\RandomExtensions.cs" />
     <Compile Include="World\TileSprites.cs" />
     <Compile Include="Utils\ColorExtensions.cs" />
