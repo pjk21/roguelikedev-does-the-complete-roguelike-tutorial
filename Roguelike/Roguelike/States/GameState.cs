@@ -3,6 +3,7 @@ using Roguelike.Entities.Components;
 using Roguelike.Input;
 using Roguelike.Render;
 using Roguelike.UI;
+using Roguelike.World.MapGeneration;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -19,6 +20,28 @@ namespace Roguelike.States
 
         public void Initialize()
         {
+            Program.Entities.Clear();
+
+            Program.Player = new Entity("Player", 25, 23, '@', Colours.Player, true)
+            {
+                SpriteIndex = EntitySprites.Player,
+                RenderLayer = Renderer.ActorLayer
+            };
+
+            Program.Player.AddComponent(new FighterComponent { MaximumHealth = 30, CurrentHealth = 30, Power = 5, Defense = 2, DeathFunction = DeathFunctions.PlayerDeath });
+            Program.Player.AddComponent(new PlayerInputComponent());
+            Program.Player.AddComponent(new InventoryComponent());
+
+            Program.Entities.Add(Program.Player);
+
+            Program.Map = new BspMapGenerator().Generate(80, 50);
+            Program.Map.ComputeFov(Program.Player.X, Program.Player.Y, Entity.PlayerFovRadius, true);
+
+            foreach (var cell in Program.Map.GetAllCells())
+            {
+                Program.Map.PathfindingMap.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable);
+            }
+
             Camera.Follow(Program.Player);
 
             MessageLog.Add("Welcome to the dungeon, punk.", Color.LightSteelBlue);
@@ -46,7 +69,7 @@ namespace Roguelike.States
             {
                 if (InputManager.CheckAction(InputAction.Quit))
                 {
-                    return false;
+                    Program.ChangeState(new MainMenuState());
                 }
 
                 if (entityActQueue.Count == 0)

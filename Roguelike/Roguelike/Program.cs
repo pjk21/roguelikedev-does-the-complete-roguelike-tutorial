@@ -1,11 +1,8 @@
 ﻿using BearLib;
 using Roguelike.Entities;
-using Roguelike.Entities.Components;
 using Roguelike.Input;
-using Roguelike.Render;
 using Roguelike.States;
 using Roguelike.World;
-using Roguelike.World.MapGeneration;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -23,7 +20,7 @@ namespace Roguelike
 
         public static Random Random { get; set; } = new Random(123456789);
 
-        public static IState CurrentState { get; private set; } = new GameState();
+        public static IState CurrentState { get; private set; } = new MainMenuState();
 
         public static Map Map { get; set; }
 
@@ -57,26 +54,6 @@ namespace Roguelike
             Terminal.Set($"0xE800: Entities.png, size=16x16;");
             Terminal.Set($"0xEF9B: UI.png, size=16x16;");
             Terminal.Composition(true);
-
-            Player = new Entity("Player", 25, 23, '@', Colours.Player, true)
-            {
-                SpriteIndex = EntitySprites.Player,
-                RenderLayer = Renderer.ActorLayer
-            };
-
-            Player.AddComponent(new FighterComponent { MaximumHealth = 30, CurrentHealth = 30, Power = 5, Defense = 2, DeathFunction = DeathFunctions.PlayerDeath });
-            Player.AddComponent(new PlayerInputComponent());
-            Player.AddComponent(new InventoryComponent());
-
-            Entities.Add(Player);
-
-            Map = new BspMapGenerator().Generate(80, 50);
-            Map.ComputeFov(Player.X, Player.Y, Entity.PlayerFovRadius, true);
-
-            foreach (var cell in Map.GetAllCells())
-            {
-                Map.PathfindingMap.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable);
-            }
 
             CurrentState?.Initialize();
         }
