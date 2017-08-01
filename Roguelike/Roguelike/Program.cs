@@ -23,7 +23,7 @@ namespace Roguelike
 
         public static Random Random { get; set; } = new Random(123456789);
 
-        public static IState CurrentState { get; set; } = new GameState();
+        public static IState CurrentState { get; private set; } = new GameState();
 
         public static Map Map { get; set; }
 
@@ -102,6 +102,12 @@ namespace Roguelike
             CurrentState?.Draw();
 
             Terminal.Refresh();
+        }
+
+        public static void ChangeState(IState state)
+        {
+            CurrentState = state;
+            state.Initialize();
         }
     }
 }

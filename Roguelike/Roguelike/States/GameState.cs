@@ -72,7 +72,7 @@ namespace Roguelike.States
             {
                 if (InputManager.AnyKeyPress())
                 {
-                    Program.CurrentState = new GameOverState();
+                    Program.ChangeState(new GameOverState());
                 }
             }
 
