@@ -78,19 +78,6 @@ namespace Roguelike.Entities
             return null;
         }
 
-        public bool Move(int x, int y)
-        {
-            if (Program.Map.CanEnter(X + x, Y + y))
-            {
-                X += x;
-                Y += y;
-
-                return true;
-            }
-
-            return false;
-        }
-
         public float DistanceTo(Entity other)
         {
             return DistanceTo(other.X, other.Y);
