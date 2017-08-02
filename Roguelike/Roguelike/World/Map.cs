@@ -43,7 +43,7 @@ namespace Roguelike.World
 
         public bool CanEnter(int x, int y)
         {
-            if (!IsWalkable(x, y) || Program.Entities.Any(e => e.IsSolid && e.X == x && e.Y == y))
+            if (!IsWalkable(x, y) || Program.Game.Entities.Any(e => e.IsSolid && e.X == x && e.Y == y))
             {
                 return false;
             }

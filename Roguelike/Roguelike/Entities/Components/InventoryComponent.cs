@@ -12,7 +12,7 @@ namespace Roguelike.Entities.Components
         {
             items.Add(item);
 
-            Program.Entities.Remove(item);
+            Program.Game.Entities.Remove(item);
         }
 
         public void Remove(Entity item, bool drop)
@@ -23,7 +23,7 @@ namespace Roguelike.Entities.Components
             {
                 item.X = Entity.X;
                 item.Y = Entity.Y;
-                Program.Entities.Add(item);
+                Program.Game.Entities.Add(item);
             }
         }
     }

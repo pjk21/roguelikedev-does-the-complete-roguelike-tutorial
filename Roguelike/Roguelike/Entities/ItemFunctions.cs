@@ -41,9 +41,9 @@ namespace Roguelike.Entities
 
         public static bool LightningScroll(Entity target)
         {
-            var closestMonster = Program.Entities
-                .Where(e => e.HasComponent<FighterComponent>() && e != Program.Player && e.DistanceTo(Program.Player) <= LightningRange)
-                .OrderBy(e => e.DistanceTo(Program.Player))
+            var closestMonster = Program.Game.Entities
+                .Where(e => e.HasComponent<FighterComponent>() && e != Program.Game.Player && e.DistanceTo(Program.Game.Player) <= LightningRange)
+                .OrderBy(e => e.DistanceTo(Program.Game.Player))
                 .FirstOrDefault();
 
             if (closestMonster != null)
@@ -63,7 +63,7 @@ namespace Roguelike.Entities
 
             if (cell != null)
             {
-                var enemy = Program.Entities.FirstOrDefault(e => e.HasComponent<FighterComponent>() && e.X == cell.X && e.Y == cell.Y);
+                var enemy = Program.Game.Entities.FirstOrDefault(e => e.HasComponent<FighterComponent>() && e.X == cell.X && e.Y == cell.Y);
 
                 if (enemy != null)
                 {
@@ -90,7 +90,7 @@ namespace Roguelike.Entities
             {
                 MessageLog.Add("The fireball explodes!", Color.Red);
 
-                var victims = Program.Entities.Where(e => e.HasComponent<FighterComponent>() && e.DistanceTo(cell.X, cell.Y) <= FireballRadius);
+                var victims = Program.Game.Entities.Where(e => e.HasComponent<FighterComponent>() && e.DistanceTo(cell.X, cell.Y) <= FireballRadius);
 
                 foreach (var victim in victims)
                 {

@@ -66,7 +66,7 @@ namespace Roguelike.UI
 
                 if (InputManager.CheckAction(InputAction.LeftClick))
                 {
-                    return new Point(mouseX + GameState.Camera.X, mouseY + GameState.Camera.Y);
+                    return new Point(mouseX + Program.Game.Camera.X, mouseY + Program.Game.Camera.Y);
                 }
                 else if (InputManager.CheckAction(InputAction.MenuCancel))
                 {

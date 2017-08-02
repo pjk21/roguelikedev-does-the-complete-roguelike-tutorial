@@ -12,8 +12,8 @@ namespace Roguelike.Render
 
         public virtual void Follow(Entity entity)
         {
-            X = (entity.X - Width / 2).Clamp(0, Program.Map.Width - Width);
-            Y = (entity.Y - Height / 2).Clamp(0, Program.Map.Height - Height);
+            X = (entity.X - Width / 2).Clamp(0, Program.Game.Map.Width - Width);
+            Y = (entity.Y - Height / 2).Clamp(0, Program.Game.Map.Height - Height);
         }
     }
 }

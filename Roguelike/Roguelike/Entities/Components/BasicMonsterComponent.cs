@@ -7,24 +7,28 @@ namespace Roguelike.Entities.Components
     {
         public override Command GetCommand()
         {
-            if (Program.Map.IsInFov(Entity.X, Entity.Y))
-            {
-                if (Entity.DistanceTo(Program.Player) >= 2)
-                {
-                    Program.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, true);
-                    Program.Map.PathfindingMap.SetCellProperties(Program.Player.X, Program.Player.Y, true, true);
+            var map = Program.Game.Map;
 
-                    var pathFinder = new PathFinder(Program.Map.PathfindingMap);
+            if (map.IsInFov(Entity.X, Entity.Y))
+            {
+                var player = Program.Game.Player;
+
+                if (Entity.DistanceTo(player) >= 2)
+                {
+                    map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, true);
+                    map.PathfindingMap.SetCellProperties(player.X, player.Y, true, true);
+
+                    var pathFinder = new PathFinder(map.PathfindingMap);
                     Path path = null;
 
                     try
                     {
-                        path = pathFinder.ShortestPath(Program.Map.PathfindingMap.GetCell(Entity.X, Entity.Y), Program.Map.PathfindingMap.GetCell(Program.Player.X, Program.Player.Y));
+                        path = pathFinder.ShortestPath(map.PathfindingMap.GetCell(Entity.X, Entity.Y), map.PathfindingMap.GetCell(player.X, player.Y));
                     }
                     catch (PathNotFoundException) { }
 
-                    Program.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, false);
-                    Program.Map.PathfindingMap.SetCellProperties(Program.Player.X, Program.Player.Y, true, false);
+                    map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, false);
+                    map.PathfindingMap.SetCellProperties(player.X, player.Y, true, false);
 
                     if (path != null)
                     {
@@ -32,9 +36,9 @@ namespace Roguelike.Entities.Components
                         return new MoveCommand(nextPosition.X - Entity.X, nextPosition.Y - Entity.Y);
                     }
                 }
-                else if (Entity.HasComponent<FighterComponent>() && Program.Player.GetComponent<FighterComponent>()?.CurrentHealth > 0)
+                else if (Entity.HasComponent<FighterComponent>() && player.GetComponent<FighterComponent>()?.CurrentHealth > 0)
                 {
-                    return new AttackCommand(Program.Player);
+                    return new AttackCommand(player);
                 }
             }
 

@@ -25,7 +25,7 @@ namespace Roguelike.Entities.Commands
             int power = entity.GetComponent<FighterComponent>().Power;
             int defense = Target.GetComponent<FighterComponent>().Defense;
 
-            if (Program.Random.NextDouble() < CriticalHitChance)
+            if (Program.Game.Random.NextDouble() < CriticalHitChance)
             {
                 damage = power;
             }

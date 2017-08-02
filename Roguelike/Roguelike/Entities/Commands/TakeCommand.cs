@@ -11,7 +11,7 @@ namespace Roguelike.Entities.Commands
         {
             if (entity.HasComponent<InventoryComponent>())
             {
-                var item = Program.Entities.FirstOrDefault(e => e.HasComponent<ItemComponent>() && e.X == entity.X && e.Y == entity.Y);
+                var item = Program.Game.Entities.FirstOrDefault(e => e.HasComponent<ItemComponent>() && e.X == entity.X && e.Y == entity.Y);
 
                 if (item != null)
                 {

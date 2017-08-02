@@ -10,7 +10,7 @@ namespace Roguelike.Entities.Commands
 
         public override CommandResult Execute(Entity entity)
         {
-            if (entity == Program.Player)
+            if (entity == Program.Game.Player)
             {
                 var healed = entity.GetComponent<FighterComponent>()?.HealPercent(RestHealPercent);
                 MessageLog.Add($"You rest for a turn and regain {healed} HP.", Color.LightGreen);

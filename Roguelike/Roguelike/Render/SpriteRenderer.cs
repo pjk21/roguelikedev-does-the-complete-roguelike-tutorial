@@ -25,7 +25,7 @@ namespace Roguelike.Render
 
         protected override void RenderTile(Map map, int x, int y, Camera camera)
         {
-            if (map.IsInFov(x, y) || Program.IsDebugModeEnabled)
+            if (map.IsInFov(x, y) || Program.Game.IsDebugModeEnabled)
             {
                 if (map.IsWalkable(x, y))
                 {

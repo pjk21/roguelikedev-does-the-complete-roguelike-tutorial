@@ -24,7 +24,7 @@ namespace Roguelike.Render
         {
             foreach (var entity in entities)
             {
-                if (camera.Contains(entity.X, entity.Y) && (Program.Map.IsInFov(entity.X, entity.Y) || Program.IsDebugModeEnabled))
+                if (camera.Contains(entity.X, entity.Y) && (Program.Game.Map.IsInFov(entity.X, entity.Y) || Program.Game.IsDebugModeEnabled))
                 {
                     RenderEntity(entity, camera);
                 }
@@ -59,7 +59,7 @@ namespace Roguelike.Render
             }
 
             int x = Program.MapDisplayWidth + 1;
-            var playerFighter = Program.Player.GetComponent<FighterComponent>();
+            var playerFighter = Program.Game.Player.GetComponent<FighterComponent>();
 
             Terminal.Color(Color.Gold);
             Terminal.Print(x, 1, $"Player");
@@ -74,9 +74,9 @@ namespace Roguelike.Render
 
             var mouse = InputManager.GetMouseWorldPosition(camera);
 
-            if (Program.Map.IsInFov(mouse.X, mouse.Y))
+            if (Program.Game.Map.IsInFov(mouse.X, mouse.Y))
             {
-                var entitiesUnderMouse = Program.Entities
+                var entitiesUnderMouse = Program.Game.Entities
                     .Where(e => e.X == mouse.X && e.Y == mouse.Y)
                     .Take(5);
 

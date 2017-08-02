@@ -21,24 +21,24 @@ namespace Roguelike.Entities.Commands
                 return new CommandResult(new RestCommand());
             }
 
-            var target = Program.Entities.FirstOrDefault(e => e.HasComponent<FighterComponent>() && e.X == entity.X + X && e.Y == entity.Y + Y);
+            var target = Program.Game.Entities.FirstOrDefault(e => e.HasComponent<FighterComponent>() && e.X == entity.X + X && e.Y == entity.Y + Y);
 
             if (target != null)
             {
                 return new CommandResult(new AttackCommand(target));
             }
 
-            if (!Program.Map.CanEnter(entity.X + X, entity.Y + Y))
+            if (!Program.Game.Map.CanEnter(entity.X + X, entity.Y + Y))
             {
                 return CommandResult.Failure;
             }
 
-            Program.Map.PathfindingMap.SetCellProperties(entity.X, entity.Y, true, true);
+            Program.Game.Map.PathfindingMap.SetCellProperties(entity.X, entity.Y, true, true);
 
             entity.X += X;
             entity.Y += Y;
 
-            Program.Map.PathfindingMap.SetCellProperties(entity.X, entity.Y, true, false);
+            Program.Game.Map.PathfindingMap.SetCellProperties(entity.X, entity.Y, true, false);
 
             return CommandResult.Success;
         }

@@ -40,7 +40,7 @@ namespace Roguelike.UI
             Terminal.Layer(Renderer.DialogLayer + 1);
 
             int selectedIndex = 0;
-            var inventory = Program.Player.GetComponent<InventoryComponent>();
+            var inventory = Program.Game.Player.GetComponent<InventoryComponent>();
 
             int itemsPerPage = Height - 8;
             int pageCount = (inventory.Items.Length - 1) / itemsPerPage;

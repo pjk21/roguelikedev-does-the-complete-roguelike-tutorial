@@ -15,14 +15,14 @@ namespace Roguelike.World.MapGeneration
 
         protected virtual void SpawnMonsters(Rectangle room)
         {
-            int numberOfMonsters = Program.Random.Next(MaximumMonstersPerRoom + 1);
+            int numberOfMonsters = Program.Game.Random.Next(MaximumMonstersPerRoom + 1);
 
             for (int i = 0; i < numberOfMonsters; i++)
             {
-                int x = Program.Random.Next(room.Left + 1, room.Right);
-                int y = Program.Random.Next(room.Top + 1, room.Bottom);
+                int x = Program.Game.Random.Next(room.Left + 1, room.Right);
+                int y = Program.Game.Random.Next(room.Top + 1, room.Bottom);
 
-                if (Program.Random.NextDouble() < 0.8)
+                if (Program.Game.Random.NextDouble() < 0.8)
                 {
                     var rat = new Entity("Rat", x, y, 'r', Colours.Rat, true)
                     {
@@ -33,7 +33,7 @@ namespace Roguelike.World.MapGeneration
                     rat.AddComponent(new FighterComponent { MaximumHealth = 3, CurrentHealth = 3, Power = 1, Defense = 0, AttackElement = ElementType.Poison, DeathFunction = DeathFunctions.MonsterDeath });
                     rat.AddComponent(new BasicMonsterComponent());
 
-                    Program.Entities.Add(rat);
+                    Program.Game.Entities.Add(rat);
                 }
                 else
                 {
@@ -46,23 +46,23 @@ namespace Roguelike.World.MapGeneration
                     hound.AddComponent(new FighterComponent { MaximumHealth = 8, CurrentHealth = 8, Power = 3, Defense = 1, DeathFunction = DeathFunctions.MonsterDeath });
                     hound.AddComponent(new BasicMonsterComponent());
 
-                    Program.Entities.Add(hound);
+                    Program.Game.Entities.Add(hound);
                 }
             }
         }
 
         protected virtual void SpawnItems(Map map, Rectangle room)
         {
-            int numberOfItems = Program.Random.Next(MaximumItemsPerRoom + 1);
+            int numberOfItems = Program.Game.Random.Next(MaximumItemsPerRoom + 1);
 
             for (int i = 0; i < numberOfItems; i++)
             {
-                int x = Program.Random.Next(room.Left + 1, room.Right);
-                int y = Program.Random.Next(room.Top + 1, room.Bottom);
+                int x = Program.Game.Random.Next(room.Left + 1, room.Right);
+                int y = Program.Game.Random.Next(room.Top + 1, room.Bottom);
 
                 if (map.IsWalkable(x, y))
                 {
-                    var itemChance = Program.Random.NextDouble();
+                    var itemChance = Program.Game.Random.NextDouble();
 
                     if (itemChance < 0.7)
                     {
@@ -73,7 +73,7 @@ namespace Roguelike.World.MapGeneration
                         };
                         potion.AddComponent(new ItemComponent { Description = "Heals you for a small amount of HP.", UseFunction = ItemFunctions.PotionFunction });
 
-                        Program.Entities.Add(potion);
+                        Program.Game.Entities.Add(potion);
                     }
                     else if (itemChance < 0.8)
                     {
@@ -85,7 +85,7 @@ namespace Roguelike.World.MapGeneration
                         };
                         lightningScroll.AddComponent(new ItemComponent { Description = "Fires bolts of lightning at your enemies.", UseFunction = ItemFunctions.LightningScroll });
 
-                        Program.Entities.Add(lightningScroll);
+                        Program.Game.Entities.Add(lightningScroll);
                     }
                     else if (itemChance < 0.9)
                     {
@@ -97,7 +97,7 @@ namespace Roguelike.World.MapGeneration
                         };
                         confuseScroll.AddComponent(new ItemComponent { Description = "Complicated math formulas that confuse your enemies.", UseFunction = ItemFunctions.ConfuseScroll });
 
-                        Program.Entities.Add(confuseScroll);
+                        Program.Game.Entities.Add(confuseScroll);
                     }
                     else
                     {
@@ -109,7 +109,7 @@ namespace Roguelike.World.MapGeneration
                         };
                         fireballScroll.AddComponent(new ItemComponent { Description = "Launch a ball of fire at your enemies.", UseFunction = ItemFunctions.FireballScroll });
 
-                        Program.Entities.Add(fireballScroll);
+                        Program.Game.Entities.Add(fireballScroll);
                     }
                 }
             }

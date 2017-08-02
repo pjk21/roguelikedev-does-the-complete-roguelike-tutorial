@@ -1,10 +1,7 @@
 ﻿using BearLib;
-using Roguelike.Entities;
 using Roguelike.Input;
 using Roguelike.States;
-using Roguelike.World;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 
 namespace Roguelike
@@ -16,16 +13,8 @@ namespace Roguelike
         public const int MapDisplayWidth = ScreenWidth - 20;
         public const int MapDisplayHeight = ScreenHeight - 8;
 
-        public static bool IsDebugModeEnabled { get; set; } = false;
-
-        public static Random Random { get; set; } = new Random(123456789);
-
         public static IState CurrentState { get; private set; } = new MainMenuState();
-
-        public static Map Map { get; set; }
-
-        public static List<Entity> Entities { get; } = new List<Entity>();
-        public static Entity Player { get; set; }
+        public static Game Game { get; set; }
 
         static void Main(string[] args)
         {

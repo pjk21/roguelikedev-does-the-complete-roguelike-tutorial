@@ -17,7 +17,7 @@ namespace Roguelike.Entities.Components
         {
             if (currentPath != null)
             {
-                if (Program.Entities.Any(e => (e != Entity && e.HasComponent<ActorComponent>() && Program.Map.IsInFov(e.X, e.Y))) || (InputManager.CheckAction(InputAction.MouseMove) || InputManager.AnyKeyPress()))
+                if (Program.Game.Entities.Any(e => (e != Entity && e.HasComponent<ActorComponent>() && Program.Game.Map.IsInFov(e.X, e.Y))) || (InputManager.CheckAction(InputAction.MouseMove) || InputManager.AnyKeyPress()))
                 {
                     currentPath = null;
                     return null;
@@ -25,7 +25,7 @@ namespace Roguelike.Entities.Components
 
                 var destination = currentPath.StepForward();
 
-                if (!Program.Map.CanEnter(destination.X, destination.Y))
+                if (!Program.Game.Map.CanEnter(destination.X, destination.Y))
                 {
                     currentPath = null;
                     return null;
@@ -98,30 +98,30 @@ namespace Roguelike.Entities.Components
 
         private Command DoMouseMovement()
         {
-            var destination = InputManager.GetMouseWorldPosition(GameState.Camera);
+            var destination = InputManager.GetMouseWorldPosition(Program.Game.Camera);
 
             if (Entity.X == destination.X && Entity.Y == destination.Y)
             {
                 return null;
             }
 
-            if ((Program.Map.IsInFov(destination.X, destination.Y) || Program.Map.IsExplored(destination.X, destination.Y)))
+            if ((Program.Game.Map.IsInFov(destination.X, destination.Y) || Program.Game.Map.IsExplored(destination.X, destination.Y)))
             {
-                if (Program.Map.CanEnter(destination.X, destination.Y))
+                if (Program.Game.Map.CanEnter(destination.X, destination.Y))
                 {
-                    Program.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, true);
+                    Program.Game.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, true);
 
-                    var pathFinder = new PathFinder(Program.Map.PathfindingMap);
+                    var pathFinder = new PathFinder(Program.Game.Map.PathfindingMap);
                     currentPath = null;
 
                     try
                     {
-                        currentPath = pathFinder.ShortestPath(Program.Map.PathfindingMap.GetCell(Entity.X, Entity.Y), Program.Map.PathfindingMap.GetCell(destination.X, destination.Y));
-                        Program.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, true);
+                        currentPath = pathFinder.ShortestPath(Program.Game.Map.PathfindingMap.GetCell(Entity.X, Entity.Y), Program.Game.Map.PathfindingMap.GetCell(destination.X, destination.Y));
+                        Program.Game.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, true);
                     }
                     catch (PathNotFoundException)
                     {
-                        Program.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, false);
+                        Program.Game.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, false);
                         return null;
                     }
 
@@ -137,9 +137,9 @@ namespace Roguelike.Entities.Components
                 }
                 else
                 {
-                    var target = Program.Entities.FirstOrDefault(e => e.HasComponent<FighterComponent>() && e.X == destination.X && e.Y == destination.Y);
+                    var target = Program.Game.Entities.FirstOrDefault(e => e.HasComponent<FighterComponent>() && e.X == destination.X && e.Y == destination.Y);
 
-                    if (target != null && Program.Player.DistanceTo(target) < 2)
+                    if (target != null && Program.Game.Player.DistanceTo(target) < 2)
                     {
                         return new AttackCommand(target);
                     }

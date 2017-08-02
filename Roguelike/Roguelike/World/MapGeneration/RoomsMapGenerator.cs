@@ -14,7 +14,7 @@ namespace Roguelike.World.MapGeneration
         {
             var map = new Map(width, height);
 
-            var random = Program.Random;
+            var random = Program.Game.Random;
             var rooms = new List<Rectangle>();
 
             for (int i = 0; i < MaximumRooms; i++)
@@ -32,8 +32,8 @@ namespace Roguelike.World.MapGeneration
 
                     if (rooms.Count == 0)
                     {
-                        Program.Player.X = room.Center.X;
-                        Program.Player.Y = room.Center.Y;
+                        Program.Game.Player.X = room.Center.X;
+                        Program.Game.Player.Y = room.Center.Y;
                     }
                     else
                     {

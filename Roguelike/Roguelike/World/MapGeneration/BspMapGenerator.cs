@@ -24,8 +24,8 @@ namespace Roguelike.World.MapGeneration
             CreateRooms(root, map);
 
             var spawnRoom = root.GetRoom();
-            Program.Player.X = spawnRoom.Center.X;
-            Program.Player.Y = spawnRoom.Center.Y;
+            Program.Game.Player.X = spawnRoom.Center.X;
+            Program.Game.Player.Y = spawnRoom.Center.Y;
 
             foreach (var room in rooms)
             {
@@ -104,11 +104,11 @@ namespace Roguelike.World.MapGeneration
                 int maxShrinkX = node.Size.Width - MinimumRoomSize;
                 int maxShrinkY = node.Size.Height - MinimumRoomSize;
 
-                room.Width = node.Size.Width - Program.Random.Next(maxShrinkX);
-                room.Height = node.Size.Height - Program.Random.Next(maxShrinkY);
+                room.Width = node.Size.Width - Program.Game.Random.Next(maxShrinkX);
+                room.Height = node.Size.Height - Program.Game.Random.Next(maxShrinkY);
 
-                room.X = Program.Random.Next(node.Size.Left, node.Size.Right - room.Width);
-                room.Y = Program.Random.Next(node.Size.Top, node.Size.Bottom - room.Height);
+                room.X = Program.Game.Random.Next(node.Size.Left, node.Size.Right - room.Width);
+                room.Y = Program.Game.Random.Next(node.Size.Top, node.Size.Bottom - room.Height);
 
                 node.Room = room;
                 rooms.Add(room);
@@ -146,12 +146,12 @@ namespace Roguelike.World.MapGeneration
                 }
                 else
                 {
-                    direction = Program.Random.Next(2);
+                    direction = Program.Game.Random.Next(2);
                 }
 
                 if (direction == 0)
                 {
-                    var childRoomWidth = (Size.Width / 2) + Program.Random.Next(-3, 4);
+                    var childRoomWidth = (Size.Width / 2) + Program.Game.Random.Next(-3, 4);
 
                     if (childRoomWidth >= minimumRoomSize && Size.Width - childRoomWidth >= minimumRoomSize)
                     {
@@ -164,7 +164,7 @@ namespace Roguelike.World.MapGeneration
                 }
                 else
                 {
-                    var childRoomHeight = (Size.Height / 2) + Program.Random.Next(-3, 4);
+                    var childRoomHeight = (Size.Height / 2) + Program.Game.Random.Next(-3, 4);
 
                     if (childRoomHeight >= minimumRoomSize && Size.Height - childRoomHeight >= minimumRoomSize)
                     {
@@ -195,7 +195,7 @@ namespace Roguelike.World.MapGeneration
                     }
                     else
                     {
-                        if (Program.Random.Next(2) == 0)
+                        if (Program.Game.Random.Next(2) == 0)
                         {
                             return ChildA.GetRoom();
                         }

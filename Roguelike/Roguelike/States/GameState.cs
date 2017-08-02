@@ -12,46 +12,25 @@ namespace Roguelike.States
 {
     public class GameState : IState
     {
-        public static Camera Camera { get; } = new Camera(0, 0, Program.MapDisplayWidth, Program.MapDisplayHeight);
-
         public IRenderer ActiveRenderer { get; set; } = new SpriteRenderer();
 
         private Queue<Entity> entityActQueue = new Queue<Entity>();
 
         public void Initialize()
         {
-            Program.Entities.Clear();
+            Program.Game = new Game();
+            Program.Game.Initialize();
 
-            Program.Player = new Entity("Player", 25, 23, '@', Colours.Player, true)
-            {
-                SpriteIndex = EntitySprites.Player,
-                RenderLayer = Renderer.ActorLayer
-            };
-
-            Program.Player.AddComponent(new FighterComponent { MaximumHealth = 30, CurrentHealth = 30, Power = 5, Defense = 2, DeathFunction = DeathFunctions.PlayerDeath });
-            Program.Player.AddComponent(new PlayerInputComponent());
-            Program.Player.AddComponent(new InventoryComponent());
-
-            Program.Entities.Add(Program.Player);
-
-            Program.Map = new BspMapGenerator().Generate(80, 50);
-            Program.Map.ComputeFov(Program.Player.X, Program.Player.Y, Entity.PlayerFovRadius, true);
-
-            foreach (var cell in Program.Map.GetAllCells())
-            {
-                Program.Map.PathfindingMap.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable);
-            }
-
-            Camera.Follow(Program.Player);
+            Program.Game.Camera.Follow(Program.Game.Player);
 
             MessageLog.Add("Welcome to the dungeon, punk.", Color.LightSteelBlue);
         }
 
         public void Draw()
         {
-            ActiveRenderer.RenderMap(Program.Map, Camera);
-            ActiveRenderer.RenderEntities(Program.Entities, Camera);
-            ActiveRenderer.RenderUI(Camera);
+            ActiveRenderer.RenderMap(Program.Game.Map, Program.Game.Camera);
+            ActiveRenderer.RenderEntities(Program.Game.Entities, Program.Game.Camera);
+            ActiveRenderer.RenderUI(Program.Game.Camera);
         }
 
         public bool Update()
@@ -62,10 +41,10 @@ namespace Roguelike.States
             }
             else if (InputManager.CheckAction(InputAction.ToggleDebugMode))
             {
-                Program.IsDebugModeEnabled = !Program.IsDebugModeEnabled;
+                Program.Game.IsDebugModeEnabled = !Program.Game.IsDebugModeEnabled;
             }
 
-            if (Program.Player.GetComponent<FighterComponent>().CurrentHealth > 0)
+            if (Program.Game.Player.GetComponent<FighterComponent>().CurrentHealth > 0)
             {
                 if (InputManager.CheckAction(InputAction.Quit))
                 {
@@ -74,7 +53,7 @@ namespace Roguelike.States
 
                 if (entityActQueue.Count == 0)
                 {
-                    entityActQueue = new Queue<Entity>(Program.Entities.Where(e => e.HasComponent<ActorComponent>()));
+                    entityActQueue = new Queue<Entity>(Program.Game.Entities.Where(e => e.HasComponent<ActorComponent>()));
                 }
 
                 while (entityActQueue.Count > 0)
@@ -133,10 +112,10 @@ namespace Roguelike.States
                 command = result.Alternative;
             }
 
-            if (entity == Program.Player)
+            if (entity == Program.Game.Player)
             {
-                Program.Map.ComputeFov(entity.X, entity.Y, Entity.PlayerFovRadius, true);
-                Camera.Follow(entity);
+                Program.Game.Map.ComputeFov(entity.X, entity.Y, Entity.PlayerFovRadius, true);
+                Program.Game.Camera.Follow(entity);
             }
 
             return true;

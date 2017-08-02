@@ -12,9 +12,9 @@ namespace Roguelike.Entities.Components
             if (TurnsRemaining > 0)
             {
                 TurnsRemaining--;
-                var direction = Program.Random.GetPoint(-1, 2, -1, 2);
+                var direction = Program.Game.Random.GetPoint(-1, 2, -1, 2);
 
-                if (Program.Map.CanEnter(Entity.X + direction.X, Entity.Y + direction.Y))
+                if (Program.Game.Map.CanEnter(Entity.X + direction.X, Entity.Y + direction.Y))
                 {
 
                     return new MoveCommand(direction.X, direction.Y);
