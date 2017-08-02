@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace Roguelike.Entities
 {
+    [Serializable]
     public class Entity
     {
         public const int PlayerFovRadius = 10;

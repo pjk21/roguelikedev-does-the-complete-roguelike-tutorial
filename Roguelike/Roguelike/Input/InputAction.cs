@@ -7,6 +7,7 @@
         Quit,
         CycleRenderer,
         ToggleDebugMode,
+        Save,
 
         MenuUp,
         MenuDown,

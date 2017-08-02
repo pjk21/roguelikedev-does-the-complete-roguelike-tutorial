@@ -4,6 +4,7 @@ using Roguelike.Render;
 using Roguelike.UI;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 
 namespace Roguelike.States
@@ -11,7 +12,7 @@ namespace Roguelike.States
     public class MainMenuState : IState
     {
         private string title = "RogueLike: The Tutorial";
-        private MenuItem[] menuOptions; //= new string[] { "New Game", "Load Game", "Exit Game" };
+        private MenuItem[] menuOptions;
         private int selectedIndex = 0;
 
         private bool quitRequested = false;
@@ -21,8 +22,8 @@ namespace Roguelike.States
             menuOptions = new MenuItem[]
             {
                 new MenuItem { Text = "New Game", OnSelected = NewGame },
-                new MenuItem {Text = "Load Game", OnSelected = LoadGame, IsEnabled = false },
-                new MenuItem {Text = "Exit Game", OnSelected = ExitGame }
+                new MenuItem { Text = "Load Game", OnSelected = LoadGame, IsEnabled = File.Exists(Game.SaveGameFileName) },
+                new MenuItem { Text = "Exit Game", OnSelected = ExitGame }
             };
         }
 
@@ -86,12 +87,23 @@ namespace Roguelike.States
 
         private void NewGame()
         {
+            Program.Game = new Game();
+            Program.Game.Initialize(true);
+
             Program.ChangeState(new GameState());
         }
 
         private void LoadGame()
         {
-            Console.WriteLine("load game");
+            var game = Game.Load();
+
+            if (game != null)
+            {
+                Program.Game = game;
+                Program.Game.Initialize(false);
+
+                Program.ChangeState(new GameState());
+            }
         }
 
         private void ExitGame()

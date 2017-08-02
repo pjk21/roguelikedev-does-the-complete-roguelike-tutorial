@@ -3,7 +3,6 @@ using Roguelike.Entities.Components;
 using Roguelike.Input;
 using Roguelike.Render;
 using Roguelike.UI;
-using Roguelike.World.MapGeneration;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -18,9 +17,6 @@ namespace Roguelike.States
 
         public void Initialize()
         {
-            Program.Game = new Game();
-            Program.Game.Initialize();
-
             Program.Game.Camera.Follow(Program.Game.Player);
 
             MessageLog.Add("Welcome to the dungeon, punk.", Color.LightSteelBlue);
@@ -49,6 +45,11 @@ namespace Roguelike.States
                 if (InputManager.CheckAction(InputAction.Quit))
                 {
                     Program.ChangeState(new MainMenuState());
+                }
+
+                if (InputManager.CheckAction(InputAction.Save))
+                {
+                    Program.Game.Save();
                 }
 
                 if (entityActQueue.Count == 0)

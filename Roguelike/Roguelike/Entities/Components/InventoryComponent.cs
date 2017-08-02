@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Roguelike.Entities.Components
 {
+    [Serializable]
     public class InventoryComponent : Component
     {
         private readonly List<Entity> items = new List<Entity>();

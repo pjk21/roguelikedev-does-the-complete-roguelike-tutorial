@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using Rectangle = RogueSharp.Rectangle;
 
 namespace Roguelike.World
@@ -49,6 +51,52 @@ namespace Roguelike.World
             }
 
             return true;
+        }
+
+        public byte[] Serialize()
+        {
+            byte[] data;
+
+            using (var stream = new MemoryStream())
+            {
+                using (var writer = new BinaryWriter(stream))
+                {
+                    for (int x = 0; x < Width; x++)
+                    {
+                        for (int y = 0; y < Height; y++)
+                        {
+                            writer.Write(IsWalkable(x, y));
+                            writer.Write(IsTransparent(x, y));
+                            writer.Write(IsExplored(x, y));
+                        }
+                    }
+                }
+
+                data = stream.ToArray();
+            }
+
+            return data;
+        }
+
+        public void Deserialize(byte[] data)
+        {
+            using (var stream = new MemoryStream(data))
+            {
+                using (var reader = new BinaryReader(stream))
+                {
+                    for (int x = 0; x < Width; x++)
+                    {
+                        for (int y = 0; y < Height; y++)
+                        {
+                            var walkable = reader.ReadBoolean();
+                            var transparent = reader.ReadBoolean();
+                            var explored = reader.ReadBoolean();
+
+                            SetCellProperties(x, y, transparent, walkable, explored);
+                        }
+                    }
+                }
+            }
         }
     }
 }

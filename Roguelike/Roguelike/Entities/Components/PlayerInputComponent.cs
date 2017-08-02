@@ -1,16 +1,19 @@
 ﻿using Roguelike.Entities.Commands;
 using Roguelike.Input;
-using Roguelike.States;
 using Roguelike.UI;
 using RogueSharp;
+using System;
 using System.Linq;
 
 namespace Roguelike.Entities.Components
 {
+    [Serializable]
     public class PlayerInputComponent : ActorComponent
     {
+        [NonSerialized]
         private Path currentPath;
 
+        [NonSerialized]
         private readonly InventoryDialog inventoryDialog = new InventoryDialog(1, 1, Program.MapDisplayWidth - 2, Program.MapDisplayHeight - 2);
 
         public override Command GetCommand()

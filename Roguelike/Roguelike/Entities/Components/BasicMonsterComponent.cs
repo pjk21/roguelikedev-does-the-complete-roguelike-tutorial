@@ -1,8 +1,10 @@
 ﻿using Roguelike.Entities.Commands;
 using RogueSharp;
+using System;
 
 namespace Roguelike.Entities.Components
 {
+    [Serializable]
     public class BasicMonsterComponent : ActorComponent
     {
         public override Command GetCommand()

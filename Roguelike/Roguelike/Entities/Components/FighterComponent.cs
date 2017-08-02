@@ -5,6 +5,7 @@ using System.Drawing;
 
 namespace Roguelike.Entities.Components
 {
+    [Serializable]
     public class FighterComponent : Component
     {
         private readonly Dictionary<ElementType, float> resistances = new Dictionary<ElementType, float>();

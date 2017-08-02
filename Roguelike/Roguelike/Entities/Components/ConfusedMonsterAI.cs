@@ -1,7 +1,9 @@
 ﻿using Roguelike.Entities.Commands;
+using System;
 
 namespace Roguelike.Entities.Components
 {
+    [Serializable]
     public class ConfusedMonsterAI : ActorComponent
     {
         public int TurnsRemaining { get; set; }

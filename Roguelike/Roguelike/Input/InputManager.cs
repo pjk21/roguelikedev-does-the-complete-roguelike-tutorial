@@ -115,6 +115,7 @@ namespace Roguelike.Input
             map.Add(InputAction.Quit, new List<KeyPress> { new KeyPress(Terminal.TK_ESCAPE), new KeyPress(Terminal.TK_CLOSE) });
             map.Add(InputAction.CycleRenderer, new List<KeyPress> { new KeyPress(Terminal.TK_F2) });
             map.Add(InputAction.ToggleDebugMode, new List<KeyPress> { new KeyPress(Terminal.TK_F3) });
+            map.Add(InputAction.Save, new List<KeyPress> { new KeyPress(Terminal.TK_S, control: true) });
 
             map.Add(InputAction.MenuUp, new List<KeyPress> { new KeyPress(Terminal.TK_UP) });
             map.Add(InputAction.MenuDown, new List<KeyPress> { new KeyPress(Terminal.TK_DOWN) });
