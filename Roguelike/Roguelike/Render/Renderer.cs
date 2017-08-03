@@ -62,7 +62,7 @@ namespace Roguelike.Render
             var playerFighter = Program.Game.Player.GetComponent<FighterComponent>();
 
             Terminal.Color(Color.Gold);
-            Terminal.Print(x, 1, $"Player");
+            Terminal.Print(x, 1, Program.Game.Player.Name);
 
             Terminal.Color(Color.White);
             Terminal.Print(x + 1, 2, $"HP");

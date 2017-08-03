@@ -87,10 +87,7 @@ namespace Roguelike.States
 
         private void NewGame()
         {
-            Program.Game = new Game();
-            Program.Game.Initialize(true);
-
-            Program.ChangeState(new GameState());
+            Program.ChangeState(new NewGameState());
         }
 
         private void LoadGame()
