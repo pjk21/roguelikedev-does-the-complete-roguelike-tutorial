@@ -26,6 +26,7 @@ namespace Roguelike.UI
                 if (highlighted)
                 {
                     Terminal.Color(HighlightedColour);
+                    Terminal.PutExt(x - 1, y, -8, 0, 0x2192);
                 }
                 else
                 {
