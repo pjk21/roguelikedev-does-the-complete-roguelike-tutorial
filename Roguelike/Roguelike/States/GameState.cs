@@ -44,6 +44,7 @@ namespace Roguelike.States
             {
                 if (InputManager.CheckAction(InputAction.Quit))
                 {
+                    Program.Game.Save();
                     Program.ChangeState(new MainMenuState());
                 }
 
