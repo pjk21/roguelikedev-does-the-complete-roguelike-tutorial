@@ -69,6 +69,7 @@
     <Compile Include="Entities\DeathFunctions.cs" />
     <Compile Include="Entities\ElementType.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\EntityFlags.cs" />
     <Compile Include="Entities\EntitySprites.cs" />
     <Compile Include="Entities\ItemFunctions.cs" />
     <Compile Include="Game.cs" />

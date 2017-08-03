@@ -26,6 +26,8 @@ namespace Roguelike.Entities
 
         public bool IsSolid { get; set; } = false;
 
+        public EntityFlags Flags { get; set; } = EntityFlags.None;
+
         public Entity(string name, int x, int y, char character, Color colour, bool solid = false)
         {
             Name = name;

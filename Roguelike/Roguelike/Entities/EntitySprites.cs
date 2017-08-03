@@ -10,5 +10,7 @@
 
         public const int Potion = 0xE804;
         public const int Scroll = 0xE805;
+
+        public const int Confusion = 0xE806;
     }
 }

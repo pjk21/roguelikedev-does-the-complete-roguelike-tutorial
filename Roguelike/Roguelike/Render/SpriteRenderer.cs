@@ -21,6 +21,11 @@ namespace Roguelike.Render
                 Terminal.Color(entity.Colour);
                 Terminal.Put(entity.X - camera.X, entity.Y - camera.Y, entity.Character);
             }
+
+            if (entity.Flags.HasFlag(EntityFlags.Confused))
+            {
+                Terminal.Put(entity.X - camera.X, entity.Y - camera.Y - 1, EntitySprites.Confusion);
+            }
         }
 
         protected override void RenderTile(Map map, int x, int y, Camera camera)
