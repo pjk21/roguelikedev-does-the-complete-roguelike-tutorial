@@ -1,8 +1,10 @@
 ﻿using Roguelike.Entities.Commands;
 using Roguelike.Input;
+using Roguelike.PathFinding;
 using Roguelike.UI;
 using RogueSharp;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Roguelike.Entities.Components
@@ -11,7 +13,7 @@ namespace Roguelike.Entities.Components
     public class PlayerInputComponent : ActorComponent
     {
         [NonSerialized]
-        private Path currentPath;
+        private Queue<Point> currentPath;
 
         [NonSerialized]
         private readonly InventoryDialog inventoryDialog = new InventoryDialog(1, 1, Program.MapDisplayWidth - 2, Program.MapDisplayHeight - 2);
@@ -26,7 +28,7 @@ namespace Roguelike.Entities.Components
                     return null;
                 }
 
-                var destination = currentPath.StepForward();
+                var destination = currentPath.Dequeue();
 
                 if (!Program.Game.Map.CanEnter(destination.X, destination.Y))
                 {
@@ -37,7 +39,7 @@ namespace Roguelike.Entities.Components
                 var x = destination.X - Entity.X;
                 var y = destination.Y - Entity.Y;
 
-                if (destination == currentPath.End)
+                if (currentPath.Count == 0)
                 {
                     currentPath = null;
                 }
@@ -114,24 +116,14 @@ namespace Roguelike.Entities.Components
                 {
                     Program.Game.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, true);
 
-                    var pathFinder = new PathFinder(Program.Game.Map.PathfindingMap);
-                    currentPath = null;
+                    currentPath = AStarPathFinder.GetPath(new Point(Entity.X, Entity.Y), destination);
+                    currentPath.Dequeue(); // Discard starting point
 
-                    try
-                    {
-                        currentPath = pathFinder.ShortestPath(Program.Game.Map.PathfindingMap.GetCell(Entity.X, Entity.Y), Program.Game.Map.PathfindingMap.GetCell(destination.X, destination.Y));
-                        Program.Game.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, true);
-                    }
-                    catch (PathNotFoundException)
-                    {
-                        Program.Game.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, false);
-                        return null;
-                    }
+                    var step = currentPath.Dequeue();
+                    var x = step.X - Entity.X;
+                    var y = step.Y - Entity.Y;
 
-                    var x = currentPath.CurrentStep.X - Entity.X;
-                    var y = currentPath.CurrentStep.Y - Entity.Y;
-
-                    if (currentPath.Length == 1)
+                    if (currentPath.Count == 0)
                     {
                         currentPath = null;
                     }
