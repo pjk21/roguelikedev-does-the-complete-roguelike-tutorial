@@ -117,18 +117,22 @@ namespace Roguelike.Entities.Components
                     Program.Game.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, true);
 
                     currentPath = AStarPathFinder.GetPath(new Point(Entity.X, Entity.Y), destination);
-                    currentPath.Dequeue(); // Discard starting point
 
-                    var step = currentPath.Dequeue();
-                    var x = step.X - Entity.X;
-                    var y = step.Y - Entity.Y;
-
-                    if (currentPath.Count == 0)
+                    if (currentPath != null)
                     {
-                        currentPath = null;
-                    }
+                        currentPath.Dequeue(); // Discard starting point
 
-                    return new MoveCommand(x, y);
+                        var step = currentPath.Dequeue();
+                        var x = step.X - Entity.X;
+                        var y = step.Y - Entity.Y;
+
+                        if (currentPath.Count == 0)
+                        {
+                            currentPath = null;
+                        }
+
+                        return new MoveCommand(x, y);
+                    }
                 }
                 else
                 {

@@ -49,7 +49,7 @@ namespace Roguelike.PathFinding
                 }
             }
 
-            return ConstructPath(cameFrom, destination);
+            return null;
         }
 
         private static float Distance(int x1, int y1, int x2, int y2)
