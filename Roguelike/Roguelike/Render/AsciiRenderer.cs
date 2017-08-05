@@ -17,18 +17,19 @@ namespace Roguelike.Render
 
         protected override void RenderTile(Map map, int x, int y, Camera camera)
         {
+            var tile = map.IsWalkable(x, y) ? Tile.Floor : Tile.Wall;
+
             if (map.IsInFov(x, y) || Program.Game.IsDebugModeEnabled)
             {
-                if (map.IsWalkable(x, y))
+                if (tile.BackColour.HasValue)
                 {
-                    Terminal.BkColor(Colours.FloorLight);
-                    Terminal.Put(x - camera.X, y - camera.Y, 0x0020);
+                    Terminal.BkColor(tile.BackColour.Value);
                 }
-                else
+
+                if (tile.Glyph.HasValue)
                 {
-                    Terminal.Color(Color.DimGray);
-                    Terminal.BkColor(Colours.WallLight);
-                    Terminal.Put(x - camera.X, y - camera.Y, 0x2591);
+                    Terminal.Color(tile.Colour ?? Color.White);
+                    Terminal.Put(x - camera.X, y - camera.Y, tile.Glyph.Value);
                 }
 
                 if (map.IsInFov(x, y))
@@ -40,16 +41,15 @@ namespace Roguelike.Render
             {
                 if (map.IsExplored(x, y))
                 {
-                    if (map.IsWalkable(x, y))
+                    if (tile.BackColour.HasValue)
                     {
-                        Terminal.BkColor(Colours.FloorDark);
-                        Terminal.Put(x - camera.X, y - camera.Y, 0x0020);
+                        Terminal.BkColor(tile.BackColour.Value.Lerp(Color.Black));
                     }
-                    else
+
+                    if (tile.Glyph.HasValue)
                     {
-                        Terminal.Color(Color.DimGray.Lerp(Color.Black));
-                        Terminal.BkColor(Colours.WallDark);
-                        Terminal.Put(x - camera.X, y - camera.Y, 0x2591);
+                        Terminal.Color((tile.Colour ?? Color.White).Lerp(Color.Black));
+                        Terminal.Put(x - camera.X, y - camera.Y, tile.Glyph.Value);
                     }
                 }
             }
