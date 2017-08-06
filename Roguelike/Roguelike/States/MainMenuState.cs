@@ -60,7 +60,7 @@ namespace Roguelike.States
 
             if (InputManager.CheckAction(InputAction.MenuSelect))
             {
-                menuOptions[selectedIndex].OnSelected();
+                menuOptions[selectedIndex].Select();
             }
 
             return true;
