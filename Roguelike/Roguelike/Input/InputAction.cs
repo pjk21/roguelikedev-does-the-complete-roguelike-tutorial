@@ -4,6 +4,7 @@
     {
         None,
 
+        CloseWindow,
         Quit,
         CycleRenderer,
         ToggleDebugMode,

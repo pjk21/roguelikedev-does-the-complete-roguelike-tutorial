@@ -15,11 +15,6 @@ namespace Roguelike.Entities.Components
         [NonSerialized]
         private Queue<Point> currentPath;
 
-        [NonSerialized]
-        private readonly InventoryDialog inventoryDialog = new InventoryDialog(1, 1, Program.MapDisplayWidth - 2, Program.MapDisplayHeight - 2);
-        [NonSerialized]
-        private readonly PauseDialog pauseDialog = new PauseDialog();
-
         public override Command GetCommand()
         {
             if (currentPath != null)
@@ -92,7 +87,7 @@ namespace Roguelike.Entities.Components
                 }
                 else if (InputManager.CheckAction(InputAction.ShowInventory))
                 {
-                    return inventoryDialog.Show();
+                    return new InventoryDialog(1, 1, Program.MapDisplayWidth - 2, Program.MapDisplayHeight - 2).Show();
                 }
                 else if (InputManager.CheckAction(InputAction.MouseMove))
                 {

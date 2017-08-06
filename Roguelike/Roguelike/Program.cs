@@ -56,6 +56,11 @@ namespace Roguelike
                 throw new NullReferenceException(nameof(CurrentState));
             }
 
+            if (InputManager.CheckAction(InputAction.CloseWindow))
+            {
+                return false;
+            }
+
             return CurrentState.Update();
         }
 

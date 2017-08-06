@@ -44,9 +44,9 @@ namespace Roguelike.Input
             return new Point(x, y);
         }
 
-        public static void Update(bool shouldBlock = false)
+        public static void Update()
         {
-            if (Terminal.HasInput() || shouldBlock)
+            if (Terminal.HasInput())
             {
                 lastInput = Terminal.Read();
             }
@@ -112,7 +112,8 @@ namespace Roguelike.Input
         {
             var map = new Dictionary<InputAction, List<KeyPress>>();
 
-            map.Add(InputAction.Quit, new List<KeyPress> { new KeyPress(Terminal.TK_ESCAPE), new KeyPress(Terminal.TK_CLOSE) });
+            map.Add(InputAction.CloseWindow, new List<KeyPress> { new KeyPress(Terminal.TK_CLOSE) });
+            map.Add(InputAction.Quit, new List<KeyPress> { new KeyPress(Terminal.TK_ESCAPE) });
             map.Add(InputAction.CycleRenderer, new List<KeyPress> { new KeyPress(Terminal.TK_F2) });
             map.Add(InputAction.ToggleDebugMode, new List<KeyPress> { new KeyPress(Terminal.TK_F3) });
             map.Add(InputAction.Save, new List<KeyPress> { new KeyPress(Terminal.TK_S, control: true) });
