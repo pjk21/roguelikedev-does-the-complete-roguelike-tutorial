@@ -24,7 +24,7 @@ namespace Roguelike.Render
         {
             foreach (var entity in entities)
             {
-                if (camera.Contains(entity.X, entity.Y) && (Program.Game.Map.IsInFov(entity.X, entity.Y) || Program.Game.IsDebugModeEnabled))
+                if (camera.Contains(entity.X, entity.Y) && (Program.Game.Map.FovMap.IsInFov(entity.X, entity.Y) || Program.Game.IsDebugModeEnabled))
                 {
                     RenderEntity(entity, camera);
                 }
@@ -74,7 +74,7 @@ namespace Roguelike.Render
 
             var mouse = InputManager.GetMouseWorldPosition(camera);
 
-            if (Program.Game.Map.IsInFov(mouse.X, mouse.Y))
+            if (Program.Game.Map.FovMap.IsInFov(mouse.X, mouse.Y))
             {
                 var entitiesUnderMouse = Program.Game.Entities
                     .Where(e => e.X == mouse.X && e.Y == mouse.Y)

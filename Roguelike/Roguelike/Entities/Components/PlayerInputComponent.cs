@@ -22,7 +22,7 @@ namespace Roguelike.Entities.Components
         {
             if (currentPath != null)
             {
-                if (Program.Game.Entities.Any(e => (e != Entity && e.HasComponent<ActorComponent>() && Program.Game.Map.IsInFov(e.X, e.Y))) || (InputManager.CheckAction(InputAction.MouseMove) || InputManager.AnyKeyPress()))
+                if (Program.Game.Entities.Any(e => (e != Entity && e.HasComponent<ActorComponent>() && Program.Game.Map.FovMap.IsInFov(e.X, e.Y))) || (InputManager.CheckAction(InputAction.MouseMove) || InputManager.AnyKeyPress()))
                 {
                     currentPath = null;
                     return null;
@@ -110,11 +110,11 @@ namespace Roguelike.Entities.Components
                 return null;
             }
 
-            if ((Program.Game.Map.IsInFov(destination.X, destination.Y) || Program.Game.Map.IsExplored(destination.X, destination.Y)))
+            if ((Program.Game.Map.FovMap.IsInFov(destination.X, destination.Y) || Program.Game.Map.IsExplored(destination.X, destination.Y)))
             {
                 if (Program.Game.Map.CanEnter(destination.X, destination.Y))
                 {
-                    Program.Game.Map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, true);
+                    Program.Game.Map.FovMap.SetCellProperties(Entity.X, Entity.Y, true, true);
 
                     currentPath = AStarPathFinder.GetPath(new Point(Entity.X, Entity.Y), destination);
 

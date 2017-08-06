@@ -11,26 +11,26 @@ namespace Roguelike.Entities.Components
         {
             var map = Program.Game.Map;
 
-            if (map.IsInFov(Entity.X, Entity.Y))
+            if (map.FovMap.IsInFov(Entity.X, Entity.Y))
             {
                 var player = Program.Game.Player;
 
                 if (Entity.DistanceTo(player) >= 2)
                 {
-                    map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, true);
-                    map.PathfindingMap.SetCellProperties(player.X, player.Y, true, true);
+                    map.FovMap.SetCellProperties(Entity.X, Entity.Y, true, true);
+                    map.FovMap.SetCellProperties(player.X, player.Y, true, true);
 
-                    var pathFinder = new PathFinder(map.PathfindingMap);
+                    var pathFinder = new PathFinder(map.FovMap);
                     Path path = null;
 
                     try
                     {
-                        path = pathFinder.ShortestPath(map.PathfindingMap.GetCell(Entity.X, Entity.Y), map.PathfindingMap.GetCell(player.X, player.Y));
+                        path = pathFinder.ShortestPath(map.FovMap.GetCell(Entity.X, Entity.Y), map.FovMap.GetCell(player.X, player.Y));
                     }
                     catch (PathNotFoundException) { }
 
-                    map.PathfindingMap.SetCellProperties(Entity.X, Entity.Y, true, false);
-                    map.PathfindingMap.SetCellProperties(player.X, player.Y, true, false);
+                    map.FovMap.SetCellProperties(Entity.X, Entity.Y, true, false);
+                    map.FovMap.SetCellProperties(player.X, player.Y, true, false);
 
                     if (path != null)
                     {

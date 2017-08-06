@@ -37,12 +37,7 @@ namespace Roguelike
         {
             Seed = info.GetInt32(nameof(Seed));
 
-            var mapWidth = info.GetInt32("MapWidth");
-            var mapHeight = info.GetInt32("MapHeight");
-            var mapData = (byte[])info.GetValue("MapData", typeof(byte[]));
-
-            Map = new Map(mapWidth, mapHeight);
-            Map.Deserialize(mapData);
+            Map = (Map)info.GetValue(nameof(Map), typeof(Map));
 
             Entities = (List<Entity>)info.GetValue(nameof(Entities), typeof(List<Entity>));
 
@@ -73,12 +68,8 @@ namespace Roguelike
                 Map = new BspMapGenerator().Generate(80, 50);
             }
 
-            Map.ComputeFov(Player.X, Player.Y, Entity.PlayerFovRadius, true);
-
-            foreach (var cell in Map.GetAllCells())
-            {
-                Map.PathfindingMap.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable);
-            }
+            Map.UpdateFovMap();
+            Map.FovMap.ComputeFov(Player.X, Player.Y, Entity.PlayerFovRadius, true);
         }
 
         public void Save()
@@ -94,9 +85,11 @@ namespace Roguelike
         {
             info.AddValue(nameof(Seed), Seed);
 
-            info.AddValue("MapWidth", Map.Width);
-            info.AddValue("MapHeight", Map.Height);
-            info.AddValue("MapData", Map.Serialize());
+            //info.AddValue("MapWidth", Map.Width);
+            //info.AddValue("MapHeight", Map.Height);
+            //info.AddValue("MapData", Map.Serialize());
+
+            info.AddValue(nameof(Map), Map);
 
             info.AddValue(nameof(Entities), Entities);
             info.AddValue(nameof(Player), Entities.IndexOf(Player));

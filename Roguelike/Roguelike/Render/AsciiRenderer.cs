@@ -19,7 +19,7 @@ namespace Roguelike.Render
         {
             var tile = map.IsWalkable(x, y) ? Tile.Floor : Tile.Wall;
 
-            if (map.IsInFov(x, y) || Program.Game.IsDebugModeEnabled)
+            if (map.FovMap.IsInFov(x, y) || Program.Game.IsDebugModeEnabled)
             {
                 if (tile.BackColour.HasValue)
                 {
@@ -32,9 +32,9 @@ namespace Roguelike.Render
                     Terminal.Put(x - camera.X, y - camera.Y, tile.Glyph.Value);
                 }
 
-                if (map.IsInFov(x, y))
+                if (map.FovMap.IsInFov(x, y))
                 {
-                    map.SetCellProperties(x, y, map.IsTransparent(x, y), map.IsWalkable(x, y), true);
+                    map.SetExplored(x, y, true);
                 }
             }
             else

@@ -58,42 +58,42 @@ namespace Roguelike.World.MapGeneration
                     {
                         if (roomA.Width >= roomB.Width)
                         {
-                            map.CreateVerticalTunnel(roomA.Center.Y, roomB.Center.Y, roomB.Center.X);
+                            map.CreateVerticalTunnel(roomA.Center.Y, roomB.Center.Y, roomB.Center.X, Tile.Floor);
                         }
                         else
                         {
-                            map.CreateVerticalTunnel(roomA.Center.Y, roomB.Center.Y, roomA.Center.X);
+                            map.CreateVerticalTunnel(roomA.Center.Y, roomB.Center.Y, roomA.Center.X, Tile.Floor);
                         }
                     }
                     else if (roomA.Top == roomB.Top || roomA.Bottom == roomB.Bottom)
                     {
                         if (roomA.Height >= roomB.Height)
                         {
-                            map.CreateHorizontalTunnel(roomA.Center.X, roomB.Center.X, roomB.Center.Y);
+                            map.CreateHorizontalTunnel(roomA.Center.X, roomB.Center.X, roomB.Center.Y, Tile.Floor);
                         }
                         else
                         {
-                            map.CreateHorizontalTunnel(roomA.Center.X, roomB.Center.X, roomA.Center.Y);
+                            map.CreateHorizontalTunnel(roomA.Center.X, roomB.Center.X, roomA.Center.Y, Tile.Floor);
                         }
                     }
                     else
                     {
                         if (roomA.Width >= roomB.Width)
                         {
-                            map.CreateVerticalTunnel(roomA.Center.Y, roomB.Center.Y, roomB.Center.X);
+                            map.CreateVerticalTunnel(roomA.Center.Y, roomB.Center.Y, roomB.Center.X, Tile.Floor);
                         }
                         else
                         {
-                            map.CreateVerticalTunnel(roomA.Center.Y, roomB.Center.Y, roomA.Center.X);
+                            map.CreateVerticalTunnel(roomA.Center.Y, roomB.Center.Y, roomA.Center.X, Tile.Floor);
                         }
 
                         if (roomA.Height >= roomB.Height)
                         {
-                            map.CreateHorizontalTunnel(roomA.Center.X, roomB.Center.X, roomB.Center.Y);
+                            map.CreateHorizontalTunnel(roomA.Center.X, roomB.Center.X, roomB.Center.Y, Tile.Floor);
                         }
                         else
                         {
-                            map.CreateHorizontalTunnel(roomA.Center.X, roomB.Center.X, roomA.Center.Y);
+                            map.CreateHorizontalTunnel(roomA.Center.X, roomB.Center.X, roomA.Center.Y, Tile.Floor);
                         }
                     }
                 }
@@ -114,7 +114,7 @@ namespace Roguelike.World.MapGeneration
                 node.Room = room;
                 rooms.Add(room);
 
-                map.CreateRoom(room);
+                map.CreateRoom(room, Tile.Floor);
             }
         }
 

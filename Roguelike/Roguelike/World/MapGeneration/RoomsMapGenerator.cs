@@ -28,7 +28,7 @@ namespace Roguelike.World.MapGeneration
 
                 if (!rooms.Any(room.Intersects))
                 {
-                    map.CreateRoom(room);
+                    map.CreateRoom(room, Tile.Floor);
 
                     if (rooms.Count == 0)
                     {
@@ -41,13 +41,13 @@ namespace Roguelike.World.MapGeneration
 
                         if (random.Next(2) == 0)
                         {
-                            map.CreateHorizontalTunnel(previousRoom.Center.X, room.Center.X, previousRoom.Center.Y);
-                            map.CreateVerticalTunnel(previousRoom.Center.Y, room.Center.Y, room.Center.X);
+                            map.CreateHorizontalTunnel(previousRoom.Center.X, room.Center.X, previousRoom.Center.Y, Tile.Floor);
+                            map.CreateVerticalTunnel(previousRoom.Center.Y, room.Center.Y, room.Center.X, Tile.Floor);
                         }
                         else
                         {
-                            map.CreateHorizontalTunnel(previousRoom.Center.X, room.Center.X, room.Center.Y);
-                            map.CreateVerticalTunnel(previousRoom.Center.Y, room.Center.Y, previousRoom.Center.X);
+                            map.CreateHorizontalTunnel(previousRoom.Center.X, room.Center.X, room.Center.Y, Tile.Floor);
+                            map.CreateVerticalTunnel(previousRoom.Center.Y, room.Center.Y, previousRoom.Center.X, Tile.Floor);
                         }
 
                         SpawnMonsters(room);

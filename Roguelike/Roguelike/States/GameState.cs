@@ -116,7 +116,7 @@ namespace Roguelike.States
 
             if (entity == Program.Game.Player)
             {
-                Program.Game.Map.ComputeFov(entity.X, entity.Y, Entity.PlayerFovRadius, true);
+                Program.Game.Map.FovMap.ComputeFov(entity.X, entity.Y, Entity.PlayerFovRadius, true);
                 Program.Game.Camera.Follow(entity);
             }
 
