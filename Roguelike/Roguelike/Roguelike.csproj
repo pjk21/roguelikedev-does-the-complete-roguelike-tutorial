@@ -94,6 +94,7 @@
     <Compile Include="UI\InventoryDialog.cs" />
     <Compile Include="UI\MenuItem.cs" />
     <Compile Include="UI\MessageLog.cs" />
+    <Compile Include="UI\PauseDialog.cs" />
     <Compile Include="UI\SelectCellDialog.cs" />
     <Compile Include="UI\UISprites.cs" />
     <Compile Include="Render\RenderUtils.cs" />

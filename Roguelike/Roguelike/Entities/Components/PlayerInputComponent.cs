@@ -17,6 +17,8 @@ namespace Roguelike.Entities.Components
 
         [NonSerialized]
         private readonly InventoryDialog inventoryDialog = new InventoryDialog(1, 1, Program.MapDisplayWidth - 2, Program.MapDisplayHeight - 2);
+        [NonSerialized]
+        private readonly PauseDialog pauseDialog = new PauseDialog();
 
         public override Command GetCommand()
         {
