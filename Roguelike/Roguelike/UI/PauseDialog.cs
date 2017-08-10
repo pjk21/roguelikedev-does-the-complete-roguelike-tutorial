@@ -23,7 +23,7 @@ namespace Roguelike.UI
         protected override void Draw()
         {
             var bounds = new Rectangle(1, 1, Program.MapDisplayWidth - 2, Program.MapDisplayHeight - 2);
-            RenderUtils.DrawBox(bounds, Color.FromArgb(128, Color.Black), Color.White);
+            RenderUtils.DrawBox(bounds, Color.FromArgb(192, Color.CornflowerBlue), Color.White);
 
             string title = "Paused";
             Terminal.Color(Color.Gold);

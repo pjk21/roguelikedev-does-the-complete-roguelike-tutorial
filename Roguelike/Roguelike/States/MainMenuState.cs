@@ -11,7 +11,7 @@ namespace Roguelike.States
 {
     public class MainMenuState : IState
     {
-        private string title = "RogueLike: The Tutorial";
+        private string title = "RogueLike Tutorial: The Game";
         private MenuItem[] menuOptions;
         private int selectedIndex = 0;
 
