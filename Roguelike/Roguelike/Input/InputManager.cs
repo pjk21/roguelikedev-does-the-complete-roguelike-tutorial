@@ -135,6 +135,8 @@ namespace Roguelike.Input
             map.Add(InputAction.MoveSouthWest, new List<KeyPress> { new KeyPress(Terminal.TK_KP_1) });
             map.Add(InputAction.MouseMove, new List<KeyPress> { new KeyPress(Terminal.TK_MOUSE_RIGHT) });
 
+            map.Add(InputAction.StairsDown, new List<KeyPress> { new KeyPress(Terminal.TK_COMMA, shift: true) });
+
             map.Add(InputAction.Rest, new List<KeyPress> { new KeyPress(Terminal.TK_R) });
             map.Add(InputAction.Take, new List<KeyPress> { new KeyPress(Terminal.TK_G) });
 

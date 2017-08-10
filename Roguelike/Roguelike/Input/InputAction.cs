@@ -27,6 +27,8 @@
         MoveSouthWest,
         MouseMove,
 
+        StairsDown,
+
         Rest,
         Take,
 

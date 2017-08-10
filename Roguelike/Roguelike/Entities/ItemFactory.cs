@@ -60,5 +60,20 @@ namespace Roguelike.Entities
 
             return fireballScroll;
         }
+
+        public static Entity CreateStairs(int x, int y)
+        {
+            var stairs = new Entity("Stairs", x, y, '<', Color.White)
+            {
+                SpriteIndex = EntitySprites.Stairs,
+                SpriteTint = Color.White,
+                RenderLayer = Renderer.FeaturesLayer,
+                IsAlwaysVisible = true
+            };
+
+            stairs.Tags.Add(Tags.Stairs);
+
+            return stairs;
+        }
     }
 }

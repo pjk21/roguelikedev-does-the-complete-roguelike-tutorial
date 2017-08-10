@@ -1,6 +1,8 @@
-﻿using RogueSharp;
+﻿using Roguelike.Entities;
+using RogueSharp;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 // BSP code adapted from: https://gamedevelopment.tutsplus.com/tutorials/how-to-use-bsp-trees-to-generate-game-maps--gamedev-12268
 
@@ -27,6 +29,10 @@ namespace Roguelike.World.MapGeneration
             var spawnRoom = root.GetRoom();
             Program.Game.Player.X = spawnRoom.Center.X;
             Program.Game.Player.Y = spawnRoom.Center.Y;
+
+            var stairsRoom = rooms.Last();
+            var stairs = ItemFactory.CreateStairs(stairsRoom.Center.X, stairsRoom.Center.Y);
+            Program.Game.Entities.Add(stairs);
 
             foreach (var room in rooms)
             {

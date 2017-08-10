@@ -20,6 +20,7 @@ namespace Roguelike.Entities
         public char Character { get; set; }
         public Color Colour { get; set; } = Color.White;
         public int RenderLayer { get; set; }
+        public bool IsAlwaysVisible { get; set; }
 
         public int? SpriteIndex { get; set; }
         public Color SpriteTint { get; set; } = Color.White;

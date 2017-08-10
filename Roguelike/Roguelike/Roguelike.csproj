@@ -59,6 +59,7 @@
     <Compile Include="Entities\Commands\CommandResult.cs" />
     <Compile Include="Entities\Commands\MoveCommand.cs" />
     <Compile Include="Entities\Commands\RestCommand.cs" />
+    <Compile Include="Entities\Commands\DescendStairsCommand.cs" />
     <Compile Include="Entities\Commands\TakeCommand.cs" />
     <Compile Include="Entities\Commands\UseCommand.cs" />
     <Compile Include="Entities\Component.cs" />

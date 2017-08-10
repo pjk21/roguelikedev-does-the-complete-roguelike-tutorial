@@ -1,4 +1,5 @@
-﻿using RogueSharp;
+﻿using Roguelike.Entities;
+using RogueSharp;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -57,6 +58,10 @@ namespace Roguelike.World.MapGeneration
                     rooms.Add(room);
                 }
             }
+
+            var stairsRoom = rooms.Last();
+            var stairs = ItemFactory.CreateStairs(stairsRoom.Center.X, stairsRoom.Center.Y);
+            Program.Game.Entities.Add(stairs);
 
             return map;
         }

@@ -22,6 +22,7 @@ namespace Roguelike
         public Random Random { get; private set; }
         public int Seed { get; private set; } = 123456789;
 
+        public int DungeonLevel { get; private set; }
         public Map Map { get; private set; }
         public Camera Camera { get; } = new Camera(0, 0, Program.MapDisplayWidth, Program.MapDisplayHeight);
 
@@ -67,6 +68,19 @@ namespace Roguelike
 
                 Map = new BspMapGenerator().Generate(80, 50);
             }
+
+            Map.UpdateFovMap();
+            Map.FovMap.ComputeFov(Player.X, Player.Y, Entity.PlayerFovRadius, true);
+        }
+
+        public void DescendStairs()
+        {
+            DungeonLevel++;
+
+            Entities.Clear();
+            Entities.Add(Player);
+
+            Map = new BspMapGenerator().Generate(80, 50);
 
             Map.UpdateFovMap();
             Map.FovMap.ComputeFov(Player.X, Player.Y, Entity.PlayerFovRadius, true);

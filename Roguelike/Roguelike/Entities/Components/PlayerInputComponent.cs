@@ -77,6 +77,10 @@ namespace Roguelike.Entities.Components
                 {
                     return new MoveCommand(-1, 1);
                 }
+                else if (InputManager.CheckAction(InputAction.StairsDown))
+                {
+                    return new DescendStairsCommand();
+                }
                 else if (InputManager.CheckAction(InputAction.Rest))
                 {
                     return new RestCommand();

@@ -13,6 +13,7 @@ namespace Roguelike.Render
     public abstract class Renderer : IRenderer
     {
         public const int MapLayer = 0;
+        public const int FeaturesLayer = 7;
         public const int CorpseLayer = 8;
         public const int ItemLayer = 9;
         public const int ActorLayer = 10;
@@ -24,9 +25,12 @@ namespace Roguelike.Render
         {
             foreach (var entity in entities)
             {
-                if (camera.Contains(entity.X, entity.Y) && (Program.Game.Map.FovMap.IsInFov(entity.X, entity.Y) || Program.Game.IsDebugModeEnabled))
+                if (camera.Contains(entity.X, entity.Y))
                 {
-                    RenderEntity(entity, camera);
+                    if ((Program.Game.Map.FovMap.IsInFov(entity.X, entity.Y) || Program.Game.IsDebugModeEnabled) || (entity.IsAlwaysVisible && Program.Game.Map.IsExplored(entity.X, entity.Y)))
+                    {
+                        RenderEntity(entity, camera);
+                    }
                 }
             }
         }
