@@ -66,49 +66,22 @@ namespace Roguelike.World.MapGeneration
 
                     if (itemChance < 0.7)
                     {
-                        var potion = new Entity("Healing Potion", x, y, '!', Color.Violet)
-                        {
-                            SpriteIndex = EntitySprites.Potion,
-                            RenderLayer = Renderer.ItemLayer
-                        };
-                        potion.AddComponent(new ItemComponent { Description = "Heals you for a small amount of HP.", UseFunction = ItemFunctions.PotionFunction });
-
+                        var potion = ItemFactory.CreatePotion(x, y);
                         Program.Game.Entities.Add(potion);
                     }
                     else if (itemChance < 0.8)
                     {
-                        var lightningScroll = new Entity("Lightning Scroll", x, y, '[', Color.LightBlue)
-                        {
-                            SpriteIndex = EntitySprites.Scroll,
-                            SpriteTint = Color.LightBlue,
-                            RenderLayer = Renderer.ItemLayer
-                        };
-                        lightningScroll.AddComponent(new ItemComponent { Description = "Fires bolts of lightning at your enemies.", UseFunction = ItemFunctions.LightningScroll });
-
+                        var lightningScroll = ItemFactory.CreateLightningScroll(x, y);
                         Program.Game.Entities.Add(lightningScroll);
                     }
                     else if (itemChance < 0.9)
                     {
-                        var confuseScroll = new Entity("Confuse Scroll", x, y, '[', Color.LightYellow)
-                        {
-                            SpriteIndex = EntitySprites.Scroll,
-                            SpriteTint = Color.LightYellow,
-                            RenderLayer = Renderer.ItemLayer
-                        };
-                        confuseScroll.AddComponent(new ItemComponent { Description = "Complicated math formulas that confuse your enemies.", UseFunction = ItemFunctions.ConfuseScroll });
-
+                        var confuseScroll = ItemFactory.CreateConfuseScroll(x, y);
                         Program.Game.Entities.Add(confuseScroll);
                     }
                     else
                     {
-                        var fireballScroll = new Entity("Fireball Scroll", x, y, '[', Color.Orange)
-                        {
-                            SpriteIndex = EntitySprites.Scroll,
-                            SpriteTint = Color.Orange,
-                            RenderLayer = Renderer.ItemLayer
-                        };
-                        fireballScroll.AddComponent(new ItemComponent { Description = "Launch a ball of fire at your enemies.", UseFunction = ItemFunctions.FireballScroll });
-
+                        var fireballScroll = ItemFactory.CreateFireballScroll(x, y);
                         Program.Game.Entities.Add(fireballScroll);
                     }
                 }
