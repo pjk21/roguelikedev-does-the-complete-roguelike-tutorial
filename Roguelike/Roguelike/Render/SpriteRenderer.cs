@@ -24,7 +24,7 @@ namespace Roguelike.Render
                 Terminal.Put(entity.X - camera.X, entity.Y - camera.Y, entity.Character);
             }
 
-            if (entity.Flags.HasFlag(EntityFlags.Confused))
+            if (entity.Tags.Contains(Tags.Confused))
             {
                 Terminal.Put(entity.X - camera.X, entity.Y - camera.Y - 1, EntitySprites.Confusion);
             }

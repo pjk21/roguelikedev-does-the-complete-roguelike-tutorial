@@ -75,7 +75,7 @@ namespace Roguelike.Entities
                     enemy.RemoveComponent<BasicMonsterComponent>();
                     enemy.AddComponent(newAI);
 
-                    enemy.Flags |= EntityFlags.Confused;
+                    enemy.Tags.Add(Tags.Confused);
                     return true;
                 }
             }

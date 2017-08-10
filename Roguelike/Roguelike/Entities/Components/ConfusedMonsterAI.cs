@@ -29,7 +29,7 @@ namespace Roguelike.Entities.Components
                 Entity.AddComponent(PreviousAI);
                 Entity.RemoveComponent<ConfusedMonsterAI>();
 
-                Entity.Flags &= ~EntityFlags.Confused;
+                Entity.Tags.Remove(Tags.Confused);
 
                 return new RestCommand();
             }
