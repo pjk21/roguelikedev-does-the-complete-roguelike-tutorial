@@ -85,10 +85,6 @@ namespace Roguelike
         {
             info.AddValue(nameof(Seed), Seed);
 
-            //info.AddValue("MapWidth", Map.Width);
-            //info.AddValue("MapHeight", Map.Height);
-            //info.AddValue("MapData", Map.Serialize());
-
             info.AddValue(nameof(Map), Map);
 
             info.AddValue(nameof(Entities), Entities);
