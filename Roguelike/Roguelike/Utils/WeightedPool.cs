@@ -9,7 +9,10 @@ namespace Roguelike.Utils
 
         public void Add(T item, int weight)
         {
-            choices[item] = weight;
+            if (weight > 0)
+            {
+                choices[item] = weight;
+            }
         }
 
         public void Remove(T item)
