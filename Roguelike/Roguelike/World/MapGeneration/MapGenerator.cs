@@ -1,7 +1,4 @@
 ﻿using Roguelike.Entities;
-using Roguelike.Entities.Components;
-using Roguelike.Render;
-using System.Drawing;
 using Rectangle = RogueSharp.Rectangle;
 
 namespace Roguelike.World.MapGeneration
@@ -24,28 +21,12 @@ namespace Roguelike.World.MapGeneration
 
                 if (Program.Game.Random.NextDouble() < 0.8)
                 {
-                    var rat = new Entity("Rat", x, y, 'r', Colours.Rat, true)
-                    {
-                        SpriteIndex = EntitySprites.Rat,
-                        RenderLayer = Renderer.ActorLayer
-                    };
-
-                    rat.AddComponent(new FighterComponent { MaximumHealth = 3, CurrentHealth = 3, Power = 1, Defense = 0, AttackElement = ElementType.Poison, DeathFunction = DeathFunctions.MonsterDeath });
-                    rat.AddComponent(new BasicMonsterComponent());
-
+                    var rat = MonsterFactory.CreateRat(x, y);
                     Program.Game.Entities.Add(rat);
                 }
                 else
                 {
-                    var hound = new Entity("Hound", x, y, 'h', Colours.Hound, true)
-                    {
-                        SpriteIndex = EntitySprites.Hound,
-                        RenderLayer = Renderer.ActorLayer
-                    };
-
-                    hound.AddComponent(new FighterComponent { MaximumHealth = 8, CurrentHealth = 8, Power = 3, Defense = 1, DeathFunction = DeathFunctions.MonsterDeath });
-                    hound.AddComponent(new BasicMonsterComponent());
-
+                    var hound = MonsterFactory.CreateHound(x, y);
                     Program.Game.Entities.Add(hound);
                 }
             }

@@ -76,6 +76,7 @@
     <Compile Include="Entities\EntitySprites.cs" />
     <Compile Include="Entities\ItemFactory.cs" />
     <Compile Include="Entities\ItemFunctions.cs" />
+    <Compile Include="Entities\MonsterFactory.cs" />
     <Compile Include="Entities\Tags.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Input\InputManager.cs" />
