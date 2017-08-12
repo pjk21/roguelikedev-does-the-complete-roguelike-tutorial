@@ -66,7 +66,8 @@ namespace Roguelike.Render
             var playerFighter = Program.Game.Player.GetComponent<FighterComponent>();
 
             Terminal.Color(Color.Gold);
-            Terminal.Print(x, 1, Program.Game.Player.Name);
+            Terminal.Print(x, 1, $"{Program.Game.Player.Name}");
+            Terminal.Print(Program.ScreenWidth - $"LVL {playerFighter.Level:00}".Length - 1, 1, $"LVL {playerFighter.Level:00}");
 
             Terminal.Color(Color.White);
             Terminal.Print(x + 1, 2, $"HP");
@@ -75,6 +76,8 @@ namespace Roguelike.Render
             Terminal.Print(Program.ScreenWidth - playerFighter.Power.ToString().Length - 1, 3, playerFighter.Power.ToString());
             Terminal.Print(x + 1, 4, $"DEF");
             Terminal.Print(Program.ScreenWidth - playerFighter.Defense.ToString().Length - 1, 4, playerFighter.Defense.ToString());
+            Terminal.Print(x + 1, 5, $"XP");
+            Terminal.Print(Program.ScreenWidth - $"{playerFighter.XP}/{playerFighter.LevelUpRequirement}".Length - 1, 5, $"{playerFighter.XP}/{playerFighter.LevelUpRequirement}");
 
             var mouse = InputManager.GetMouseWorldPosition(camera);
 
@@ -84,7 +87,7 @@ namespace Roguelike.Render
                     .Where(e => e.X == mouse.X && e.Y == mouse.Y)
                     .Take(5);
 
-                int entityUnderMouseY = 6;
+                int entityUnderMouseY = 7;
                 foreach (var entity in entitiesUnderMouse)
                 {
                     Terminal.Print(x, entityUnderMouseY++, entity.Name);

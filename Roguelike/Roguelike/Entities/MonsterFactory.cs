@@ -13,7 +13,7 @@ namespace Roguelike.Entities
                 RenderLayer = Renderer.ActorLayer
             };
 
-            hound.AddComponent(new FighterComponent { MaximumHealth = 8, CurrentHealth = 8, Power = 3, Defense = 1, DeathFunction = DeathFunctions.MonsterDeath });
+            hound.AddComponent(new FighterComponent { MaximumHealth = 8, CurrentHealth = 8, Power = 3, Defense = 1, XP = 20, DeathFunction = DeathFunctions.MonsterDeath });
             hound.AddComponent(new BasicMonsterComponent());
 
             return hound;
@@ -27,7 +27,7 @@ namespace Roguelike.Entities
                 RenderLayer = Renderer.ActorLayer
             };
 
-            rat.AddComponent(new FighterComponent { MaximumHealth = 3, CurrentHealth = 3, Power = 1, Defense = 0, AttackElement = ElementType.Poison, DeathFunction = DeathFunctions.MonsterDeath });
+            rat.AddComponent(new FighterComponent { MaximumHealth = 3, CurrentHealth = 3, Power = 1, Defense = 0, XP = 5, AttackElement = ElementType.Poison, DeathFunction = DeathFunctions.MonsterDeath });
             rat.AddComponent(new BasicMonsterComponent());
 
             return rat;

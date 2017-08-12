@@ -8,12 +8,19 @@ namespace Roguelike.Entities.Components
     [Serializable]
     public class FighterComponent : Component
     {
+        public const int LevelUpBase = 50;
+        public const int LevelUpFactor = 50;
+
         private readonly Dictionary<ElementType, float> resistances = new Dictionary<ElementType, float>();
 
         public int MaximumHealth { get; set; }
         public int CurrentHealth { get; set; }
         public int Power { get; set; }
         public int Defense { get; set; }
+
+        public int Level { get; private set; } = 1;
+        public int XP { get; set; }
+        public int LevelUpRequirement => LevelUpBase + ((Level - 1) * LevelUpFactor);
 
         public ElementType AttackElement { get; set; }
 
@@ -51,6 +58,23 @@ namespace Roguelike.Entities.Components
             if (CurrentHealth <= 0)
             {
                 DeathFunction?.Invoke(Entity);
+
+                if (source == Program.Game.Player)
+                {
+                    source.GetComponent<FighterComponent>().AwardXP(XP);
+                }
+            }
+        }
+
+        public void AwardXP(int amount)
+        {
+            XP += amount;
+
+            if (XP >= LevelUpRequirement)
+            {
+                Level++;
+                XP = 0;
+                MessageLog.Add($"You grow stronger! You have reached level {Level}!", Color.Yellow);
             }
         }
 
