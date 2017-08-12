@@ -75,6 +75,10 @@ namespace Roguelike.Entities.Components
                 Level++;
                 XP = 0;
                 MessageLog.Add($"You grow stronger! You have reached level {Level}!", Color.Yellow);
+
+                new LevelUpDialog().Show();
+
+                CurrentHealth = MaximumHealth;
             }
         }
 

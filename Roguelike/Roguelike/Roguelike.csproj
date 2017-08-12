@@ -95,6 +95,7 @@
     <Compile Include="States\NewGameState.cs" />
     <Compile Include="UI\Dialog.cs" />
     <Compile Include="UI\InventoryDialog.cs" />
+    <Compile Include="UI\LevelUpDialog.cs" />
     <Compile Include="UI\MenuItem.cs" />
     <Compile Include="UI\MessageLog.cs" />
     <Compile Include="UI\PauseDialog.cs" />
