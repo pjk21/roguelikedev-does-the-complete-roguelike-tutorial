@@ -1,4 +1,6 @@
 ﻿using Roguelike.Entities;
+using Roguelike.Utils;
+using System;
 using Rectangle = RogueSharp.Rectangle;
 
 namespace Roguelike.World.MapGeneration
@@ -14,27 +16,30 @@ namespace Roguelike.World.MapGeneration
         {
             int numberOfMonsters = Program.Game.Random.Next(MaximumMonstersPerRoom + 1);
 
+            var monsterPool = new WeightedPool<Func<int, int, Entity>>();
+            monsterPool.Add(MonsterFactory.CreateRat, 80);
+            monsterPool.Add(MonsterFactory.CreateHound, 20);
+
             for (int i = 0; i < numberOfMonsters; i++)
             {
                 int x = Program.Game.Random.Next(room.Left + 1, room.Right);
                 int y = Program.Game.Random.Next(room.Top + 1, room.Bottom);
 
-                if (Program.Game.Random.NextDouble() < 0.8)
-                {
-                    var rat = MonsterFactory.CreateRat(x, y);
-                    Program.Game.Entities.Add(rat);
-                }
-                else
-                {
-                    var hound = MonsterFactory.CreateHound(x, y);
-                    Program.Game.Entities.Add(hound);
-                }
+                var monsterFactory = monsterPool.Pick();
+                var monster = monsterFactory.Invoke(x, y);
+                Program.Game.Entities.Add(monster);
             }
         }
 
         protected virtual void SpawnItems(Map map, Rectangle room)
         {
             int numberOfItems = Program.Game.Random.Next(MaximumItemsPerRoom + 1);
+
+            var itemPool = new WeightedPool<Func<int, int, Entity>>();
+            itemPool.Add(ItemFactory.CreatePotion, 70);
+            itemPool.Add(ItemFactory.CreateLightningScroll, 10);
+            itemPool.Add(ItemFactory.CreateConfuseScroll, 10);
+            itemPool.Add(ItemFactory.CreateFireballScroll, 10);
 
             for (int i = 0; i < numberOfItems; i++)
             {
@@ -43,28 +48,10 @@ namespace Roguelike.World.MapGeneration
 
                 if (map.IsWalkable(x, y))
                 {
-                    var itemChance = Program.Game.Random.NextDouble();
+                    var itemFactory = itemPool.Pick();
 
-                    if (itemChance < 0.7)
-                    {
-                        var potion = ItemFactory.CreatePotion(x, y);
-                        Program.Game.Entities.Add(potion);
-                    }
-                    else if (itemChance < 0.8)
-                    {
-                        var lightningScroll = ItemFactory.CreateLightningScroll(x, y);
-                        Program.Game.Entities.Add(lightningScroll);
-                    }
-                    else if (itemChance < 0.9)
-                    {
-                        var confuseScroll = ItemFactory.CreateConfuseScroll(x, y);
-                        Program.Game.Entities.Add(confuseScroll);
-                    }
-                    else
-                    {
-                        var fireballScroll = ItemFactory.CreateFireballScroll(x, y);
-                        Program.Game.Entities.Add(fireballScroll);
-                    }
+                    var item = itemFactory?.Invoke(x, y);
+                    Program.Game.Entities.Add(item);
                 }
             }
         }

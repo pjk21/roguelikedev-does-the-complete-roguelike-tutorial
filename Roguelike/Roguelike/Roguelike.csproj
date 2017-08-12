@@ -104,6 +104,7 @@
     <Compile Include="Render\RenderUtils.cs" />
     <Compile Include="Utils\MathUtils.cs" />
     <Compile Include="Utils\RandomExtensions.cs" />
+    <Compile Include="Utils\WeightedPool.cs" />
     <Compile Include="World\Tile.cs" />
     <Compile Include="World\TileSprites.cs" />
     <Compile Include="Utils\ColorExtensions.cs" />
