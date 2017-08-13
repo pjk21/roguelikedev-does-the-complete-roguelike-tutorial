@@ -53,6 +53,14 @@ namespace Roguelike.Entities
             components.Remove(typeof(T));
         }
 
+        public void RemoveComponent(Component component)
+        {
+            if (components.ContainsValue(component))
+            {
+                components.Remove(component.GetType());
+            }
+        }
+
         public bool HasComponent<T>() where T : Component
         {
             if (components.ContainsKey(typeof(T)))
