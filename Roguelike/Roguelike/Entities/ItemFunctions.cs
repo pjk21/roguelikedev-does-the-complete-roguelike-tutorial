@@ -1,4 +1,5 @@
 ﻿using Roguelike.Entities.Components;
+using Roguelike.Entities.StatusEffects;
 using Roguelike.UI;
 using System.Drawing;
 using System.Linq;
@@ -68,14 +69,8 @@ namespace Roguelike.Entities
                 if (enemy != null)
                 {
                     MessageLog.Add($"{enemy.Name} is confused.", Color.LightBlue);
+                    enemy.GetComponent<FighterComponent>().ApplyStatus(new ConfusionEffect(ConfuseTurns));
 
-                    var oldAI = enemy.GetComponent<BasicMonsterComponent>();
-                    var newAI = new ConfusedMonsterAI { TurnsRemaining = ConfuseTurns, PreviousAI = oldAI };
-
-                    enemy.RemoveComponent<BasicMonsterComponent>();
-                    enemy.AddComponent(newAI);
-
-                    enemy.Tags.Add(Tags.Confused);
                     return true;
                 }
             }

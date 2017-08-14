@@ -11,28 +11,15 @@ namespace Roguelike.Entities.Components
 
         public override Command GetCommand()
         {
-            if (TurnsRemaining > 0)
+            var direction = Program.Game.Random.GetPoint(-1, 2, -1, 2);
+
+            if (Program.Game.Map.CanEnter(Entity.X + direction.X, Entity.Y + direction.Y))
             {
-                TurnsRemaining--;
-                var direction = Program.Game.Random.GetPoint(-1, 2, -1, 2);
 
-                if (Program.Game.Map.CanEnter(Entity.X + direction.X, Entity.Y + direction.Y))
-                {
-
-                    return new MoveCommand(direction.X, direction.Y);
-                }
-
-                return new RestCommand();
+                return new MoveCommand(direction.X, direction.Y);
             }
-            else
-            {
-                Entity.AddComponent(PreviousAI);
-                Entity.RemoveComponent<ConfusedMonsterAI>();
 
-                Entity.Tags.Remove(Tags.Confused);
-
-                return new RestCommand();
-            }
+            return new RestCommand();
         }
     }
 }

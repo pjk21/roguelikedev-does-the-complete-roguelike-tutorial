@@ -29,6 +29,8 @@ namespace Roguelike.Entities
 
         public HashSet<string> Tags { get; } = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
 
+        public event Action TurnEnd;
+
         public Entity(string name, int x, int y, char character, Color colour, bool solid = false)
         {
             Name = name;
@@ -46,11 +48,18 @@ namespace Roguelike.Entities
         {
             component.Entity = this;
             components[component.GetType()] = component;
+
+            component.OnAdded();
         }
 
         public void RemoveComponent<T>() where T : Component
         {
-            components.Remove(typeof(T));
+            var component = GetComponent<T>();
+
+            if (component != null)
+            {
+                RemoveComponent(component);
+            }
         }
 
         public void RemoveComponent(Component component)
@@ -58,6 +67,7 @@ namespace Roguelike.Entities
             if (components.ContainsValue(component))
             {
                 components.Remove(component.GetType());
+                component.OnRemoved();
             }
         }
 
@@ -88,6 +98,11 @@ namespace Roguelike.Entities
             }
 
             return null;
+        }
+
+        public void EndTurn()
+        {
+            TurnEnd?.Invoke();
         }
 
         public float DistanceTo(Entity other)

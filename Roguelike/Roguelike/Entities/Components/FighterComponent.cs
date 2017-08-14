@@ -12,6 +12,7 @@ namespace Roguelike.Entities.Components
         public const int LevelUpFactor = 50;
 
         private readonly Dictionary<ElementType, float> resistances = new Dictionary<ElementType, float>();
+        private readonly List<StatusEffect> statusEffects = new List<StatusEffect>();
 
         public int MaximumHealth { get; set; }
         public int CurrentHealth { get; set; }
@@ -34,6 +35,16 @@ namespace Roguelike.Entities.Components
             }
         }
 
+        public override void OnAdded()
+        {
+            Entity.TurnEnd += Entity_TurnEnd;
+        }
+
+        public override void OnRemoved()
+        {
+            Entity.TurnEnd -= Entity_TurnEnd;
+        }
+
         public void SetResistance(ElementType element, float value)
         {
             resistances[element] = value.Clamp(-1f, 1f);
@@ -42,6 +53,18 @@ namespace Roguelike.Entities.Components
         public float GetResistance(ElementType element)
         {
             return resistances[element];
+        }
+
+        public void ApplyStatus(StatusEffect effect)
+        {
+            statusEffects.Add(effect);
+            effect.Apply(Entity);
+        }
+
+        public void RemoveStatus(StatusEffect effect)
+        {
+            effect.Remove(Entity);
+            statusEffects.Remove(effect);
         }
 
         public void Damage(int amount, Entity source, ElementType element)
@@ -95,6 +118,28 @@ namespace Roguelike.Entities.Components
         {
             var amount = (int)Math.Round(MaximumHealth * percent);
             return Heal(amount);
+        }
+
+        private void Entity_TurnEnd()
+        {
+            var expiringEffects = new List<StatusEffect>();
+
+            foreach (var effect in statusEffects)
+            {
+                effect.OnEndTurn(Entity);
+
+                effect.Duration--;
+
+                if (effect.Duration <= 0)
+                {
+                    expiringEffects.Add(effect);
+                }
+            }
+
+            foreach (var effect in expiringEffects)
+            {
+                RemoveStatus(effect);
+            }
         }
     }
 }

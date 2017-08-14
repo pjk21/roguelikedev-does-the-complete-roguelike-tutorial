@@ -71,6 +71,7 @@ namespace Roguelike.States
                     }
                     else
                     {
+                        currentEntity.EndTurn();
                         entityActQueue.Dequeue();
                     }
                 }

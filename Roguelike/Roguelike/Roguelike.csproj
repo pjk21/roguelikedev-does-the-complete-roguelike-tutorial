@@ -77,6 +77,8 @@
     <Compile Include="Entities\ItemFactory.cs" />
     <Compile Include="Entities\ItemFunctions.cs" />
     <Compile Include="Entities\MonsterFactory.cs" />
+    <Compile Include="Entities\StatusEffect.cs" />
+    <Compile Include="Entities\StatusEffects\ConfusionEffect.cs" />
     <Compile Include="Entities\Tags.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Input\InputManager.cs" />
