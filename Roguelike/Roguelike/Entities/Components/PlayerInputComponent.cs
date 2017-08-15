@@ -1,45 +1,48 @@
 ﻿using Roguelike.Entities.Commands;
 using Roguelike.Input;
 using Roguelike.PathFinding;
+using Roguelike.States;
 using Roguelike.UI;
 using RogueSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Roguelike.Entities.Components
 {
     [Serializable]
     public class PlayerInputComponent : ActorComponent
     {
-        [NonSerialized]
-        private Queue<Point> currentPath;
+        public Queue<Point> CurrentPath { get; private set; }
 
         public override Command GetCommand()
         {
-            if (currentPath != null)
+            if (CurrentPath != null)
             {
                 if (Program.Game.Entities.Any(e => (e != Entity && e.HasComponent<ActorComponent>() && Program.Game.Map.FovMap.IsInFov(e.X, e.Y))) || (InputManager.CheckAction(InputAction.MouseMove) || InputManager.AnyKeyPress()))
                 {
-                    currentPath = null;
+                    CurrentPath = null;
                     return null;
                 }
 
-                var destination = currentPath.Dequeue();
+                var destination = CurrentPath.Dequeue();
 
                 if (!Program.Game.Map.CanEnter(destination.X, destination.Y))
                 {
-                    currentPath = null;
+                    CurrentPath = null;
                     return null;
                 }
 
                 var x = destination.X - Entity.X;
                 var y = destination.Y - Entity.Y;
 
-                if (currentPath.Count == 0)
+                if (CurrentPath.Count == 0)
                 {
-                    currentPath = null;
+                    CurrentPath = null;
                 }
+
+                Thread.Sleep(50);
 
                 return new MoveCommand(x, y);
             }
@@ -117,19 +120,19 @@ namespace Roguelike.Entities.Components
                 {
                     Program.Game.Map.FovMap.SetCellProperties(Entity.X, Entity.Y, true, true);
 
-                    currentPath = AStarPathFinder.GetPath(new Point(Entity.X, Entity.Y), destination);
+                    CurrentPath = AStarPathFinder.GetPath(new Point(Entity.X, Entity.Y), destination);
 
-                    if (currentPath != null)
+                    if (CurrentPath != null)
                     {
-                        currentPath.Dequeue(); // Discard starting point
+                        CurrentPath.Dequeue(); // Discard starting point
 
-                        var step = currentPath.Dequeue();
+                        var step = CurrentPath.Dequeue();
                         var x = step.X - Entity.X;
                         var y = step.Y - Entity.Y;
 
-                        if (currentPath.Count == 0)
+                        if (CurrentPath.Count == 0)
                         {
-                            currentPath = null;
+                            CurrentPath = null;
                         }
 
                         return new MoveCommand(x, y);

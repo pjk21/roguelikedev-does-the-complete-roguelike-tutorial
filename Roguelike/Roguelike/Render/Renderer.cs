@@ -95,6 +95,19 @@ namespace Roguelike.Render
             }
 
             Terminal.Layer(OverlayLayer);
+
+            var playerInput = Program.Game.Player.GetComponent<PlayerInputComponent>();
+
+            if (playerInput != null && playerInput.CurrentPath != null)
+            {
+                Terminal.Color(Color.FromArgb(96, Color.LightBlue));
+
+                foreach (var point in playerInput.CurrentPath)
+                {
+                    Terminal.Put(point.X - camera.X, point.Y - camera.Y, UISprites.DialogBackground);
+                }
+            }
+
             Terminal.Color(Color.Yellow);
             Terminal.Put(mouse.X - camera.X, mouse.Y - camera.Y, UISprites.TileHighlighter);
 
