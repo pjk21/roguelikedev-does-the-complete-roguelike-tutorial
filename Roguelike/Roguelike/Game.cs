@@ -22,7 +22,7 @@ namespace Roguelike
         public Random Random { get; private set; }
         public int Seed { get; private set; } = 123456789;
 
-        public int DungeonLevel { get; private set; }
+        public int DungeonLevel { get; private set; } = 1;
         public Map Map { get; private set; }
         public Camera Camera { get; } = new Camera(0, 0, Program.MapDisplayWidth, Program.MapDisplayHeight);
 

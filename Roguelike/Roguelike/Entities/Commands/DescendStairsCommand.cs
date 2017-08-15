@@ -10,8 +10,8 @@ namespace Roguelike.Entities.Commands
         {
             if (Program.Game.Entities.Any(e => e.Tags.Contains(Tags.Stairs) && e.X == entity.X && e.Y == entity.Y))
             {
-                MessageLog.Add("You descend deeper into the dungeon.", Color.LightBlue);
                 Program.Game.DescendStairs();
+                MessageLog.Add($"You descend to level {Program.Game.DungeonLevel} of the dungeon.", Color.LightBlue);
 
                 return CommandResult.Success;
             }
