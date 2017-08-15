@@ -6,7 +6,7 @@ namespace Roguelike.Entities
 {
     public static class ItemFactory
     {
-        public static Entity CreatePotion(int x, int y)
+        public static Entity CreatePotion(int x, int y, int dungeonLevel)
         {
             var potion = new Entity("Healing Potion", x, y, '!', Color.Violet)
             {
@@ -19,7 +19,7 @@ namespace Roguelike.Entities
             return potion;
         }
 
-        public static Entity CreateLightningScroll(int x, int y)
+        public static Entity CreateLightningScroll(int x, int y, int dungeonLevel)
         {
             var lightningScroll = new Entity("Lightning Scroll", x, y, '[', Color.LightBlue)
             {
@@ -33,7 +33,7 @@ namespace Roguelike.Entities
             return lightningScroll;
         }
 
-        public static Entity CreateConfuseScroll(int x, int y)
+        public static Entity CreateConfuseScroll(int x, int y, int dungeonLevel)
         {
             var confuseScroll = new Entity("Confuse Scroll", x, y, '[', Color.LightYellow)
             {
@@ -47,7 +47,7 @@ namespace Roguelike.Entities
             return confuseScroll;
         }
 
-        public static Entity CreateFireballScroll(int x, int y)
+        public static Entity CreateFireballScroll(int x, int y, int dungeonLevel)
         {
             var fireballScroll = new Entity("Fireball Scroll", x, y, '[', Color.Orange)
             {
@@ -61,7 +61,7 @@ namespace Roguelike.Entities
             return fireballScroll;
         }
 
-        public static Entity CreateStairs(int x, int y)
+        public static Entity CreateStairs(int x, int y, int dungeonLevel)
         {
             var stairs = new Entity("Stairs", x, y, '<', Color.White)
             {

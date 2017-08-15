@@ -1,6 +1,8 @@
 ﻿using Roguelike.Entities;
 using Roguelike.Utils;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Rectangle = RogueSharp.Rectangle;
 
 namespace Roguelike.World.MapGeneration
@@ -16,9 +18,9 @@ namespace Roguelike.World.MapGeneration
         {
             int numberOfMonsters = Program.Game.Random.Next(MaximumMonstersPerRoom + 1);
 
-            var monsterPool = new WeightedPool<Func<int, int, Entity>>();
-            monsterPool.Add(MonsterFactory.CreateRat, 80);
-            monsterPool.Add(MonsterFactory.CreateHound, 20);
+            var monsterPool = new WeightedPool<Entity.EntityFactoryDelegate>();
+            monsterPool.Add(MonsterFactory.CreateRat, 50);
+            monsterPool.Add(MonsterFactory.CreateHound, GetWeightFromDungeonLevel(new SortedDictionary<int, int> { { 1, 10 }, { 3, 30 }, { 5, 50 } }));
 
             for (int i = 0; i < numberOfMonsters; i++)
             {
@@ -26,7 +28,8 @@ namespace Roguelike.World.MapGeneration
                 int y = Program.Game.Random.Next(room.Top + 1, room.Bottom);
 
                 var monsterFactory = monsterPool.Pick();
-                var monster = monsterFactory.Invoke(x, y);
+
+                var monster = monsterFactory(x, y, Program.Game.DungeonLevel);
                 Program.Game.Entities.Add(monster);
             }
         }
@@ -35,11 +38,11 @@ namespace Roguelike.World.MapGeneration
         {
             int numberOfItems = Program.Game.Random.Next(MaximumItemsPerRoom + 1);
 
-            var itemPool = new WeightedPool<Func<int, int, Entity>>();
+            var itemPool = new WeightedPool<Entity.EntityFactoryDelegate>();
             itemPool.Add(ItemFactory.CreatePotion, 70);
-            itemPool.Add(ItemFactory.CreateLightningScroll, 10);
-            itemPool.Add(ItemFactory.CreateConfuseScroll, 10);
-            itemPool.Add(ItemFactory.CreateFireballScroll, 10);
+            itemPool.Add(ItemFactory.CreateLightningScroll, GetWeightFromDungeonLevel(new SortedDictionary<int, int> { { 2, 10 }, { 4, 25 } }));
+            itemPool.Add(ItemFactory.CreateConfuseScroll, GetWeightFromDungeonLevel(new SortedDictionary<int, int> { { 2, 25 } }));
+            itemPool.Add(ItemFactory.CreateFireballScroll, GetWeightFromDungeonLevel(new SortedDictionary<int, int> { { 4, 20 } }));
 
             for (int i = 0; i < numberOfItems; i++)
             {
@@ -50,10 +53,25 @@ namespace Roguelike.World.MapGeneration
                 {
                     var itemFactory = itemPool.Pick();
 
-                    var item = itemFactory?.Invoke(x, y);
+                    var item = itemFactory(x, y, Program.Game.DungeonLevel);
                     Program.Game.Entities.Add(item);
                 }
             }
+        }
+
+        private int GetWeightFromDungeonLevel(SortedDictionary<int, int> weightLevelPairs)
+        {
+            var weight = 0;
+
+            foreach (var dungeonLevel in weightLevelPairs.Keys.Reverse())
+            {
+                if (Program.Game.DungeonLevel >= dungeonLevel)
+                {
+                    return weightLevelPairs[dungeonLevel];
+                }
+            }
+
+            return weight;
         }
     }
 }

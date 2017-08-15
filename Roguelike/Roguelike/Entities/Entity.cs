@@ -9,6 +9,7 @@ namespace Roguelike.Entities
     public class Entity
     {
         public const int PlayerFovRadius = 10;
+        public delegate Entity EntityFactoryDelegate(int x, int y, int dungeonLevel);
 
         private readonly Dictionary<Type, Component> components = new Dictionary<Type, Component>();
 

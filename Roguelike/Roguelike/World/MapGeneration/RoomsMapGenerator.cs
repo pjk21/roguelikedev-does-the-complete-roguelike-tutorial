@@ -60,7 +60,8 @@ namespace Roguelike.World.MapGeneration
             }
 
             var stairsRoom = rooms.Last();
-            var stairs = ItemFactory.CreateStairs(stairsRoom.Center.X, stairsRoom.Center.Y);
+
+            var stairs = ItemFactory.CreateStairs(stairsRoom.Center.X, stairsRoom.Center.Y, Program.Game.DungeonLevel);
             Program.Game.Entities.Add(stairs);
 
             return map;
