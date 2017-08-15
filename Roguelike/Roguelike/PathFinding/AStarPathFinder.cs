@@ -38,12 +38,12 @@ namespace Roguelike.PathFinding
                         continue;
                     }
 
-                    float cost = costSoFar[current] + 1f;
+                    float cost = costSoFar[current] + Distance(current, neighbour);
 
                     if (!costSoFar.ContainsKey(neighbour) || cost < costSoFar[neighbour])
                     {
                         costSoFar[neighbour] = cost;
-                        openSet.Enqueue(neighbour, cost + Distance(current.X, current.X, neighbour.X, neighbour.Y));
+                        openSet.Enqueue(neighbour, cost);
                         cameFrom[neighbour] = current;
                     }
                 }
@@ -52,9 +52,12 @@ namespace Roguelike.PathFinding
             return null;
         }
 
-        private static float Distance(int x1, int y1, int x2, int y2)
+        private static float Distance(Point a, Point b)
         {
-            return Math.Abs(x1 - x2) + Math.Abs(y1 - y2);
+            var dx = Math.Abs(a.X - b.X);
+            var dy = Math.Abs(a.Y - b.Y);
+
+            return (float)Math.Sqrt(dx * dx + dy * dy);
         }
 
         private static IEnumerable<Point> GetNeighbours(Point current)
@@ -77,6 +80,26 @@ namespace Roguelike.PathFinding
             if (current.Y < Program.Game.Map.Height - 1 && Program.Game.Map.IsWalkable(current.X, current.Y + 1))
             {
                 yield return new Point(current.X, current.Y + 1);
+            }
+
+            if (current.X > 0 && current.Y > 0 && Program.Game.Map.IsWalkable(current.X - 1, current.Y - 1))
+            {
+                yield return new Point(current.X - 1, current.Y - 1);
+            }
+
+            if (current.X < Program.Game.Map.Width - 1 && current.Y > 0 && Program.Game.Map.IsWalkable(current.X + 1, current.Y - 1))
+            {
+                yield return new Point(current.X + 1, current.Y - 1);
+            }
+
+            if (current.X > 0 && current.Y < Program.Game.Map.Height - 1 && Program.Game.Map.IsWalkable(current.X - 1, current.Y + 1))
+            {
+                yield return new Point(current.X - 1, current.Y + 1);
+            }
+
+            if (current.X < Program.Game.Map.Width - 1 && current.Y < Program.Game.Map.Height - 1 && Program.Game.Map.IsWalkable(current.X + 1, current.Y + 1))
+            {
+                yield return new Point(current.X + 1, current.Y + 1);
             }
         }
 
