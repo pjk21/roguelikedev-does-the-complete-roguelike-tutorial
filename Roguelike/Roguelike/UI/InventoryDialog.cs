@@ -152,7 +152,11 @@ namespace Roguelike.UI
             {
                 var item = inventory.Items[selectedIndex];
 
-                if (item.GetComponent<ItemComponent>().UseFunction != null)
+                if (item.HasComponent<EquipmentComponent>())
+                {
+                    return new EquipCommand(item);
+                }
+                else if (item.GetComponent<ItemComponent>().UseFunction != null)
                 {
                     return new UseCommand(item);
                 }

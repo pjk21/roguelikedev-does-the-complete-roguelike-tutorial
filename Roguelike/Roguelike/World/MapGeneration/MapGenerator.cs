@@ -43,6 +43,7 @@ namespace Roguelike.World.MapGeneration
             itemPool.Add(ItemFactory.CreateLightningScroll, GetWeightFromDungeonLevel(new SortedDictionary<int, int> { { 2, 10 }, { 4, 25 } }));
             itemPool.Add(ItemFactory.CreateConfuseScroll, GetWeightFromDungeonLevel(new SortedDictionary<int, int> { { 2, 25 } }));
             itemPool.Add(ItemFactory.CreateFireballScroll, GetWeightFromDungeonLevel(new SortedDictionary<int, int> { { 4, 20 } }));
+            itemPool.Add(ItemFactory.CreateSword, 30);
 
             for (int i = 0; i < numberOfItems; i++)
             {

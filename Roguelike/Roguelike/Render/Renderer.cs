@@ -71,11 +71,11 @@ namespace Roguelike.Render
 
             Terminal.Color(Color.White);
             Terminal.Print(x + 1, 2, $"HP");
-            Terminal.Print(Program.ScreenWidth - $"{playerFighter.CurrentHealth}/{playerFighter.MaximumHealth}".Length - 1, 2, $"{playerFighter.CurrentHealth}/{playerFighter.MaximumHealth}");
+            Terminal.Print(Program.ScreenWidth - $"{playerFighter.Health.Value}/{playerFighter.Health.Base}".Length - 1, 2, $"{playerFighter.Health.Value}/{playerFighter.Health.Base}");
             Terminal.Print(x + 1, 3, $"POW");
-            Terminal.Print(Program.ScreenWidth - playerFighter.Power.ToString().Length - 1, 3, playerFighter.Power.ToString());
+            Terminal.Print(Program.ScreenWidth - playerFighter.Power.Value.ToString().Length - 1, 3, playerFighter.Power.Value.ToString());
             Terminal.Print(x + 1, 4, $"DEF");
-            Terminal.Print(Program.ScreenWidth - playerFighter.Defense.ToString().Length - 1, 4, playerFighter.Defense.ToString());
+            Terminal.Print(Program.ScreenWidth - playerFighter.Defense.Value.ToString().Length - 1, 4, playerFighter.Defense.Value.ToString());
             Terminal.Print(x + 1, 5, $"XP");
             Terminal.Print(Program.ScreenWidth - $"{playerFighter.XP}/{playerFighter.LevelUpRequirement}".Length - 1, 5, $"{playerFighter.XP}/{playerFighter.LevelUpRequirement}");
 
@@ -93,6 +93,18 @@ namespace Roguelike.Render
                     Terminal.Print(x, entityUnderMouseY++, entity.Name);
                 }
             }
+
+            var playerInventory = Program.Game.Player.GetComponent<InventoryComponent>();
+
+            Terminal.Color(Color.Gold);
+            Terminal.Print(x, Program.ScreenHeight - 7, "Equipment");
+
+            Terminal.Color(Color.White);
+            Terminal.Print(x + 1, Program.ScreenHeight - 6, playerInventory.GetEquipment(EquipmentSlot.MainHand)?.Name ?? "[color=grey]Main Hand");
+            Terminal.Print(x + 1, Program.ScreenHeight - 5, playerInventory.GetEquipment(EquipmentSlot.OffHand)?.Name ?? "[color=grey]Off Hand");
+            Terminal.Print(x + 1, Program.ScreenHeight - 4, playerInventory.GetEquipment(EquipmentSlot.Head)?.Name ?? "[color=grey]Head");
+            Terminal.Print(x + 1, Program.ScreenHeight - 3, playerInventory.GetEquipment(EquipmentSlot.Body)?.Name ?? "[color=grey]Body");
+            Terminal.Print(x + 1, Program.ScreenHeight - 2, playerInventory.GetEquipment(EquipmentSlot.Feet)?.Name ?? "[color=grey]Feet");
 
             Terminal.Layer(OverlayLayer);
 

@@ -40,7 +40,7 @@ namespace Roguelike.States
                 Program.Game.IsDebugModeEnabled = !Program.Game.IsDebugModeEnabled;
             }
 
-            if (Program.Game.Player.GetComponent<FighterComponent>().CurrentHealth > 0)
+            if (Program.Game.Player.GetComponent<FighterComponent>().Health.Value > 0)
             {
                 if (InputManager.CheckAction(InputAction.Quit))
                 {

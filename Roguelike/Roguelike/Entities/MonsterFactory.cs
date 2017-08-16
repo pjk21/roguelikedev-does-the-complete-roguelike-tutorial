@@ -18,16 +18,12 @@ namespace Roguelike.Entities
             var defence = 1 + 1 * (dungeonLevel / 3);
             var xp = 20 + 20 * (dungeonLevel / 3);
 
-            hound.AddComponent(new FighterComponent
-            {
-                MaximumHealth = health,
-                CurrentHealth = health,
-                Power = power,
-                Defense = defence,
-                XP = xp,
-                DeathFunction = DeathFunctions.MonsterDeath
-            });
+            var fighterComponent = new FighterComponent { XP = xp, DeathFunction = DeathFunctions.MonsterDeath };
+            fighterComponent.Health.Base = health;
+            fighterComponent.Power.Base = power;
+            fighterComponent.Defense.Base = defence;
 
+            hound.AddComponent(fighterComponent);
             hound.AddComponent(new BasicMonsterComponent());
 
             return hound;
@@ -46,17 +42,12 @@ namespace Roguelike.Entities
             var defence = 0 + 1 * (dungeonLevel / 3);
             var xp = 5 + 5 * (dungeonLevel / 3);
 
-            rat.AddComponent(new FighterComponent
-            {
-                MaximumHealth = health,
-                CurrentHealth = health,
-                Power = power,
-                Defense = defence,
-                XP = xp,
-                AttackElement = ElementType.Poison,
-                DeathFunction = DeathFunctions.MonsterDeath
-            });
+            var fighterComponent = new FighterComponent { XP = xp, DeathFunction = DeathFunctions.MonsterDeath };
+            fighterComponent.Health.Base = health;
+            fighterComponent.Power.Base = power;
+            fighterComponent.Defense.Base = defence;
 
+            rat.AddComponent(fighterComponent);
             rat.AddComponent(new BasicMonsterComponent());
 
             return rat;

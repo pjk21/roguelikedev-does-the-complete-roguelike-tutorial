@@ -75,5 +75,20 @@ namespace Roguelike.Entities
 
             return stairs;
         }
+
+        public static Entity CreateSword(int x, int y, int dungeonLevel)
+        {
+            var sword = new Entity("Sword", x, y, '/', Color.Silver)
+            {
+                SpriteIndex = EntitySprites.Sword,
+                SpriteTint = Color.White,
+                RenderLayer = Renderer.ItemLayer
+            };
+
+            sword.AddComponent(new ItemComponent());
+            sword.AddComponent(new EquipmentComponent(EquipmentSlot.MainHand) { Power = 2 });
+
+            return sword;
+        }
     }
 }

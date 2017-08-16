@@ -10,6 +10,7 @@
 
         public const int Potion = 0xE804;
         public const int Scroll = 0xE805;
+        public const int Sword = 0xE808;
 
         public const int Stairs = 0xE807;
 

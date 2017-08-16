@@ -14,10 +14,9 @@ namespace Roguelike.Entities.Components
         private readonly Dictionary<ElementType, float> resistances = new Dictionary<ElementType, float>();
         private readonly List<StatusEffect> statusEffects = new List<StatusEffect>();
 
-        public int MaximumHealth { get; set; }
-        public int CurrentHealth { get; set; }
-        public int Power { get; set; }
-        public int Defense { get; set; }
+        public EntityAttribute Health { get; } = new EntityAttribute();
+        public EntityAttribute Power { get; } = new EntityAttribute();
+        public EntityAttribute Defense { get; } = new EntityAttribute();
 
         public int Level { get; private set; } = 1;
         public int XP { get; set; }
@@ -71,14 +70,14 @@ namespace Roguelike.Entities.Components
         {
             amount -= (int)(amount * GetResistance(element));
 
-            CurrentHealth -= amount;
+            Health.Modifier -= amount;
 
             if (source != null)
             {
                 MessageLog.Add($"{source.Name} attacks {Entity.Name} for {amount} HP.", Color.Red);
             }
 
-            if (CurrentHealth <= 0)
+            if (Health.Value <= 0)
             {
                 DeathFunction?.Invoke(Entity);
 
@@ -101,22 +100,22 @@ namespace Roguelike.Entities.Components
 
                 new LevelUpDialog().Show();
 
-                CurrentHealth = MaximumHealth;
+                Health.Modifier = 0;
             }
         }
 
         public int Heal(int amount)
         {
-            amount = amount.Clamp(0, MaximumHealth - CurrentHealth);
+            amount = amount.Clamp(0, Health.Base - Health.Modifier);
 
-            CurrentHealth += amount;
+            Health.Modifier += amount;
 
             return amount;
         }
 
         public int HealPercent(float percent)
         {
-            var amount = (int)Math.Round(MaximumHealth * percent);
+            var amount = (int)Math.Round(Health.Base * percent);
             return Heal(amount);
         }
 

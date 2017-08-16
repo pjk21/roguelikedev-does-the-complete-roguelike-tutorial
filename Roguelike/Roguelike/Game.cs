@@ -60,7 +60,12 @@ namespace Roguelike
                     RenderLayer = Renderer.ActorLayer
                 };
 
-                Player.AddComponent(new FighterComponent { MaximumHealth = 30, CurrentHealth = 30, Power = 5, Defense = 2, DeathFunction = DeathFunctions.PlayerDeath });
+                var fighterComponent = new FighterComponent { DeathFunction = DeathFunctions.PlayerDeath };
+                fighterComponent.Health.Base = 30;
+                fighterComponent.Power.Base = 5;
+                fighterComponent.Defense.Base = 2;
+
+                Player.AddComponent(fighterComponent);
                 Player.AddComponent(new PlayerInputComponent());
                 Player.AddComponent(new InventoryComponent());
 

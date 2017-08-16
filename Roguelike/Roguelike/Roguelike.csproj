@@ -57,6 +57,7 @@
     <Compile Include="Entities\Commands\AttackCommand.cs" />
     <Compile Include="Entities\Commands\Command.cs" />
     <Compile Include="Entities\Commands\CommandResult.cs" />
+    <Compile Include="Entities\Commands\EquipCommand.cs" />
     <Compile Include="Entities\Commands\MoveCommand.cs" />
     <Compile Include="Entities\Commands\RestCommand.cs" />
     <Compile Include="Entities\Commands\DescendStairsCommand.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Entities\Components\ActorComponent.cs" />
     <Compile Include="Entities\Components\BasicMonsterComponent.cs" />
     <Compile Include="Entities\Components\ConfusedMonsterAI.cs" />
+    <Compile Include="Entities\Components\EquipmentComponent.cs" />
     <Compile Include="Entities\Components\FighterComponent.cs" />
     <Compile Include="Entities\Components\InventoryComponent.cs" />
     <Compile Include="Entities\Components\ItemComponent.cs" />
@@ -73,7 +75,9 @@
     <Compile Include="Entities\DeathFunctions.cs" />
     <Compile Include="Entities\ElementType.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\EntityAttribute.cs" />
     <Compile Include="Entities\EntitySprites.cs" />
+    <Compile Include="Entities\EquipmentSlot.cs" />
     <Compile Include="Entities\ItemFactory.cs" />
     <Compile Include="Entities\ItemFunctions.cs" />
     <Compile Include="Entities\MonsterFactory.cs" />

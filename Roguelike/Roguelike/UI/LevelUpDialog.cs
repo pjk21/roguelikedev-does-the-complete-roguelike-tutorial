@@ -18,9 +18,9 @@ namespace Roguelike.UI
 
             menuOptions = new MenuItem[]
             {
-                new MenuItem { Text = $"HP  {fighter.MaximumHealth} \u2192 {fighter.MaximumHealth + 5}", OnSelected = () => { fighter.MaximumHealth += 5; } },
-                new MenuItem { Text = $"POW {fighter.Power} \u2192 {fighter.Power + 1}", OnSelected = () => {fighter.Power++; } },
-                new MenuItem { Text = $"DEF {fighter.Defense} \u2192 {fighter.Defense + 1}", OnSelected = () => {fighter.Defense++; } }
+                new MenuItem { Text = $"HP  {fighter.Health.Base} \u2192 {fighter.Health.Base + 5}", OnSelected = () => { fighter.Health.Base += 5; } },
+                new MenuItem { Text = $"POW {fighter.Power.Value} \u2192 {fighter.Power.Value + 1}", OnSelected = () => {fighter.Power.Base++; } },
+                new MenuItem { Text = $"DEF {fighter.Defense.Value} \u2192 {fighter.Defense.Value + 1}", OnSelected = () => {fighter.Defense.Base++; } }
             };
         }
 

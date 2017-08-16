@@ -38,7 +38,7 @@ namespace Roguelike.Entities.Components
                         return new MoveCommand(nextPosition.X - Entity.X, nextPosition.Y - Entity.Y);
                     }
                 }
-                else if (Entity.HasComponent<FighterComponent>() && player.GetComponent<FighterComponent>()?.CurrentHealth > 0)
+                else if (Entity.HasComponent<FighterComponent>() && player.GetComponent<FighterComponent>()?.Health.Value > 0)
                 {
                     return new AttackCommand(player);
                 }
